@@ -2,49 +2,34 @@ import React from 'react';
 import { ActivityIndicator, AsyncStorage, Button, StatusBar, StyleSheet, View } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import SignInScreen from './authPages/signInScreen';
+import HomeStack from './HomeScreen';
+import SplashScreen from './authPages/splashScreen';
+// import sass from './src/sass/login.sass';
 
-class SignInScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Please sign in',
-  };
+// class HomeScreen extends React.Component {
+//   static navigationOptions = {
+//     title: 'Welcome to the app!',
+//   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Button title="Sign in!" onPress={this._signInAsync} />
-      </View>
-    );
-  }
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <Button title="Show me more of the app" onPress={this._showMoreApp} />
+//         <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
+//       </View>
+//     );
+//   }
 
-  _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('App');
-  };
-}
+//   _showMoreApp = () => {
+//     this.props.navigation.navigate('Other');
+//   };
 
-class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Welcome to the app!',
-  };
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Button title="Show me more of the app" onPress={this._showMoreApp} />
-        <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
-      </View>
-    );
-  }
-
-  _showMoreApp = () => {
-    this.props.navigation.navigate('Other');
-  };
-
-  _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('Auth');
-  };
-}
+//   _signOutAsync = async () => {
+//     await AsyncStorage.clear();
+//     this.props.navigation.navigate('Auth');
+//   };
+// }
 
 class OtherScreen extends React.Component {
   static navigationOptions = {
@@ -100,13 +85,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppStack = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
+// const AppStack = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
 export default createAppContainer(createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    App: AppStack,
+    App: HomeStack,
     Auth: AuthStack,
   },
   {

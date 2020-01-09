@@ -7,12 +7,17 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "webpack --config webpack.config.js -w"
   },
   "dependencies": {
+    "@ant-design/icons-react-native": "^1.0.2",
+    "@ant-design/react-native": "^3.2.2",
     "@react-native-community/masked-view": "^0.1.5",
     "antd-mobile": "^2.3.1",
+    "rc-form": "^2.4.11",
     "react": "16.9.0",
+    "react-dom": "^16.12.0",
     "react-native": "0.61.4",
     "react-native-gesture-handler": "^1.5.3",
     "react-native-reanimated": "^1.4.0",
@@ -27,11 +32,23 @@
     "@babel/core": "^7.7.2",
     "@babel/runtime": "^7.7.2",
     "@react-native-community/eslint-config": "^0.0.5",
+    "autoprefixer": "^9.7.3",
     "babel-jest": "^24.9.0",
+    "css-loader": "^3.4.1",
     "eslint": "^6.6.0",
+    "install": "^0.13.0",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.57.0",
-    "react-test-renderer": "16.9.0"
+    "node-sass": "^4.13.0",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-loader": "^3.0.0",
+    "react-native-style-loader": "0.0.11",
+    "react-test-renderer": "16.9.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.1.2",
+    "ts-loader": "^6.2.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   },
   "jest": {
     "preset": "react-native"

@@ -3,7 +3,8 @@ import { Text, View, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer } from 'react-navigation';
 // import { createSwitchNavigator } from 'react-navigation';
-import { createStackNavigator } from '@react-navigation/stack';
+// import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import procureScreen from './fragments/procure/procureScreen';
 import materialoutScreen from './fragments/materialout/materialoutScreen';
@@ -73,16 +74,6 @@ const materialoutDetailStack = createStackNavigator(
   // }
 );
 
-// procureStack.navigationOptions = ({ navigation }) => {
-//   let tabBarVisible = true;
-//   if (navigation.state.index > 0)
-//     tabBarVisible = false;
-
-//   return {
-//     tabBarVisible,
-//   };
-// };
-
 // 标签栏导航
 const TabNavigator = createBottomTabNavigator(
   {
@@ -117,20 +108,24 @@ const TabNavigator = createBottomTabNavigator(
 );
 
 // 应用内堆
-const HomeStack = createStackNavigator({
-  Tabs: TabNavigator,
-  Details: materialoutDetailStack,
-},
+const HomeStack = createStackNavigator(
+  {
+    Tabs: TabNavigator,
+    Details: materialoutDetailStack,
+  },
   {
     initialRouteName: 'Tabs',
-    defaultNavigationOptions: {
-      headerShown: false,
-    },
-  });
+    // defaultNavigationOptions: {
+    //   headerShown: false,
+    // },
+  }
+);
+
+export default HomeStack;
 
 // // 总导航
 // const AppNavigator = createSwitchNavigator({
 //   Home: HomeStack,
 // });
 
-export default createAppContainer(HomeStack);
+// export default createAppContainer(HomeStack);
