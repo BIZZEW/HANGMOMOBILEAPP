@@ -7,8 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint .",
-    "build": "webpack --config webpack.config.js -w"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@ant-design/icons-react-native": "^1.0.2",

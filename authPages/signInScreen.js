@@ -16,16 +16,10 @@ class SignInScreen extends React.Component {
             password: '',
         };
     }
+
     render() {
         return (
-            // <ScrollView
-            //     style={{ flex: 1 }}
-            //     automaticallyAdjustContentInsets={false}
-            //     showsHorizontalScrollIndicator={false}
-            //     showsVerticalScrollIndicator={false}
-            // >
-
-            <View>
+            <View style={{ flex: 1 }}>
                 <WhiteSpace size="lg" />
                 <WhiteSpace size="lg" />
                 <WhiteSpace size="lg" />
@@ -40,7 +34,7 @@ class SignInScreen extends React.Component {
                         value={this.state.username}
                         onChange={value => {
                             this.setState({
-                                value,
+                                username: value,
                             });
                         }}
                         // extra="元"
@@ -48,9 +42,9 @@ class SignInScreen extends React.Component {
                     >
                         用户名
                     </InputItem>
-                    {/* <WhiteSpace  size="sm" /> */}
                     <InputItem
                         clear
+                        error
                         type="password"
                         value={this.state.password}
                         onChange={value => {
@@ -73,13 +67,11 @@ class SignInScreen extends React.Component {
                             }}
                             type="primary"
                         >
-                            登录
+                            登  录
                         </Button>
                     </WingBlank>
                 </WingBlank>
             </View>
-
-            // </ScrollView >
         );
     }
 
