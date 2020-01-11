@@ -19,7 +19,12 @@ class SignInScreen extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <ScrollView
+                style={{ flex: 1 }}
+                automaticallyAdjustContentInsets={false}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+            >
                 <WhiteSpace size="lg" />
                 <WhiteSpace size="lg" />
                 <WhiteSpace size="lg" />
@@ -71,7 +76,7 @@ class SignInScreen extends React.Component {
                         </Button>
                     </WingBlank>
                 </WingBlank>
-            </View>
+            </ScrollView>
         );
     }
 
