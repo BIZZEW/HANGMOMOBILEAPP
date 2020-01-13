@@ -103,12 +103,12 @@ const TabNavigator = createBottomTabNavigator(
         else if (routeName === '销售出库')
           iconName = `sign-out-alt`;
 
-        return <IconComponent name={iconName} size={20} color={tintColor} />;
+        return <IconComponent name={iconName} size={15} color={tintColor} />;
       },
     }),
     tabBarOptions: {
-      activeTintColor: 'black',
-      inactiveTintColor: 'gray',
+      activeTintColor: '#1C86EE',
+      inactiveTintColor: '#999999',
     },
   }
 );

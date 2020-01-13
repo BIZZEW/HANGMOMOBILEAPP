@@ -116,15 +116,75 @@ export default class procureScreen extends React.Component {
                 onOpenChange={this.onOpenChange}
                 drawerBackgroundColor="#fff"
             >
-                <View style={{ flex: 1, padding: 8 }}>
-                    <Button onPress={() => this.drawer && this.drawer.openDrawer()}><Icon name="search" size="md" color="gray" /><Text>搜       索</Text></Button>
+                <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}>
+                    <Button onPress={() => this.drawer && this.drawer.openDrawer()} style={{ height: 35, position: "absolute", zIndex: 100, right: 20, bottom: 20, borderColor: "#1C86EE" }}><Icon name="search" size="sm" color="#1C86EE" style={{ fontSize: 20 }} /></Button>
                     <ScrollView
-                        style={{ flex: 1, backgroundColor: '#f5f5f9', marginTop: 8 }}
+                        style={{ flex: 1, backgroundColor: '#f5f5f9' }}
                         automaticallyAdjustContentInsets={false}
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                     >
                         <List>
+                            <Item
+                                wrap
+                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
+                                multipleLine
+                                align="top"
+                                arrow="horizontal"
+                                onPress={this.onItemPress}
+                            >
+                                顶部对齐
+                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
+                                <Brief>辅助文字内容</Brief>
+                            </Item>
+                            <Item
+                                wrap
+                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
+                                multipleLine
+                                align="top"
+                                arrow="horizontal"
+                                onPress={this.onItemPress}
+                            >
+                                顶部对齐
+                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
+                                <Brief>辅助文字内容</Brief>
+                            </Item>
+                            <Item
+                                wrap
+                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
+                                multipleLine
+                                align="top"
+                                arrow="horizontal"
+                                onPress={this.onItemPress}
+                            >
+                                顶部对齐
+                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
+                                <Brief>辅助文字内容</Brief>
+                            </Item>
+                            <Item
+                                wrap
+                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
+                                multipleLine
+                                align="top"
+                                arrow="horizontal"
+                                onPress={this.onItemPress}
+                            >
+                                顶部对齐
+                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
+                                <Brief>辅助文字内容</Brief>
+                            </Item>
+                            <Item
+                                wrap
+                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
+                                multipleLine
+                                align="top"
+                                arrow="horizontal"
+                                onPress={this.onItemPress}
+                            >
+                                顶部对齐
+                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
+                                <Brief>辅助文字内容</Brief>
+                            </Item>
                             <Item
                                 wrap
                                 extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
@@ -140,7 +200,7 @@ export default class procureScreen extends React.Component {
                         </List>
                     </ScrollView>
                 </View>
-            </Drawer>
+            </Drawer >
         );
     }
 }
