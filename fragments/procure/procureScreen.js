@@ -3,37 +3,12 @@ import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Image } from 'rea
 import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon } from '@ant-design/react-native';
 const Item = List.Item;
 const Brief = Item.Brief;
-// const data = require('@bang88/china-city-data');
-
-// import Ionicons from 'react-native-vector-icons/FontAwesome5';
-// import { createAppContainer } from 'react-navigation';
-// import { createSwitchNavigator } from 'react-navigation';
-// import { createStackNavigator } from 'react-navigation-stack';
-// import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
 });
-
-// const CustomChildren = props => (
-//     <TouchableOpacity onPress={props.onPress}>
-//         <View
-//             style={{
-//                 height: 36,
-//                 paddingLeft: 15,
-//                 flexDirection: 'row',
-//                 alignItems: 'center',
-//             }}
-//         >
-//             <Text style={{ flex: 1 }}>{props.children}</Text>
-//             <Text style={{ textAlign: 'right', color: 'blue', marginRight: 15 }}>
-//                 {props.extra}
-//             </Text>
-//         </View>
-//     </TouchableOpacity>
-// );
 
 export default class procureScreen extends React.Component {
     constructor() {
