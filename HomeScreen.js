@@ -59,6 +59,12 @@ const materialoutDetailStack = createStackNavigator(
     Home: materialoutDetailScreen,
     // Details: materialoutDetailScreen,
   },
+  {
+    // initialRouteName: '杭摩PDA',
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
   // {
   //   initialRouteName: 'Home',
   //   /* The header config from HomeScreen is now here */
@@ -97,7 +103,7 @@ const TabNavigator = createBottomTabNavigator(
         else if (routeName === '销售出库')
           iconName = `sign-out-alt`;
 
-        return <IconComponent name={iconName} size={25} color={tintColor} />;
+        return <IconComponent name={iconName} size={20} color={tintColor} />;
       },
     }),
     tabBarOptions: {
@@ -110,11 +116,11 @@ const TabNavigator = createBottomTabNavigator(
 // 应用内堆
 const HomeStack = createStackNavigator(
   {
-    Tabs: TabNavigator,
-    Details: materialoutDetailStack,
+    杭摩PDA: TabNavigator,
+    详情: materialoutDetailStack,
   },
   {
-    initialRouteName: 'Tabs',
+    initialRouteName: '杭摩PDA',
     // defaultNavigationOptions: {
     //   headerShown: false,
     // },

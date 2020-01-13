@@ -59,7 +59,7 @@ export default class procureScreen extends React.Component {
         };
 
         this.onItemPress = value => {
-            this.props.navigation.navigate('Details')
+            this.props.navigation.navigate('详情')
         }
 
         this.state = {
