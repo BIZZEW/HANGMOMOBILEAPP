@@ -35,7 +35,7 @@ class materialoutDetailScreen extends React.Component {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 {/* other code from before here */}
                 <Button
-                    title="前往采购入库详情"
+                    title="前往采购订单"
                     onPress={() => ScanModule.openScanner()}
                 />
             </View>

@@ -34,7 +34,7 @@ export default class procureScreen extends React.Component {
         };
 
         this.onItemPress = value => {
-            this.props.navigation.navigate('详情')
+            this.props.navigation.navigate('采购订单')
         }
 
         this.state = {
@@ -102,8 +102,17 @@ export default class procureScreen extends React.Component {
                             规格
                         </InputItem>
                     </List>
-
                 </View>
+
+                <Button
+                    onPress={() => {
+                        this.drawer.closeDrawer();
+                    }}
+                    type="primary"
+                    style={{ width: "40%", marginLeft: "30%", marginRight: "30%", marginTop: 30 }}
+                >
+                    查   询
+                 </Button>
             </Provider>
             // </ScrollView>
         );
@@ -117,7 +126,7 @@ export default class procureScreen extends React.Component {
                 drawerBackgroundColor="#fff"
             >
                 <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}>
-                    <Button onPress={() => this.drawer && this.drawer.openDrawer()} style={{ height: 35, position: "absolute", zIndex: 100, right: 20, bottom: 20, borderColor: "#1C86EE" }}><Icon name="search" size="sm" color="#1C86EE" style={{ fontSize: 20 }} /></Button>
+                    <Button onPress={() => this.drawer && this.drawer.openDrawer()} style={{ height: 35, position: "absolute", zIndex: 100, right: 20, bottom: 20, borderColor: "#fff", borderWidth: 2, backgroundColor: "#1C86EE" }}><Icon name="search" size="sm" color="#fff" style={{ fontSize: 20 }} /></Button>
                     <ScrollView
                         style={{ flex: 1, backgroundColor: '#f5f5f9' }}
                         automaticallyAdjustContentInsets={false}

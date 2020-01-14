@@ -7,6 +7,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import procureScreen from './fragments/procure/procureScreen';
+import procureDetailScreen from './fragments/procure/procureDetail/procureDetailScreen';
 import materialoutScreen from './fragments/materialout/materialoutScreen';
 import materialoutDetailScreen from './fragments/materialout/materialoutDetail/materialoutDetailScreen';
 import productinScreen from './fragments/productin/productinScreen';
@@ -38,6 +39,32 @@ const materialoutStack = createStackNavigator(
     Home: materialoutScreen,
     // Details: materialoutDetailScreen,
   },
+  // {
+  //   initialRouteName: 'Home',
+  //   /* The header config from HomeScreen is now here */
+  //   defaultNavigationOptions: {
+  //     headerStyle: {
+  //       backgroundColor: 'white',
+  //     },
+  //     headerTintColor: 'black',
+  //     headerTitleStyle: {
+  //       fontWeight: 'bold',
+  //     },
+  //   }
+  // }
+);
+
+// 采购入库堆
+const procureDetailStack = createStackNavigator(
+  {
+    Home: procureDetailScreen,
+  },
+  {
+    // initialRouteName: '杭摩PDA',
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
   // {
   //   initialRouteName: 'Home',
   //   /* The header config from HomeScreen is now here */
@@ -117,7 +144,8 @@ const TabNavigator = createBottomTabNavigator(
 const HomeStack = createStackNavigator(
   {
     杭摩PDA: TabNavigator,
-    详情: materialoutDetailStack,
+    采购订单: procureDetailStack,
+    材料出库详情: materialoutDetailStack,
   },
   {
     initialRouteName: '杭摩PDA',

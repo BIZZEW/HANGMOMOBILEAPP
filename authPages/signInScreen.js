@@ -28,7 +28,7 @@ class SignInScreen extends React.Component {
                 <WhiteSpace size="lg" />
                 <WhiteSpace size="lg" />
                 <WhiteSpace size="lg" />
-                <Image source={require('../logo.png')} style={{ width: 150, height: 150, alignSelf: "center" }} />
+                <Image source={require('../logo.png')} style={{ width: 50, height: 50, alignSelf: "center" }} />
                 <WhiteSpace size="lg" />
                 <WhiteSpace size="lg" />
                 <WhiteSpace size="lg" />
