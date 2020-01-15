@@ -3,7 +3,7 @@ import { AsyncStorage, Button, Text, TextInput, View } from 'react-native';
 import { NavigationNativeContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "./HomeScreen";
-import procureScreen from './fragments/procure/procureScreen';
+import ProcureScreen from './fragments/procure/ProcureScreen';
 
 const AuthContext = React.createContext();
 

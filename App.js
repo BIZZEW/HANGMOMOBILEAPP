@@ -4,32 +4,6 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import SignInScreen from './authPages/signInScreen';
 import HomeStack from './HomeScreen';
-import SplashScreen from './authPages/splashScreen';
-// import sass from './src/sass/login.sass';
-
-// class HomeScreen extends React.Component {
-//   static navigationOptions = {
-//     title: 'Welcome to the app!',
-//   };
-
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         <Button title="Show me more of the app" onPress={this._showMoreApp} />
-//         <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
-//       </View>
-//     );
-//   }
-
-//   _showMoreApp = () => {
-//     this.props.navigation.navigate('Other');
-//   };
-
-//   _signOutAsync = async () => {
-//     await AsyncStorage.clear();
-//     this.props.navigation.navigate('Auth');
-//   };
-// }
 
 class OtherScreen extends React.Component {
   static navigationOptions = {
@@ -70,7 +44,7 @@ class AuthLoadingScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
+        <ActivityIndicator size="large" color="#1C86EE" />
         <StatusBar barStyle="default" />
       </View>
     );
@@ -85,7 +59,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// const AppStack = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
 export default createAppContainer(createSwitchNavigator(

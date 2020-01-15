@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Button, DeviceEventEmitter } from 'react-native';
 import ScanModule from "../../../nativeCall/ScanModule";
 
-class procureDetailScreen extends React.Component {
+class ProcureDetailScreen extends React.Component {
 
     componentWillMount() {
         //通过使用DeviceEventEmitter模块来监听事件
@@ -24,4 +24,4 @@ class procureDetailScreen extends React.Component {
     }
 }
 
-export default procureDetailScreen;
+export default ProcureDetailScreen;

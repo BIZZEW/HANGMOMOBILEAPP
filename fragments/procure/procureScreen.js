@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon } from '@ant-design/react-native';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, FlatList, AsyncStorage } from 'react-native';
+import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal } from '@ant-design/react-native';
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -8,9 +8,58 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    ListItem: {
+        backgroundColor: "#fff",
+        marginBottom: 10,
+        borderRadius: 10,
+        height: 200,
+        padding: 20,
+    },
+    searchBtn: {
+        height: 40,
+        position: "absolute",
+        zIndex: 100,
+        right: 20,
+        bottom: 20,
+        borderColor: "#fff",
+        borderWidth: 1,
+        borderRadius: 10,
+        backgroundColor: "#1C86EE"
+    },
+    searchBtnIcon: {
+        fontSize: 20,
+        // color:"#51A0EE"
+    },
+    emptyIcon: {
+        fontSize: 100,
+        color: "#51A0EE",
+    },
+    emptyView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+        zIndex: -1,
+    },
+    emptyHint: {
+        fontSize: 15,
+        color: "#fff"
+    },
+    FlatList: {
+        flex: 1,
+        backgroundColor: '#1C86EE',
+        paddingBottom: 60,
+    },
+    confirmSearchBtn: {
+        width: "40%",
+        marginLeft: "30%",
+        marginRight: "30%",
+        marginTop: 20,
+        borderWidth: 0,
+        borderColor: "#1C86EE"
+    }
 });
 
-export default class procureScreen extends React.Component {
+export default class ProcureScreen extends React.Component {
     constructor() {
         super(...arguments);
         this.onOpenChange = isOpen => {
@@ -41,6 +90,7 @@ export default class procureScreen extends React.Component {
             data: [],
             value: [],
             pickerValue: [],
+            searchResult: []
         };
     }
 
@@ -57,10 +107,28 @@ export default class procureScreen extends React.Component {
         }
     };
 
+    _signOutAsync = async () => {
+        await AsyncStorage.clear();
+        this.props.navigation.navigate('Auth');
+    };
+
+    requireList = () => {
+        this.setState({
+            searchResult: [
+                { key: "kkkk1" },
+                { key: "kkkk2" },
+                { key: "kkkk3" },
+                { key: "kkkk4" },
+                { key: "kkkk5" },
+                { key: "kkkk6" },
+            ]
+        })
+    }
+
     render() {
         const sidebar = (
-            // <ScrollView style={[styles.container]}>
-            <Provider>
+            // <Provider>
+            <>
                 <View>
                     <List>
                         <Picker
@@ -107,109 +175,80 @@ export default class procureScreen extends React.Component {
                 <Button
                     onPress={() => {
                         this.drawer.closeDrawer();
+                        this.requireList();
                     }}
                     type="primary"
-                    style={{ width: "40%", marginLeft: "30%", marginRight: "30%", marginTop: 30 }}
+                    style={styles.confirmSearchBtn}
                 >
                     查   询
-                 </Button>
-            </Provider>
-            // </ScrollView>
+                </Button>
+
+                <Button
+                    onPress={() => {
+                        this.drawer.closeDrawer();
+                    }}
+                    type="primary"
+                    style={styles.confirmSearchBtn}
+                >
+                    取   消
+                </Button>
+            </>
+            // </Provider >
         );
         return (
-            <Drawer
-                sidebar={sidebar}
-                position="right"
-                open={false}
-                drawerRef={el => (this.drawer = el)}
-                onOpenChange={this.onOpenChange}
-                drawerBackgroundColor="#fff"
-            >
-                <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}>
-                    <Button onPress={() => this.drawer && this.drawer.openDrawer()} style={{ height: 35, position: "absolute", zIndex: 100, right: 20, bottom: 20, borderColor: "#fff", borderWidth: 2, backgroundColor: "#1C86EE" }}><Icon name="search" size="sm" color="#fff" style={{ fontSize: 20 }} /></Button>
-                    <ScrollView
-                        style={{ flex: 1, backgroundColor: '#f5f5f9' }}
-                        automaticallyAdjustContentInsets={false}
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        <List>
-                            <Item
-                                wrap
-                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
-                                multipleLine
-                                align="top"
-                                arrow="horizontal"
-                                onPress={this.onItemPress}
-                            >
-                                顶部对齐
-                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
-                                <Brief>辅助文字内容</Brief>
-                            </Item>
-                            <Item
-                                wrap
-                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
-                                multipleLine
-                                align="top"
-                                arrow="horizontal"
-                                onPress={this.onItemPress}
-                            >
-                                顶部对齐
-                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
-                                <Brief>辅助文字内容</Brief>
-                            </Item>
-                            <Item
-                                wrap
-                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
-                                multipleLine
-                                align="top"
-                                arrow="horizontal"
-                                onPress={this.onItemPress}
-                            >
-                                顶部对齐
-                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
-                                <Brief>辅助文字内容</Brief>
-                            </Item>
-                            <Item
-                                wrap
-                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
-                                multipleLine
-                                align="top"
-                                arrow="horizontal"
-                                onPress={this.onItemPress}
-                            >
-                                顶部对齐
-                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
-                                <Brief>辅助文字内容</Brief>
-                            </Item>
-                            <Item
-                                wrap
-                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
-                                multipleLine
-                                align="top"
-                                arrow="horizontal"
-                                onPress={this.onItemPress}
-                            >
-                                顶部对齐
-                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
-                                <Brief>辅助文字内容</Brief>
-                            </Item>
-                            <Item
-                                wrap
-                                extra="文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行文字超长折行"
-                                multipleLine
-                                align="top"
-                                arrow="horizontal"
-                                onPress={this.onItemPress}
-                            >
-                                顶部对齐
-                                <Brief>辅助文字内容辅助文字内容辅助文字内容辅助文字内容</Brief>
-                                <Brief>辅助文字内容</Brief>
-                            </Item>
-                        </List>
-                    </ScrollView>
-                </View>
-            </Drawer >
+            <Provider>
+                <Drawer
+                    sidebar={sidebar}
+                    position="right"
+                    open={false}
+                    drawerRef={el => (this.drawer = el)}
+                    onOpenChange={this.onOpenChange}
+                    drawerBackgroundColor="#fff"
+                >
+                    <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}>
+                        <Button
+                            onPress={() => this.drawer && this.drawer.openDrawer()}
+                            style={styles.searchBtn}>
+                            <Icon name="search" size="sm" color="#fff" style={styles.searchBtnIcon} />
+                        </Button>
+                        <View style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '100%',
+                            display: (this.state.searchResult.length > 0 ? "none" : "flex"),
+                        }}>
+                            <Icon name="inbox" color="white" style={styles.emptyIcon} />
+                            <Text style={styles.emptyHint}>可点右下角按钮查询</Text>
+                        </View>
+
+                        <ScrollView
+                            style={{ flex: 1 }}
+                            automaticallyAdjustContentInsets={false}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <FlatList
+                                style={styles.FlatList}
+                                data={this.state.searchResult}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('采购订单') }}>
+                                        <ListItem itemInfo={item} />
+                                    </TouchableOpacity>
+                                )}
+                            />
+                        </ScrollView>
+                    </View>
+                </Drawer >
+            </Provider>
         );
+    }
+}
+
+class ListItem extends React.Component {
+    render() {
+        let itemInfo = this.props.itemInfo;
+        return <View style={styles.ListItem}>
+            <Text>{itemInfo.key}</Text>
+        </View>
     }
 }
