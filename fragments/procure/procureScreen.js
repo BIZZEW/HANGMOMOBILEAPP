@@ -71,8 +71,9 @@ export default class ProcureScreen extends React.Component {
             setTimeout(() => {
                 this.setState({
                     data: [
-                        { value: "0", label: "黑火药" },
+                        { value: "0", label: "黑火药1" },
                         { value: "1", label: "黑火药2" },
+                        { value: "2", label: "黑火药3" },
                     ],
                 });
             }, 500);
@@ -96,14 +97,14 @@ export default class ProcureScreen extends React.Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: "杭摩PDA / 采购入库",
-            headerStyle: {
-                backgroundColor: 'black',
-            },
-            headerTintColor: 'white',
-            headerTitleStyle: {
-                fontWeight: 'bold',
-            },
+            title: "采购入库",
+            // headerStyle: {
+            //     backgroundColor: 'black',
+            // },
+            headerTintColor: '#1C86EE',
+            // headerTitleStyle: {
+            //     fontWeight: 'bold',
+            // },
         }
     };
 
@@ -115,7 +116,6 @@ export default class ProcureScreen extends React.Component {
     requireList = () => {
         this.setState({
             searchResult: [
-                { key: "kkkk1" },
                 { key: "kkkk2" },
                 { key: "kkkk3" },
                 { key: "kkkk4" },
@@ -218,7 +218,7 @@ export default class ProcureScreen extends React.Component {
                             display: (this.state.searchResult.length > 0 ? "none" : "flex"),
                         }}>
                             <Icon name="inbox" color="white" style={styles.emptyIcon} />
-                            <Text style={styles.emptyHint}>可点右下角按钮查询</Text>
+                            <Text style={styles.emptyHint}>可点右下角按钮查询采购订单</Text>
                         </View>
 
                         <ScrollView
@@ -248,7 +248,7 @@ class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
         return <View style={styles.ListItem}>
-            <Text>{itemInfo.key}</Text>
+            <Text>{"单据号：" + itemInfo.key}</Text>
         </View>
     }
 }

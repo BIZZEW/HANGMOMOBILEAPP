@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, View, Button, StyleSheet, AsyncStorage } from 'react-native';
 import Ionicons from 'react-native-vector-icons/FontAwesome5';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, getActiveChildNavigationOptions } from 'react-navigation';
 // import { createSwitchNavigator } from 'react-navigation';
 // import { createStackNavigator } from '@react-navigation/stack';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProcureScreen from './fragments/procure/ProcureScreen';
 import ProcureDetailScreen from './fragments/procure/ProcureDetail/ProcureDetailScreen';
-import materialoutScreen from './fragments/materialout/materialoutScreen';
+import materialoutScreen from './fragments/materialout/MaterialoutScreen';
 import materialoutDetailScreen from './fragments/materialout/materialoutDetail/materialoutDetailScreen';
 import productinScreen from './fragments/productin/productinScreen';
 import saleoutScreen from './fragments/saleout/saleoutScreen';
@@ -146,6 +146,22 @@ const TabNavigator = createBottomTabNavigator(
       activeTintColor: '#1C86EE',
       inactiveTintColor: '#999999',
     },
+    // tabBarOptions: ({ navigation }) => ({
+    //   // activeTintColor: () => {
+    //   //   const { routeName } = navigation.state;
+    //   //   let iconColor;
+    //   //   if (routeName === '采购入库')
+    //   //     iconColor = `#1C86EE`;
+    //   //   else if (routeName === '材料出库')
+    //   //     iconColor = `#1C8600`;
+    //   //   else if (routeName === '产成品入库')
+    //   //     iconColor = `#1C8600`;
+    //   //   else if (routeName === '销售出库')
+    //   //     iconColor = `#1C8600`;
+    //   //   return iconColor;
+    //   // },
+    //   // inactiveTintColor: '#999999',
+    // }),
   }
 );
 
@@ -158,12 +174,16 @@ const HomeStack = createStackNavigator(
   },
   {
     initialRouteName: '杭摩PDA',
-    defaultNavigationOptions: ({ navigation }) => {
+    defaultNavigationOptions: ({ navigation, screenProps }) => {
+      let tabState = getActiveChildNavigationOptions(navigation, screenProps);
       return {
+        title: tabState.title,
+        headerTintColor: "#1C86EE",
+        // ...tabState,
         // headerShown: false,
         headerRight: () => (
           <Icon name="logout" style={styles.logoutIcon} onPress={() => {
-            Modal.alert('提示', '确定退出登录？', [
+            Modal.alert('提示', "确认退出当前账户？", [
               {
                 text: '取消',
                 onPress: () => console.log('cancel'),
