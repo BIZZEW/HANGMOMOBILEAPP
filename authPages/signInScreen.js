@@ -73,12 +73,6 @@ class SignInScreen extends React.Component {
                         >
                             登  录
                         </Button>
-                        {/* <Button
-                            onPress={this.open.bind(this)}
-                            type="primary"
-                        >
-                            testloading
-                        </Button> */}
                     </WingBlank>
                 </WingBlank>
             </ScrollView >
@@ -91,15 +85,6 @@ class SignInScreen extends React.Component {
         // await AsyncStorage.setItem('userToken', 'abc');
         // this.props.navigation.navigate('App');
     };
-
-    open() {
-        //显示加载
-        Loading.show();
-        // this.clear = setTimeout(() => {
-        //     //关闭Loading
-        //     Loading.hide();
-        // },2000)
-    }
 }
 
 export default SignInScreen;
