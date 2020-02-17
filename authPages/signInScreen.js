@@ -4,7 +4,7 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Button, InputItem, List, WhiteSpace, WingBlank } from '@ant-design/react-native';
 import axios from '../axios/index';
-import Loading from "../fragments/common/loading";
+// import Loading from "../fragments/common/loading";
 
 
 class SignInScreen extends React.Component {
@@ -80,7 +80,6 @@ class SignInScreen extends React.Component {
     }
 
     _signInAsync = async () => {
-        Loading.show();
         axios.login(this, "/mobile_tel_segment.htm", { tel: this.state.username });
         // await AsyncStorage.setItem('userToken', 'abc');
         // this.props.navigation.navigate('App');

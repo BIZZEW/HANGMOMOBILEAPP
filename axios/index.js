@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, Image, Text, TextInput, Dimensions, ScrollView } from 'react-native';
+import Loading from "../fragments/common/loading";
 
 export default class Axios {
 
@@ -42,6 +43,7 @@ export default class Axios {
         //     loading = document.getElementById('ajaxLoading');
         //     loading.style.display = 'block';
         // }
+        Loading.show();
         let baseApi0 = 'https://tcc.taobao.com/cc/json';
         let baseApi = 'http://10.1.8.231:80/cusapl';
         let baseApi1 = 'http://rap2api.taobao.org/app/mock/239516/example/1576031001727';
@@ -60,6 +62,7 @@ export default class Axios {
                 //     loading.style.display = 'none';
                 // }
                 // alert(JSON.stringify(response));
+                Loading.hide();
                 if (response.status === 200) {
                     let res = response.data;
                     // if (res.code === 0) {
@@ -75,6 +78,7 @@ export default class Axios {
                 //     loading = document.getElementById('ajaxLoading');
                 //     loading.style.display = 'none';
                 // }
+                Loading.hide();
                 reject(error);
             })
         });
