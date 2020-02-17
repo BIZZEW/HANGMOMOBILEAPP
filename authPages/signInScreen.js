@@ -3,6 +3,8 @@ import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, Image, Te
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Button, InputItem, List, WhiteSpace, WingBlank } from '@ant-design/react-native';
+import axios from '../axios/index'
+
 
 class SignInScreen extends React.Component {
     static navigationOptions = {
@@ -79,8 +81,9 @@ class SignInScreen extends React.Component {
     }
 
     _signInAsync = async () => {
-        await AsyncStorage.setItem('userToken', 'abc');
-        this.props.navigation.navigate('App');
+        axios.login(this, "/mobile_tel_segment.htm", { tel: this.state.username });
+        // await AsyncStorage.setItem('userToken', 'abc');
+        // this.props.navigation.navigate('App');
     };
 }
 
