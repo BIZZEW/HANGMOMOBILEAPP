@@ -3,7 +3,8 @@ import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, Image, Te
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Button, InputItem, List, WhiteSpace, WingBlank } from '@ant-design/react-native';
-import axios from '../axios/index'
+import axios from '../axios/index';
+import Loading from "../fragments/common/loading";
 
 
 class SignInScreen extends React.Component {
@@ -67,24 +68,38 @@ class SignInScreen extends React.Component {
                 <WingBlank size="lg">
                     <WingBlank size="lg">
                         <Button
-                            onPress={() => {
-                                this._signInAsync();
-                            }}
+                            onPress={this._signInAsync.bind(this)}
                             type="primary"
                         >
                             登  录
                         </Button>
+                        {/* <Button
+                            onPress={this.open.bind(this)}
+                            type="primary"
+                        >
+                            testloading
+                        </Button> */}
                     </WingBlank>
                 </WingBlank>
-            </ScrollView>
+            </ScrollView >
         );
     }
 
     _signInAsync = async () => {
+        Loading.show();
         axios.login(this, "/mobile_tel_segment.htm", { tel: this.state.username });
         // await AsyncStorage.setItem('userToken', 'abc');
         // this.props.navigation.navigate('App');
     };
+
+    open() {
+        //显示加载
+        Loading.show();
+        // this.clear = setTimeout(() => {
+        //     //关闭Loading
+        //     Loading.hide();
+        // },2000)
+    }
 }
 
 export default SignInScreen;

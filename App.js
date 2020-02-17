@@ -4,7 +4,15 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import SignInScreen from './authPages/signInScreen';
 import HomeStack from './HomeScreen';
+import "./fragments/common/RootView";
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 class OtherScreen extends React.Component {
   static navigationOptions = {
     title: 'Lots of features here',
@@ -24,7 +32,6 @@ class OtherScreen extends React.Component {
     this.props.navigation.navigate('Auth');
   };
 }
-
 class AuthLoadingScreen extends React.Component {
   constructor() {
     super();
@@ -50,14 +57,6 @@ class AuthLoadingScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
