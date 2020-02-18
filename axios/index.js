@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, Image, Text, TextInput, Dimensions, ScrollView } from 'react-native';
-import Loading from "../fragments/common/loading";
+import { Toast, Portal } from '@ant-design/react-native';
+
+import Loading from "../fragments/common/Loading";
 
 export default class Axios {
 
@@ -13,7 +15,8 @@ export default class Axios {
             if (eval(data).province == "浙江") {
                 await AsyncStorage.setItem('userToken', 'abc');
                 _this.props.navigation.navigate('App');
-            }
+            } else
+                alert('用户名或密码不正确')
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1) {
                 alert('服务器繁忙，请稍后重试')
@@ -38,12 +41,8 @@ export default class Axios {
     }
 
     static ajax(options) {
-        // let loading;
-        // if ((options.data || options.params) && options.isShowLoading !== false) {
-        //     loading = document.getElementById('ajaxLoading');
-        //     loading.style.display = 'block';
-        // }
-        Loading.show();
+        // Loading.show();
+        const key = Toast.loading('加载中，请稍后...');
         let baseApi0 = 'https://tcc.taobao.com/cc/json';
         let baseApi = 'http://10.1.8.231:80/cusapl';
         let baseApi1 = 'http://rap2api.taobao.org/app/mock/239516/example/1576031001727';
@@ -57,12 +56,8 @@ export default class Axios {
                 params: (options.params) || "",
                 data: (options.data) || "",
             }).then((response) => {
-                // if ((options.data || options.params) && options.isShowLoading !== false) {
-                //     loading = document.getElementById('ajaxLoading');
-                //     loading.style.display = 'none';
-                // }
-                // alert(JSON.stringify(response));
-                Loading.hide();
+                // Loading.hide();
+                Portal.remove(key);
                 if (response.status === 200) {
                     let res = response.data;
                     // if (res.code === 0) {
@@ -74,11 +69,8 @@ export default class Axios {
                     reject(response.data)
                 }
             }).catch((error) => {
-                // if ((options.data || options.params) && options.isShowLoading !== false) {
-                //     loading = document.getElementById('ajaxLoading');
-                //     loading.style.display = 'none';
-                // }
-                Loading.hide();
+                // Loading.hide();
+                Portal.remove(key);
                 reject(error);
             })
         });

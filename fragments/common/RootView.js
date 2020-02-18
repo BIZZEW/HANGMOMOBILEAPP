@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, AppRegistry, View, Text } from 'react-native';
-import Loading from './loading';
+import Loading from './Loading';
 // import Toast from './Toast';
-// import Popup from './Popup';
+import Popup from './Popup';
 const originRegister = AppRegistry.registerComponent;
 AppRegistry.registerComponent = (appKey, component) => {
     return originRegister(appKey, function () {
@@ -13,7 +13,7 @@ AppRegistry.registerComponent = (appKey, component) => {
                     <View style={styles.container}>
                         <OriginAppComponent />
                         {/* 弹窗 */}
-                        {/* <Popup /> */}
+                        <Popup />
                         {/* 提示 */}
                         {/* <Toast /> */}
                         {/* //加载动画 */}
