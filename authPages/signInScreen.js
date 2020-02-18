@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, Image, Text, TextInput, Dimensions, ScrollView } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 // import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 // import { createStackNavigator } from 'react-navigation-stack';
 import { Button, InputItem, List, WhiteSpace, WingBlank, Toast, Provider } from '@ant-design/react-native';

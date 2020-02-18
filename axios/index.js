@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, Image, Text, TextInput, Dimensions, ScrollView } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { Toast, Portal } from '@ant-design/react-native';
-
-import Loading from "../fragments/common/Loading";
+// import Loading from "../fragments/common/Loading";
 
 export default class Axios {
 
