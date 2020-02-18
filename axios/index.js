@@ -15,12 +15,14 @@ export default class Axios {
                 await AsyncStorage.setItem('userToken', 'abc');
                 _this.props.navigation.navigate('App');
             } else
-                alert('用户名或密码不正确')
+                Toast.fail('用户名或密码不正确', 1);
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1) {
-                alert('服务器繁忙，请稍后重试')
+                // alert('服务器繁忙，请稍后重试')
+                Toast.offline('服务器繁忙，请稍后重试', 1);
             } else if (String(error).toLowerCase().indexOf('network') != -1) {
-                alert('服务器问失败，请稍后重试')
+                // alert('服务器问失败，请稍后重试')
+                Toast.offline('服务器问失败，请稍后重试', 1);
             }
         })
     }
