@@ -17,13 +17,12 @@ export default class Axios {
             } else
                 Toast.fail('用户名或密码不正确', 1);
         }).catch((error) => {
-            if (String(error).toLowerCase().indexOf('timeout') != -1) {
-                // alert('服务器繁忙，请稍后重试')
+            if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);
-            } else if (String(error).toLowerCase().indexOf('network') != -1) {
-                // alert('服务器问失败，请稍后重试')
-                Toast.offline('服务器问失败，请稍后重试', 1);
-            }
+            else if (String(error).toLowerCase().indexOf('network') != -1)
+                Toast.offline('网络连接失败，请稍后重试', 1);
+            else
+                Toast.offline('服务器访问失败，请稍后重试', 1);
         })
     }
 
