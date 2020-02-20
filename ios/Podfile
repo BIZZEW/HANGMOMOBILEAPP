@@ -36,6 +36,7 @@ target 'xcDemo' do
 
 
 
+
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'xcDemoTests' do
