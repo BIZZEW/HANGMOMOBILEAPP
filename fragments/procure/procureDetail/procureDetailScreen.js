@@ -65,267 +65,268 @@ class ProcureDetailScreen extends React.Component {
     render() {
         return (
             <Provider>
-                <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}><ScrollView
-                    style={{ flex: 1, backgroundColor: "#1C86EE" }}
-                    automaticallyAdjustContentInsets={false}
-                    showsHorizontalScrollIndicator={false}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <List style={styles.detailList}>
-                        <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
+                <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}>
+                    <ScrollView
+                        style={{ flex: 1, backgroundColor: "#1C86EE" }}
+                        automaticallyAdjustContentInsets={false}
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <List style={styles.detailList}>
+                            <Picker
+                                data={this.state.data}
+                                cols={1}
+                                value={this.state.value}
+                                onChange={this.onChange}
+                            >
+                                <List.Item arrow="horizontal" onPress={this.onPress}>
+                                    物料
                             </List.Item>
-                        </Picker>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入物料编码"
-                        >
-                            编码
+                            </Picker>
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.material}
+                                onChange={value => {
+                                    this.setState({
+                                        material: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入物料编码"
+                            >
+                                编码
                         </InputItem>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.unit}
-                            onChange={value => {
-                                this.setState({
-                                    unit: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入规格"
-                        >
-                            规格
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.unit}
+                                onChange={value => {
+                                    this.setState({
+                                        unit: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入规格"
+                            >
+                                规格
                         </InputItem>
-                        <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
+                            <Picker
+                                data={this.state.data}
+                                cols={1}
+                                value={this.state.value}
+                                onChange={this.onChange}
+                            >
+                                <List.Item arrow="horizontal" onPress={this.onPress}>
+                                    物料
                             </List.Item>
-                        </Picker>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入物料编码"
-                        >
-                            编码
+                            </Picker>
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.material}
+                                onChange={value => {
+                                    this.setState({
+                                        material: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入物料编码"
+                            >
+                                编码
                         </InputItem>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.unit}
-                            onChange={value => {
-                                this.setState({
-                                    unit: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入规格"
-                        >
-                            规格
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.unit}
+                                onChange={value => {
+                                    this.setState({
+                                        unit: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入规格"
+                            >
+                                规格
                         </InputItem>
-                        <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
+                            <Picker
+                                data={this.state.data}
+                                cols={1}
+                                value={this.state.value}
+                                onChange={this.onChange}
+                            >
+                                <List.Item arrow="horizontal" onPress={this.onPress}>
+                                    物料
                             </List.Item>
-                        </Picker>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入物料编码"
-                        >
-                            编码
+                            </Picker>
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.material}
+                                onChange={value => {
+                                    this.setState({
+                                        material: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入物料编码"
+                            >
+                                编码
                         </InputItem>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.unit}
-                            onChange={value => {
-                                this.setState({
-                                    unit: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入规格"
-                        >
-                            规格
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.unit}
+                                onChange={value => {
+                                    this.setState({
+                                        unit: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入规格"
+                            >
+                                规格
                         </InputItem>
-                        <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
+                            <Picker
+                                data={this.state.data}
+                                cols={1}
+                                value={this.state.value}
+                                onChange={this.onChange}
+                            >
+                                <List.Item arrow="horizontal" onPress={this.onPress}>
+                                    物料
                             </List.Item>
-                        </Picker>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入物料编码"
-                        >
-                            编码
+                            </Picker>
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.material}
+                                onChange={value => {
+                                    this.setState({
+                                        material: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入物料编码"
+                            >
+                                编码
                         </InputItem>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.unit}
-                            onChange={value => {
-                                this.setState({
-                                    unit: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入规格"
-                        >
-                            规格
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.unit}
+                                onChange={value => {
+                                    this.setState({
+                                        unit: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入规格"
+                            >
+                                规格
                         </InputItem>
-                        <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
+                            <Picker
+                                data={this.state.data}
+                                cols={1}
+                                value={this.state.value}
+                                onChange={this.onChange}
+                            >
+                                <List.Item arrow="horizontal" onPress={this.onPress}>
+                                    物料
                             </List.Item>
-                        </Picker>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入物料编码"
-                        >
-                            编码
+                            </Picker>
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.material}
+                                onChange={value => {
+                                    this.setState({
+                                        material: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入物料编码"
+                            >
+                                编码
                         </InputItem>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.unit}
-                            onChange={value => {
-                                this.setState({
-                                    unit: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入规格"
-                        >
-                            规格
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.unit}
+                                onChange={value => {
+                                    this.setState({
+                                        unit: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入规格"
+                            >
+                                规格
                         </InputItem>
-                        <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
+                            <Picker
+                                data={this.state.data}
+                                cols={1}
+                                value={this.state.value}
+                                onChange={this.onChange}
+                            >
+                                <List.Item arrow="horizontal" onPress={this.onPress}>
+                                    物料
                             </List.Item>
-                        </Picker>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入物料编码"
-                        >
-                            编码
+                            </Picker>
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.material}
+                                onChange={value => {
+                                    this.setState({
+                                        material: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入物料编码"
+                            >
+                                编码
                         </InputItem>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.unit}
-                            onChange={value => {
-                                this.setState({
-                                    unit: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入规格"
-                        >
-                            规格
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.unit}
+                                onChange={value => {
+                                    this.setState({
+                                        unit: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入规格"
+                            >
+                                规格
                         </InputItem>
-                        <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
+                            <Picker
+                                data={this.state.data}
+                                cols={1}
+                                value={this.state.value}
+                                onChange={this.onChange}
+                            >
+                                <List.Item arrow="horizontal" onPress={this.onPress}>
+                                    物料
                             </List.Item>
-                        </Picker>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            // extra="元"
-                            placeholder="请输入物料编码"
-                        >
-                            编码
+                            </Picker>
+                            <InputItem
+                                clear
+                                error
+                                value={this.state.material}
+                                onChange={value => {
+                                    this.setState({
+                                        material: value,
+                                    });
+                                }}
+                                // extra="元"
+                                placeholder="请输入物料编码"
+                            >
+                                编码
                         </InputItem>
-                    </List>
-                </ScrollView>
+                        </List>
+                    </ScrollView>
                     <Button
                         onPress={() => ScanModule.openScanner()}
                         style={styles.scanBtn}>
