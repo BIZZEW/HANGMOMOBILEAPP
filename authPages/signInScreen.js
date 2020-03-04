@@ -23,23 +23,39 @@ class SignInScreen extends React.Component {
         };
 
         this.onOrgPress = () => {
-            setTimeout(() => {
-                this.setState({
-                    orgs: [
-                        { value: "0", label: "晓" },
-                        { value: "1", label: "敌联合" },
-                        { value: "2", label: "恶人联盟" },
-                    ],
-                });
-            }, 500);
+            var origin = {
+                test: "test"
+            }
+
+            var params = {
+                params: JSON.stringify(origin)
+            }
+
+            axios.getUserList(this, "/queryorglist", qs.stringify(params));
         };
 
         this.onOrgChange = org => {
             this.setState({ org });
         };
+
+        this._signInAsync = async () => {
+            var origin = {
+                user_code: this.state.username,
+                password: this.state.password
+            }
+
+            var params = {
+                params: JSON.stringify(origin)
+            }
+
+            if (this.state.username.trim() === "" || this.state.password.trim() === "")
+                Toast.fail('用户名或密码为空', 1);
+            else if (this.state.org === "")
+                Toast.fail('组织未选', 1);
+            else
+                axios.login(this, "/login", qs.stringify(params));
+        };
     }
-
-
 
     render() {
         return (
@@ -111,22 +127,6 @@ class SignInScreen extends React.Component {
             </Provider>
         );
     }
-
-    _signInAsync = async () => {
-        var origin = {
-            user_code: this.state.username,
-            password: this.state.password
-        }
-
-        var params = {
-            params: JSON.stringify(origin)
-        }
-
-        if (this.state.username.trim() === "" || this.state.password.trim() === "")
-            Toast.fail('用户名或密码为空', 1);
-        else
-            axios.login(this, "/login", qs.stringify(params));
-    };
 }
 
 export default SignInScreen;

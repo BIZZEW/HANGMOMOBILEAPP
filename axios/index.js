@@ -26,6 +26,32 @@ export default class Axios {
         })
     }
 
+    static getUserList(_this, url, data) {
+        this.ajax({
+            url,
+            data,
+            method: "post"
+        }).then(async (res) => {
+            let data = res.data;
+
+            _this.setState({
+                orgs: data.map(function (item) {
+                    return {
+                        value: item.pk_corp,
+                        label: item.unitname,
+                    }
+                }),
+            });
+        }).catch((error) => {
+            if (String(error).toLowerCase().indexOf('timeout') != -1)
+                Toast.offline('服务器繁忙，请稍后重试', 1);
+            else if (String(error).toLowerCase().indexOf('network') != -1)
+                Toast.offline('网络连接失败，请稍后重试', 1);
+            else
+                Toast.offline('服务器访问失败，请稍后重试', 1);
+        })
+    }
+
     static jsonp(options) {
         new Promise((resolve, reject) => {
             JsonP(options.url, {

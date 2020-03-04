@@ -89,7 +89,7 @@ export default class ProcureScreen extends React.Component {
 
         this.state = {
             data: [],
-            value: [],
+            value: "",
             pickerValue: [],
             searchResult: []
         };
