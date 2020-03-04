@@ -5,17 +5,17 @@ import { Toast, Portal } from '@ant-design/react-native';
 
 export default class Axios {
 
-    static login(_this, url, params) {
+    static login(_this, url, data) {
         this.ajax({
             url,
-            params,
-            method: "get"
+            data,
+            method: "post"
         }).then(async (data) => {
-            if (eval(data).province == "浙江") {
-                await AsyncStorage.setItem('userToken', 'abc');
-                _this.props.navigation.navigate('App');
-            } else
-                Toast.fail('用户名或密码不正确', 1);
+            // if (eval(data).province == "浙江") {
+            await AsyncStorage.setItem('userToken', 'abc');
+            _this.props.navigation.navigate('App');
+            // } else
+            //     Toast.fail('用户名或密码不正确', 1);
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);
@@ -44,27 +44,28 @@ export default class Axios {
         // Loading.show();
         const key = Toast.loading('加载中，请稍后...');
         let baseApi0 = 'https://tcc.taobao.com/cc/json';
-        let baseApi = 'http://10.1.8.231:80/cusapl';
+        let baseApi = 'http://10.100.6.25:80/service';
         let baseApi1 = 'http://rap2api.taobao.org/app/mock/239516/example/1576031001727';
 
         return new Promise((resolve, reject) => {
             axios({
                 url: options.url,
                 method: options.method,
-                baseURL: baseApi0,
+                baseURL: baseApi,
                 timeout: 8000,
                 params: (options.params) || "",
                 data: (options.data) || "",
             }).then((response) => {
                 // Loading.hide();
+                // alert(JSON.stringify(response));
                 Portal.remove(key);
                 if (response.status === 200) {
                     let res = response.data;
-                    // if (res.code === 0) {
-                    resolve(res);
-                    // } else {
-                    //     alert(res.msg)
-                    // }
+                    if (res.errorcode == 0) {
+                        resolve(res);
+                    } else {
+                        alert(res.errormsg)
+                    }
                 } else {
                     reject(response.data)
                 }
