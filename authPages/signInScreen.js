@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView } from 'react-native';
+import { Image, ScrollView, AsyncStorage } from 'react-native';
 // import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 // import { createStackNavigator } from 'react-navigation-stack';
 import { Button, InputItem, List, WhiteSpace, WingBlank, Toast, Provider, Picker } from '@ant-design/react-native';
@@ -11,6 +11,7 @@ import qs from 'qs'
 class SignInScreen extends React.Component {
     static navigationOptions = {
         title: '登录',
+        headerStyle: { height: 42 },
     };
 
     constructor(props) {
@@ -34,11 +35,12 @@ class SignInScreen extends React.Component {
             axios.getUserList(this, "/queryorglist", qs.stringify(params));
         };
 
-        this.onOrgChange = org => {
+        this.onOrgChange = async (org) => {
+            await AsyncStorage.setItem('pk_org', org[0]);
             this.setState({ org });
         };
 
-        this._signInAsync = async () => {
+        this._signInAsync = () => {
             var origin = {
                 user_code: this.state.username,
                 password: this.state.password

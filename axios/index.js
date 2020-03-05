@@ -11,11 +11,8 @@ export default class Axios {
             data,
             method: "post"
         }).then(async (data) => {
-            // if (eval(data).province == "浙江") {
             await AsyncStorage.setItem('userToken', 'abc');
             _this.props.navigation.navigate('App');
-            // } else
-            //     Toast.fail('用户名或密码不正确', 1);
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);
@@ -42,6 +39,27 @@ export default class Axios {
                     }
                 }),
             });
+        }).catch((error) => {
+            if (String(error).toLowerCase().indexOf('timeout') != -1)
+                Toast.offline('服务器繁忙，请稍后重试', 1);
+            else if (String(error).toLowerCase().indexOf('network') != -1)
+                Toast.offline('网络连接失败，请稍后重试', 1);
+            else
+                Toast.offline('服务器访问失败，请稍后重试', 1);
+        })
+    }
+
+    static getArriveOrder(_this, url, data) {
+        this.ajax({
+            url,
+            data,
+            method: "post"
+        }).then(async (res) => {
+            let data = res.data;
+
+            _this.setState({
+                searchResult: data
+            })
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);

@@ -179,6 +179,7 @@ const HomeStack = createStackNavigator(
       return {
         title: tabState.title,
         headerTintColor: "#1C86EE",
+        headerStyle: { height: 42 },
         // ...tabState,
         // headerShown: false,
         headerRight: () => (
