@@ -11,7 +11,7 @@ import qs from 'qs'
 class SignInScreen extends React.Component {
     static navigationOptions = {
         title: '登录',
-        headerStyle: { height: 42 },
+        headerStyle: { height: 40 },
     };
 
     constructor(props) {

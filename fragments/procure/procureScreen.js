@@ -274,7 +274,7 @@ export default class ProcureScreen extends React.Component {
                             display: (this.state.searchResult.length > 0 ? "none" : "flex"),
                         }}>
                             <Icon name="inbox" color="white" style={styles.emptyIcon} />
-                            <Text style={styles.emptyHint}>可点右下角按钮查询采购订单</Text>
+                            <Text style={styles.emptyHint}>可点右下角按钮查询到货单</Text>
                         </View>
 
                         <ScrollView

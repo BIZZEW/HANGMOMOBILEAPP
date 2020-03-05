@@ -1,7 +1,7 @@
 import React from 'react';
-import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal, Tabs } from '@ant-design/react-native';
-import ScanModule from "../../../nativeCall/ScanModule";
+// import ScanModule from "../../../nativeCall/ScanModule";
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         height: 45,
         position: "absolute",
         zIndex: 100,
-        right: 20,
+        // right: 20,
         bottom: 20,
         borderColor: "#fff",
         borderWidth: 1,
@@ -46,6 +46,24 @@ const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         backgroundColor: '#1C86EE',
+    },
+    FlatList: {
+        flex: 1,
+        backgroundColor: '#1C86EE',
+        paddingBottom: 60,
+    },
+    ListItem: {
+        backgroundColor: "#fff",
+        marginBottom: 10,
+        borderRadius: 10,
+        // height: 200,
+        padding: 20,
+    },
+    ScrollView: {
+        flex: 1,
+        backgroundColor: "#1C86EE",
+        width: "100%",
+        paddingHorizontal: 10
     }
 });
 
@@ -62,23 +80,14 @@ class ProcureDetailScreen extends React.Component {
 
     componentWillMount() {
         //通过使用DeviceEventEmitter模块来监听事件
-        DeviceEventEmitter.addListener('iDataScan', function (Event) {
-            alert(Event.ScanResult);
-        });
+        // DeviceEventEmitter.addListener('iDataScan', function (Event) {
+        //     alert(Event.ScanResult);
+        // });
 
         let detail = this.props.navigation.state.params.item;
         this.setState({
             detail
         })
-    }
-
-    componentDidMount() {
-        // let detail = this.props.navigation.state.params.item;
-        // // alert(JSON.stringify(detail));
-        // // alert(typeof (detail));
-        // this.setState({
-        //     detail
-        // })
     }
 
     render() {
@@ -144,103 +153,119 @@ class ProcureDetailScreen extends React.Component {
                     )}
                 >
                     <View style={styles.tabsContent}>
-                        <View style={{
-                            flex: 1,
-                            padding: 10,
-                            paddingTop: 0,
-                            backgroundColor: '#1C86EE',
-                            width: "100%"
-                        }}>
-                            <ScrollView
-                                style={{ flex: 1, backgroundColor: "#1C86EE", width: "100%" }}
-                                automaticallyAdjustContentInsets={false}
-                                showsHorizontalScrollIndicator={false}
-                                showsVerticalScrollIndicator={false}
-                            >
-                                <List style={styles.detailList}>
-                                    <Item
-                                        extra={
-                                            <Text>
-                                                { this.state.detail.varrordercode }
-                                            </Text>
-                                        }
-                                        multipleLine
-                                    >
-                                        单据号
+                        <ScrollView
+                            style={styles.ScrollView}
+                            automaticallyAdjustContentInsets={false}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <List style={styles.detailList}>
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.varrordercode}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    单据号
                                     </Item>
-                                    <Item
-                                        extra={
-                                            <Text>
-                                                {this.state.detail.dreceivedate}
-                                            </Text>
-                                        }
-                                        multipleLine
-                                    >
-                                        到货日期
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.dreceivedate}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    到货日期
                                     </Item>
-                                    <Item
-                                        extra={
-                                            <Text>
-                                                {this.state.detail.cstoreorganization_name}
-                                            </Text>
-                                        }
-                                        multipleLine
-                                    >
-                                        库存组织
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.cstoreorganization_name}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    库存组织
                                     </Item>
-                                    <Item
-                                        extra={
-                                            <Text>
-                                                {this.state.detail.cbiztype_name}
-                                            </Text>
-                                        }
-                                        multipleLine
-                                    >
-                                        业务流程
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.cbiztype_name}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    业务流程
                                     </Item>
-                                    <Item
-                                        extra={
-                                            <Text>
-                                                {this.state.detail.cemployeeid_name}
-                                            </Text>
-                                        }
-                                        multipleLine
-                                    >
-                                        业务员
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.cemployeeid_name}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    业务员
                                     </Item>
-                                    <Item
-                                        extra={
-                                            <Text>
-                                                {this.state.detail.cdeptid_name}
-                                            </Text>
-                                        }
-                                        multipleLine
-                                    >
-                                        部门
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.cdeptid_name}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    部门
                                     </Item>
-                                </List>
-                            </ScrollView>
-                            <Button
-                                onPress={() => ScanModule.openScanner()}
-                                style={styles.scanBtn}>
-                                <Icon name="scan" size="sm" color="#fff" style={styles.btnIcon} />
-                                <Text style={styles.btnText}> 扫码</Text>
-                            </Button>
-                            <Button
-                                onPress={() => ScanModule.openScanner()}
-                                style={styles.confirmBtn}>
-                                <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
-                                <Text style={styles.btnText}> 确认</Text>
-                            </Button>
-                        </View>
+                            </List>
+                        </ScrollView>
+                        <Button
+                            onPress={() => ScanModule.openScanner()}
+                            style={styles.confirmBtn}>
+                            <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
+                            <Text style={styles.btnText}> 入库</Text>
+                        </Button>
                     </View>
 
                     <View style={styles.tabsContent}>
-                        <Text>Content of Second TabContent of Second TabContent of Second TabContent of Second TabContent of Second Tab</Text>
+                        <ScrollView
+                            automaticallyAdjustContentInsets={false}
+                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
+                            style={styles.ScrollView}
+                        >
+                            <FlatList
+                                style={styles.FlatList}
+                                data={this.state.detail.bitems}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('物料明细', { item: item }) }}>
+                                        <ListItem itemInfo={item} />
+                                    </TouchableOpacity>
+                                )}
+                            />
+                        </ScrollView>
                     </View>
                 </Tabs>
             </Provider >
         );
+    }
+}
+
+class ListItem extends React.Component {
+    render() {
+        let itemInfo = this.props.itemInfo;
+        return <View style={styles.ListItem}>
+            <Text>{"物料主键：" + itemInfo.cbaseid}</Text>
+            <Text>{"物料名称：" + itemInfo.cbaseid_name}</Text>
+            <Text>{"主单位：" + itemInfo.measname}</Text>
+            <Text>{"到货数量：" + itemInfo.narrvnum}</Text>
+            <Text>{"本币单价：" + itemInfo.nprice}</Text>
+            <Text>{"本币金额：" + itemInfo.nmoney}</Text>
+            <Text>{"规格：" + itemInfo.cbaseid_spec}</Text>
+        </View>
     }
 }
 

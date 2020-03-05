@@ -6,7 +6,7 @@ import { Text, View, Button } from 'react-native';
 // import { createStackNavigator } from 'react-navigation-stack';
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-class saleoutScreen extends React.Component {
+class SaleoutScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerTitle: "杭摩PDA / 销售出库",
@@ -32,4 +32,4 @@ class saleoutScreen extends React.Component {
     }
 }
 
-export default saleoutScreen;
+export default SaleoutScreen;

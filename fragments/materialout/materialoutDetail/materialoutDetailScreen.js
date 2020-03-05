@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Button, DeviceEventEmitter } from 'react-native';
 import ScanModule from "../../../nativeCall/ScanModule";
 
-class materialoutDetailScreen extends React.Component {
+class MaterialoutDetailScreen extends React.Component {
     // static navigationOptions = ({ navigation }) => {
     //     return {
     //         headerTitle: "杭摩PDA / 采购入库",
@@ -43,4 +43,4 @@ class materialoutDetailScreen extends React.Component {
     }
 }
 
-export default materialoutDetailScreen;
+export default MaterialoutDetailScreen;

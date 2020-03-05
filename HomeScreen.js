@@ -8,10 +8,11 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProcureScreen from './fragments/procure/ProcureScreen';
 import ProcureDetailScreen from './fragments/procure/ProcureDetail/ProcureDetailScreen';
-import materialoutScreen from './fragments/materialout/MaterialoutScreen';
-import materialoutDetailScreen from './fragments/materialout/materialoutDetail/materialoutDetailScreen';
-import productinScreen from './fragments/productin/productinScreen';
-import saleoutScreen from './fragments/saleout/saleoutScreen';
+import MaterialoutScreen from './fragments/materialout/MaterialoutScreen';
+import MaterialoutDetailScreen from './fragments/materialout/materialoutDetail/MaterialoutDetailScreen';
+import ProductinScreen from './fragments/productin/ProductinScreen';
+import SaleoutScreen from './fragments/saleout/SaleoutScreen';
+import MaterialDetailScreen from './fragments/public/MaterialDetailScreen';
 import { Icon, Modal } from '@ant-design/react-native';
 
 const styles = StyleSheet.create({
@@ -21,47 +22,6 @@ const styles = StyleSheet.create({
     marginRight: 10
   }
 });
-
-// 采购入库堆
-const procureStack = createStackNavigator(
-  {
-    Home: ProcureScreen,
-  },
-  {
-    initialRouteName: 'Home',
-    /* The header config from HomeScreen is now here */
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: 'white',
-      },
-      headerTintColor: 'black',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    },
-  }
-);
-
-// 材料出库堆
-const materialoutStack = createStackNavigator(
-  {
-    Home: materialoutScreen,
-    // Details: materialoutDetailScreen,
-  },
-  // {
-  //   initialRouteName: 'Home',
-  //   /* The header config from HomeScreen is now here */
-  //   defaultNavigationOptions: {
-  //     headerStyle: {
-  //       backgroundColor: 'white',
-  //     },
-  //     headerTintColor: 'black',
-  //     headerTitleStyle: {
-  //       fontWeight: 'bold',
-  //     },
-  //   }
-  // }
-);
 
 // 采购入库堆
 const ProcureDetailStack = createStackNavigator(
@@ -74,55 +34,39 @@ const ProcureDetailStack = createStackNavigator(
       headerShown: false,
     },
   }
-  // {
-  //   initialRouteName: 'Home',
-  //   /* The header config from HomeScreen is now here */
-  //   defaultNavigationOptions: {
-  //     headerStyle: {
-  //       backgroundColor: 'white',
-  //     },
-  //     headerTintColor: 'black',
-  //     headerTitleStyle: {
-  //       fontWeight: 'bold',
-  //     },
-  //   }
-  // }
 );
 
-// 材料出库堆
-const materialoutDetailStack = createStackNavigator(
+// 物料明细
+const MaterialDetailStack = createStackNavigator(
   {
-    Home: materialoutDetailScreen,
-    // Details: materialoutDetailScreen,
+    Home: MaterialDetailScreen,
   },
   {
-    // initialRouteName: '杭摩PDA',
     defaultNavigationOptions: {
       headerShown: false,
     },
   }
-  // {
-  //   initialRouteName: 'Home',
-  //   /* The header config from HomeScreen is now here */
-  //   defaultNavigationOptions: {
-  //     headerStyle: {
-  //       backgroundColor: 'white',
-  //     },
-  //     headerTintColor: 'black',
-  //     headerTitleStyle: {
-  //       fontWeight: 'bold',
-  //     },
-  //   }
-  // }
+);
+
+// 材料出库堆
+const MaterialoutDetailStack = createStackNavigator(
+  {
+    Home: MaterialoutDetailScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
 );
 
 // 标签栏导航
 const TabNavigator = createBottomTabNavigator(
   {
     "采购入库": ProcureScreen,
-    "材料出库": materialoutScreen,
-    "产成品入库": productinScreen,
-    "销售出库": saleoutScreen,
+    "材料出库": MaterialoutScreen,
+    "产成品入库": ProductinScreen,
+    "销售出库": SaleoutScreen,
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -146,22 +90,6 @@ const TabNavigator = createBottomTabNavigator(
       activeTintColor: '#1C86EE',
       inactiveTintColor: '#999999',
     },
-    // tabBarOptions: ({ navigation }) => ({
-    //   // activeTintColor: () => {
-    //   //   const { routeName } = navigation.state;
-    //   //   let iconColor;
-    //   //   if (routeName === '采购入库')
-    //   //     iconColor = `#1C86EE`;
-    //   //   else if (routeName === '材料出库')
-    //   //     iconColor = `#1C8600`;
-    //   //   else if (routeName === '产成品入库')
-    //   //     iconColor = `#1C8600`;
-    //   //   else if (routeName === '销售出库')
-    //   //     iconColor = `#1C8600`;
-    //   //   return iconColor;
-    //   // },
-    //   // inactiveTintColor: '#999999',
-    // }),
   }
 );
 
@@ -170,7 +98,8 @@ const HomeStack = createStackNavigator(
   {
     杭摩PDA: TabNavigator,
     采购订单: ProcureDetailStack,
-    材料出库详情: materialoutDetailStack,
+    材料出库详情: MaterialoutDetailStack,
+    物料明细: MaterialDetailStack,
   },
   {
     initialRouteName: '杭摩PDA',
@@ -179,9 +108,7 @@ const HomeStack = createStackNavigator(
       return {
         title: tabState.title,
         headerTintColor: "#1C86EE",
-        headerStyle: { height: 42 },
-        // ...tabState,
-        // headerShown: false,
+        headerStyle: { height: 40 },
         headerRight: () => (
           <Icon name="logout" style={styles.logoutIcon} onPress={() => {
             Modal.alert('提示', "确认退出当前账户？", [
@@ -205,10 +132,3 @@ const HomeStack = createStackNavigator(
 );
 
 export default HomeStack;
-
-// // 总导航
-// const AppNavigator = createSwitchNavigator({
-//   Home: HomeStack,
-// });
-
-// export default createAppContainer(HomeStack);
