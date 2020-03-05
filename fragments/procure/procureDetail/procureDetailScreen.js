@@ -240,8 +240,8 @@ class ProcureDetailScreen extends React.Component {
                             <FlatList
                                 style={styles.FlatList}
                                 data={this.state.detail.bitems}
-                                renderItem={({ item }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('物料明细', { item: item }) }}>
+                                renderItem={({ item, index }) => (
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('物料明细', { item: item, index: index }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 100,
         left: 20,
-        bottom: 20,
+        bottom: 10,
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 100,
         right: 20,
-        bottom: 20,
+        bottom: 10,
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
@@ -76,18 +76,32 @@ class MaterialDetailScreen extends React.Component {
             data: [],
             value: [],
             detail: {},
+            index: "",
+            ninum: "",
+            cinventoryid: "",
         };
+
+        // this.updateInventory = cinventoryid => {
+        //     this.setState({
+        //         cinventoryid
+        //     })
+        // };
     }
 
     componentWillMount() {
+        let _this = this;
         //通过使用DeviceEventEmitter模块来监听事件
         DeviceEventEmitter.addListener('iDataScan', function (Event) {
             alert(Event.ScanResult);
+            _this.setState({
+                cinventoryid: Event.ScanResult
+            })
         });
 
         let detail = this.props.navigation.state.params.item;
+        let index = this.props.navigation.state.params.index;
         this.setState({
-            detail
+            detail, index
         })
     }
 
@@ -102,6 +116,30 @@ class MaterialDetailScreen extends React.Component {
                         showsVerticalScrollIndicator={false}
                     >
                         <List style={styles.detailList}>
+
+                            <InputItem
+                                clear
+                                type="number"
+                                value={this.state.cinventoryid}
+                                placeholder="请扫码获取库位"
+                                editable={false}
+                            >
+                                库位
+                            </InputItem>
+
+                            <InputItem
+                                clear
+                                type="number"
+                                value={this.state.ninum}
+                                onChange={ninum => {
+                                    this.setState({ ninum });
+                                }}
+                                placeholder="请输入数量"
+                                style={{ marginBottom: 10 }}
+                            >
+                                入库数量
+                            </InputItem>
+
                             <Item
                                 extra={
                                     <Text>
