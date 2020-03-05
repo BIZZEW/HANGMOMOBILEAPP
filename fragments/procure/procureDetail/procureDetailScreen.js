@@ -76,14 +76,13 @@ class ProcureDetailScreen extends React.Component {
             value: [],
             detail: {},
         };
+
+        this.editConfirmed = data => {
+            alert(JSON.stringify(data));
+        }
     }
 
     componentWillMount() {
-        //通过使用DeviceEventEmitter模块来监听事件
-        // DeviceEventEmitter.addListener('iDataScan', function (Event) {
-        //     alert(Event.ScanResult);
-        // });
-
         let detail = this.props.navigation.state.params.item;
         this.setState({
             detail
@@ -241,7 +240,7 @@ class ProcureDetailScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.detail.bitems}
                                 renderItem={({ item, index }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('物料明细', { item: item, index: index }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}

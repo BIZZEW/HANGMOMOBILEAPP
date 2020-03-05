@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal, Tabs } from '@ant-design/react-native';
 import ScanModule from "../../nativeCall/ScanModule";
+import { Toast, Portal } from '@ant-design/react-native';
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -73,26 +74,28 @@ class MaterialDetailScreen extends React.Component {
         super(...arguments);
 
         this.state = {
-            data: [],
-            value: [],
             detail: {},
             index: "",
             ninum: "",
             cinventoryid: "",
         };
 
-        // this.updateInventory = cinventoryid => {
-        //     this.setState({
-        //         cinventoryid
-        //     })
-        // };
+        this.materialConfirm = () => {
+            if (this.state.ninum.trim() === "" || this.state.cinventoryid.trim() === "")
+                Toast.fail('需要填选的项为必输', 1);
+            else {
+                const { navigation } = this.props;
+                navigation.navigate("采购订单");
+                navigation.state.params.editConfirmed(this.state);
+            }
+        };
     }
 
     componentWillMount() {
         let _this = this;
         //通过使用DeviceEventEmitter模块来监听事件
         DeviceEventEmitter.addListener('iDataScan', function (Event) {
-            alert(Event.ScanResult);
+            alert("扫码结果为： " + Event.ScanResult);
             _this.setState({
                 cinventoryid: Event.ScanResult
             })
@@ -115,8 +118,7 @@ class MaterialDetailScreen extends React.Component {
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                     >
-                        <List style={styles.detailList}>
-
+                        <List renderHeader={'请填选'}>
                             <InputItem
                                 clear
                                 type="number"
@@ -134,12 +136,13 @@ class MaterialDetailScreen extends React.Component {
                                 onChange={ninum => {
                                     this.setState({ ninum });
                                 }}
-                                placeholder="请输入数量"
-                                style={{ marginBottom: 10 }}
+                                placeholder="请输入实际入库数量"
                             >
                                 入库数量
                             </InputItem>
+                        </List>
 
+                        <List style={styles.detailList} renderHeader={'请查看'}>
                             <Item
                                 extra={
                                     <Text>
@@ -243,7 +246,7 @@ class MaterialDetailScreen extends React.Component {
                         </List>
                     </ScrollView>
                     <Button
-                        onPress={() => ScanModule.openScanner()}
+                        onPress={() => this.materialConfirm()}
                         style={styles.confirmBtn}>
                         <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                         <Text style={styles.btnText}> 确定</Text>
