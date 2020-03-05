@@ -65,15 +65,20 @@ class ProcureDetailScreen extends React.Component {
         DeviceEventEmitter.addListener('iDataScan', function (Event) {
             alert(Event.ScanResult);
         });
+
+        let detail = this.props.navigation.state.params.item;
+        this.setState({
+            detail
+        })
     }
 
     componentDidMount() {
-        let detail = this.props.navigation.state.params.item;
-        alert(JSON.stringify(detail));
-        // alert(typeof (detail));
-        this.setState({
-            detail: JSON.parse(detail)
-        })
+        // let detail = this.props.navigation.state.params.item;
+        // // alert(JSON.stringify(detail));
+        // // alert(typeof (detail));
+        // this.setState({
+        //     detail
+        // })
     }
 
     render() {
@@ -155,9 +160,9 @@ class ProcureDetailScreen extends React.Component {
                                 <List style={styles.detailList}>
                                     <Item
                                         extra={
-                                            <View>
-                                                {this.state.detail.varrordercode}
-                                            </View>
+                                            <Text>
+                                                { this.state.detail.varrordercode }
+                                            </Text>
                                         }
                                         multipleLine
                                     >
@@ -165,9 +170,9 @@ class ProcureDetailScreen extends React.Component {
                                     </Item>
                                     <Item
                                         extra={
-                                            <View>
+                                            <Text>
                                                 {this.state.detail.dreceivedate}
-                                            </View>
+                                            </Text>
                                         }
                                         multipleLine
                                     >
@@ -175,9 +180,9 @@ class ProcureDetailScreen extends React.Component {
                                     </Item>
                                     <Item
                                         extra={
-                                            <View>
+                                            <Text>
                                                 {this.state.detail.cstoreorganization_name}
-                                            </View>
+                                            </Text>
                                         }
                                         multipleLine
                                     >
@@ -185,9 +190,9 @@ class ProcureDetailScreen extends React.Component {
                                     </Item>
                                     <Item
                                         extra={
-                                            <View>
+                                            <Text>
                                                 {this.state.detail.cbiztype_name}
-                                            </View>
+                                            </Text>
                                         }
                                         multipleLine
                                     >
@@ -195,9 +200,9 @@ class ProcureDetailScreen extends React.Component {
                                     </Item>
                                     <Item
                                         extra={
-                                            <View>
+                                            <Text>
                                                 {this.state.detail.cemployeeid_name}
-                                            </View>
+                                            </Text>
                                         }
                                         multipleLine
                                     >
@@ -205,9 +210,9 @@ class ProcureDetailScreen extends React.Component {
                                     </Item>
                                     <Item
                                         extra={
-                                            <View>
+                                            <Text>
                                                 {this.state.detail.cdeptid_name}
-                                            </View>
+                                            </Text>
                                         }
                                         multipleLine
                                     >
