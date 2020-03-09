@@ -1,7 +1,9 @@
 import React from 'react';
-import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal, Tabs } from '@ant-design/react-native';
+import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
+import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal, Tabs, Toast } from '@ant-design/react-native';
 // import ScanModule from "../../../nativeCall/ScanModule";
+import axios from '../../../axios/index';
+import qs from 'qs';
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -67,6 +69,22 @@ const styles = StyleSheet.create({
     }
 });
 
+const formatTime = date => {
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+    const second = date.getSeconds()
+
+    return [year, month, day].map(formatNumber).join('-')
+}
+
+const formatNumber = n => {
+    n = n.toString()
+    return n[1] ? n : '0' + n
+}
+
 class ProcureDetailScreen extends React.Component {
     constructor() {
         super(...arguments);
@@ -78,7 +96,44 @@ class ProcureDetailScreen extends React.Component {
         };
 
         this.editConfirmed = data => {
-            alert(JSON.stringify(data));
+            // alert(JSON.stringify(data));
+
+            let newDetail = this.state.detail;
+            let newSubDetail = data.detail;
+
+            newSubDetail.ninum = data.ninum;
+            newSubDetail.cargdoc = data.inventory;
+            newDetail.bitems[data.index] = newSubDetail;
+
+            this.setState({
+                detail: newDetail
+            })
+        }
+
+        this.submitConfirmed = async () => {
+            let tmpList = this.state.detail.bitems;
+
+            for await (i of tmpList) {
+                if (!("cargdoc" in i) || !("ninum" in i)) {
+                    Toast.fail('请先填选所有物料明细中的数量和库位之后再提交', 1);
+                    return;
+                }
+            }
+
+            let username = await AsyncStorage.getItem('username');
+            let org = await AsyncStorage.getItem('pk_org');
+
+            let origin = {
+                ...this.state.detail, pk_org: org, coperatorid: username, dbilldate: formatTime(new Date())
+            }
+
+            alert(JSON.stringify(origin));
+
+            let params = {
+                params: JSON.stringify(origin)
+            }
+
+            axios.submitOrder(this, "/addpurchase", qs.stringify(params));
         }
     }
 
@@ -222,7 +277,7 @@ class ProcureDetailScreen extends React.Component {
                             </List>
                         </ScrollView>
                         <Button
-                            onPress={() => ScanModule.openScanner()}
+                            onPress={() => this.submitConfirmed()}
                             style={styles.confirmBtn}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 入库</Text>

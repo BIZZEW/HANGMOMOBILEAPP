@@ -1,10 +1,9 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, FlatList, AsyncStorage } from 'react-native';
-import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Moda, DatePicker } from '@ant-design/react-native';
+import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Moda, DatePicker, Toast } from '@ant-design/react-native';
 const Item = List.Item;
 import axios from '../../axios/index';
-import qs from 'qs'
-const Brief = Item.Brief;
+import qs from 'qs';
 
 const styles = StyleSheet.create({
     container: {
@@ -98,20 +97,24 @@ export default class ProcureScreen extends React.Component {
         };
 
         this.requireList = () => {
-            AsyncStorage.getItem('pk_org').then((org) => {
-                let origin = {
-                    vbillcode: this.state.vbillcode,
-                    formdate: this.state.formdate,
-                    enddate: this.state.enddate,
-                    pk_org: org,
-                }
+            if (this.state.supplier.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
+                Toast.fail('请先填选所有查询条件在查询', 1);
+            else {
+                AsyncStorage.getItem('pk_org').then((org) => {
+                    let origin = {
+                        supplier: this.state.supplier,
+                        formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
+                        enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
+                        pk_org: org,
+                    }
 
-                let params = {
-                    params: JSON.stringify(origin)
-                }
+                    let params = {
+                        params: JSON.stringify(origin)
+                    }
 
-                axios.getArriveOrder(this, "/queryarrive", qs.stringify(params));
-            })
+                    axios.getArriveOrder(this, "/queryarrive", qs.stringify(params));
+                })
+            }
         }
 
         this.state = {
@@ -119,7 +122,7 @@ export default class ProcureScreen extends React.Component {
             // value: "",
             // pickerValue: [],
             searchResult: [],
-            vbillcode: "",
+            supplier: "",
             formdate: "",
             enddate: "",
         };
@@ -188,18 +191,32 @@ export default class ProcureScreen extends React.Component {
                         </InputItem> */}
 
 
-                        <InputItem
+                        {/* <InputItem
                             clear
                             // error
-                            value={this.state.vbillcode}
+                            value={this.state.supplier}
                             onChange={value => {
                                 this.setState({
-                                    vbillcode: value,
+                                    supplier: value,
                                 });
                             }}
                             placeholder="请输入单据编号"
                         >
                             单据编号
+                        </InputItem> */}
+
+                        <InputItem
+                            clear
+                            // error
+                            value={this.state.supplier}
+                            onChange={value => {
+                                this.setState({
+                                    supplier: value,
+                                });
+                            }}
+                            placeholder="请输入供应商"
+                        >
+                            供应商
                         </InputItem>
 
                         <DatePicker

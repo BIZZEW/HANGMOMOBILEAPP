@@ -5,13 +5,14 @@ import { Toast, Portal } from '@ant-design/react-native';
 
 export default class Axios {
 
-    static login(_this, url, data) {
+    static login(_this, url, data, username) {
         this.ajax({
             url,
             data,
             method: "post"
-        }).then(async (data) => {
+        }).then(async (res) => {
             await AsyncStorage.setItem('userToken', 'abc');
+            await AsyncStorage.setItem('username', username);
             _this.props.navigation.navigate('App');
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
@@ -55,11 +56,33 @@ export default class Axios {
             data,
             method: "post"
         }).then(async (res) => {
+            // alert(JSON.stringify(res));
+
             let data = res.data;
+
+            if (data.length == 0)
+                Toast.info('没有查询到到货单', 1)
 
             _this.setState({
                 searchResult: data
             })
+        }).catch((error) => {
+            if (String(error).toLowerCase().indexOf('timeout') != -1)
+                Toast.offline('服务器繁忙，请稍后重试', 1);
+            else if (String(error).toLowerCase().indexOf('network') != -1)
+                Toast.offline('网络连接失败，请稍后重试', 1);
+            else
+                Toast.offline('服务器访问失败，请稍后重试', 1);
+        })
+    }
+
+    static submitOrder(_this, url, data) {
+        this.ajax({
+            url,
+            data,
+            method: "post"
+        }).then(async (res) => {
+            Toast.success('提交成功！', 1);
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);
@@ -88,8 +111,8 @@ export default class Axios {
         // Loading.show();
         const key = Toast.loading('加载中，请稍后...');
         let baseApi0 = 'https://tcc.taobao.com/cc/json';
-        // let baseApi = 'http://10.100.6.25:80/service';
-        let baseApi = 'http://192.168.43.50:80/service';
+        let baseApi = 'http://10.100.6.25:80/service';
+        // let baseApi = 'http://192.168.43.50:80/service';
         let baseApi1 = 'http://rap2api.taobao.org/app/mock/239516/example/1576031001727';
 
         return new Promise((resolve, reject) => {
@@ -102,7 +125,7 @@ export default class Axios {
                 data: (options.data) || "",
             }).then((response) => {
                 // Loading.hide();
-                // alert(JSON.stringify(response));
+                alert(JSON.stringify(response));
                 Portal.remove(key);
                 if (response.status === 200) {
                     let res = response.data;

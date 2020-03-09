@@ -77,11 +77,11 @@ class MaterialDetailScreen extends React.Component {
             detail: {},
             index: "",
             ninum: "",
-            cinventoryid: "",
+            inventory: "",
         };
 
         this.materialConfirm = () => {
-            if (this.state.ninum.trim() === "" || this.state.cinventoryid.trim() === "")
+            if (this.state.ninum.trim() === "" || this.state.inventory.trim() === "")
                 Toast.fail('需要填选的项为必输', 1);
             else {
                 const { navigation } = this.props;
@@ -97,7 +97,7 @@ class MaterialDetailScreen extends React.Component {
         DeviceEventEmitter.addListener('iDataScan', function (Event) {
             alert("扫码结果为： " + Event.ScanResult);
             _this.setState({
-                cinventoryid: Event.ScanResult
+                inventory: Event.ScanResult
             })
         });
 
@@ -122,7 +122,7 @@ class MaterialDetailScreen extends React.Component {
                             <InputItem
                                 clear
                                 type="number"
-                                value={this.state.cinventoryid}
+                                value={this.state.inventory}
                                 placeholder="请扫码获取库位"
                                 editable={false}
                             >

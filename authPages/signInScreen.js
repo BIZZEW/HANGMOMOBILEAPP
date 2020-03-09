@@ -55,7 +55,7 @@ class SignInScreen extends React.Component {
             else if (this.state.org === "")
                 Toast.fail('组织未选', 1);
             else
-                axios.login(this, "/login", qs.stringify(params));
+                axios.login(this, "/login", qs.stringify(params), this.state.username);
         };
     }
 
