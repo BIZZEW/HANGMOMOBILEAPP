@@ -125,7 +125,7 @@ export default class Axios {
                 data: (options.data) || "",
             }).then((response) => {
                 // Loading.hide();
-                alert(JSON.stringify(response));
+                // alert(JSON.stringify(response));
                 Portal.remove(key);
                 if (response.status === 200) {
                     let res = response.data;
