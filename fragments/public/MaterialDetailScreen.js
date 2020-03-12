@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         height: 45,
         position: "absolute",
         zIndex: 100,
-        right: 20,
+        // right: 20,
         bottom: 10,
         borderColor: "#fff",
         borderWidth: 1,
@@ -251,12 +251,12 @@ class MaterialDetailScreen extends React.Component {
                         <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                         <Text style={styles.btnText}> 确定</Text>
                     </Button>
-                    <Button
+                    {/* <Button
                         onPress={() => ScanModule.openScanner()}
                         style={styles.scanBtn}>
                         <Icon name="scan" size="sm" color="#fff" style={styles.btnIcon} />
                         <Text style={styles.btnText}> 扫码</Text>
-                    </Button>
+                    </Button> */}
                 </View>
             </Provider >
         );
