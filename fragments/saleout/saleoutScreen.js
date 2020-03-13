@@ -98,7 +98,7 @@ export default class ProcureScreen extends React.Component {
 
         this.requireList = () => {
             if (this.state.supplier.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
-                Toast.fail('请先填选所有查询条件在查询', 1);
+                Toast.fail('请先填选所有查询条件再查询', 1);
             else {
                 AsyncStorage.getItem('pk_org').then((org) => {
                     let origin = {
@@ -304,7 +304,7 @@ export default class ProcureScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.searchResult}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('销售出库', { item: item }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('预出库单', { item: item }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}
@@ -321,12 +321,14 @@ class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
         return <View style={styles.ListItem}>
-            <Text>{"单据号：" + itemInfo.varrordercode}</Text>
-            <Text>{"到货日期：" + itemInfo.dreceivedate}</Text>
-            <Text>{"库存组织：" + itemInfo.cstoreorganization_name}</Text>
+            <Text>{"单据号：" + itemInfo.vreceivecode}</Text>
+            <Text>{"申请日期：" + itemInfo.dbilldate}</Text>
+            <Text>{"销售组织：" + itemInfo.csalecorpid_name}</Text>
             <Text>{"业务流程：" + itemInfo.cbiztype_name}</Text>
-            <Text>{"业务员：" + itemInfo.cemployeeid_name}</Text>
-            <Text>{"部门：" + itemInfo.cdeptid_name}</Text>
+            <Text>{"申请人：" + itemInfo.cemployeeid_name}</Text>
+            <Text>{"申请部门：" + itemInfo.cdeptid_name}</Text>
+            {/* <Text>{"总数量：" + itemInfo.ntotalnumber}</Text>
+            <Text>{"运输方式：" + itemInfo.ctransmodeid_name}</Text> */}
         </View>
     }
 }

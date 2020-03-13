@@ -98,7 +98,7 @@ export default class ProcureScreen extends React.Component {
 
         this.requireList = () => {
             if (this.state.supplier.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
-                Toast.fail('请先填选所有查询条件在查询', 1);
+                Toast.fail('请先填选所有查询条件再查询', 1);
             else {
                 AsyncStorage.getItem('pk_org').then((org) => {
                     let origin = {

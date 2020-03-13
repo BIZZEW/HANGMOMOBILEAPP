@@ -12,6 +12,7 @@ import MaterialoutScreen from './fragments/materialout/MaterialoutScreen';
 import MaterialoutDetailScreen from './fragments/materialout/materialoutDetail/MaterialoutDetailScreen';
 import ProductinScreen from './fragments/productin/ProductinScreen';
 import SaleoutScreen from './fragments/saleout/SaleoutScreen';
+import SaleoutDetailScreen from './fragments/saleout/SaleoutDetail/SaleoutDetailScreen';
 import MaterialDetailScreen from './fragments/public/MaterialDetailScreen';
 import { Icon, Modal } from '@ant-design/react-native';
 
@@ -27,6 +28,19 @@ const styles = StyleSheet.create({
 const ProcureDetailStack = createStackNavigator(
   {
     Home: ProcureDetailScreen,
+  },
+  {
+    // initialRouteName: '杭摩PDA',
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+
+// 销售出库堆
+const SaleoutDetailStack = createStackNavigator(
+  {
+    Home: SaleoutDetailScreen,
   },
   {
     // initialRouteName: '杭摩PDA',
@@ -98,6 +112,7 @@ const HomeStack = createStackNavigator(
   {
     杭摩PDA: TabNavigator,
     采购订单: ProcureDetailStack,
+    预出库单: SaleoutDetailStack,
     材料出库详情: MaterialoutDetailStack,
     物料明细: MaterialDetailStack,
   },
