@@ -1,8 +1,9 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, FlatList, AsyncStorage } from 'react-native';
-import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal } from '@ant-design/react-native';
+import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Moda, DatePicker, Toast } from '@ant-design/react-native';
 const Item = List.Item;
-const Brief = Item.Brief;
+import axios from '../../axios/index';
+import qs from 'qs';
 
 const styles = StyleSheet.create({
     container: {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginBottom: 10,
         borderRadius: 10,
-        height: 200,
+        // height: 200,
         padding: 20,
     },
     searchBtn: {
@@ -67,31 +68,59 @@ export default class MaterialoutScreen extends React.Component {
             console.log('是否打开了 Drawer', isOpen.toString());
         };
 
-        this.onPress = () => {
-            setTimeout(() => {
-                this.setState({
-                    data: [
-                        { value: "0", label: "黑火药1" },
-                        { value: "1", label: "黑火药2" },
-                        { value: "2", label: "黑火药3" },
-                    ],
-                });
-            }, 500);
-        };
+        // this.onPress = () => {
+        //     setTimeout(() => {
+        //         this.setState({
+        //             data: [
+        //                 { value: "0", label: "黑火药1" },
+        //                 { value: "1", label: "黑火药2" },
+        //                 { value: "2", label: "黑火药3" },
+        //             ],
+        //         });
+        //     }, 500);
+        // };
 
         this.onChange = value => {
             this.setState({ value });
         };
 
-        this.onItemPress = value => {
-            this.props.navigation.navigate('采购订单')
+        this.onFormdateChange = formdate => {
+            this.setState({ formdate });
+        };
+
+        this.onEnddateChange = enddate => {
+            this.setState({ enddate });
+        };
+
+        this.requireList = () => {
+            if (this.state.supplier.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
+                Toast.fail('请先填选所有查询条件再查询', 1);
+            else {
+                AsyncStorage.getItem('pk_org').then((org) => {
+                    let origin = {
+                        supplier: this.state.supplier,
+                        formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
+                        enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
+                        pk_org: org,
+                    }
+
+                    let params = {
+                        params: JSON.stringify(origin)
+                    }
+
+                    axios.requestList(this, "/querymaterial", qs.stringify(params));
+                })
+            }
         }
 
         this.state = {
-            data: [],
-            value: [],
-            pickerValue: [],
-            searchResult: []
+            // data: [],
+            // value: "",
+            // pickerValue: [],
+            searchResult: [],
+            supplier: "",
+            formdate: "",
+            enddate: "",
         };
     }
 
@@ -113,25 +142,13 @@ export default class MaterialoutScreen extends React.Component {
         this.props.navigation.navigate('Auth');
     };
 
-    requireList = () => {
-        this.setState({
-            searchResult: [
-                { key: "llll2" },
-                { key: "llll3" },
-                { key: "llll4" },
-                { key: "llll5" },
-                { key: "llll6" },
-            ]
-        })
-    }
-
     render() {
         const sidebar = (
             // <Provider>
             <>
                 <View>
                     <List>
-                        <Picker
+                        {/* <Picker
                             data={this.state.data}
                             cols={1}
                             value={this.state.value}
@@ -150,7 +167,6 @@ export default class MaterialoutScreen extends React.Component {
                                     material: value,
                                 });
                             }}
-                            // extra="元"
                             placeholder="请输入物料编码"
                         >
                             编码
@@ -164,11 +180,64 @@ export default class MaterialoutScreen extends React.Component {
                                     unit: value,
                                 });
                             }}
-                            // extra="元"
+                            extra="元"
                             placeholder="请输入规格"
                         >
                             规格
+                        </InputItem> */}
+
+
+                        {/* <InputItem
+                            clear
+                            // error
+                            value={this.state.supplier}
+                            onChange={value => {
+                                this.setState({
+                                    supplier: value,
+                                });
+                            }}
+                            placeholder="请输入单据编号"
+                        >
+                            单据编号
+                        </InputItem> */}
+
+                        <InputItem
+                            clear
+                            // error
+                            value={this.state.supplier}
+                            onChange={value => {
+                                this.setState({
+                                    supplier: value,
+                                });
+                            }}
+                            placeholder="请输入供应商"
+                        >
+                            供应商
                         </InputItem>
+
+                        <DatePicker
+                            value={this.state.formdate}
+                            mode="date"
+                            defaultDate={new Date()}
+                            minDate={new Date(2015, 7, 6)}
+                            maxDate={new Date(2026, 11, 3)}
+                            onChange={this.onFormdateChange}
+                            format="YYYY-MM-DD"
+                        >
+                            <List.Item arrow="horizontal">单据日期</List.Item>
+                        </DatePicker>
+
+                        <DatePicker
+                            value={this.state.enddate}
+                            mode="date"
+                            defaultDate={new Date()}
+                            minDate={new Date(2015, 7, 6)}
+                            maxDate={new Date(2026, 11, 3)}
+                            onChange={this.onEnddateChange}
+                            format="YYYY-MM-DD"
+                        >
+                            <List.Item arrow="horizontal">截止日期</List.Item>
+                        </DatePicker>
                     </List>
                 </View>
 
@@ -218,7 +287,7 @@ export default class MaterialoutScreen extends React.Component {
                             display: (this.state.searchResult.length > 0 ? "none" : "flex"),
                         }}>
                             <Icon name="inbox" color="white" style={styles.emptyIcon} />
-                            <Text style={styles.emptyHint}>可点右下角按钮查询材料出库详情</Text>
+                            <Text style={styles.emptyHint}>可点右下角按钮查询材料出库单</Text>
                         </View>
 
                         <ScrollView
@@ -231,7 +300,7 @@ export default class MaterialoutScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.searchResult}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('材料出库详情') }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('材料出库详情', { item: item }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}
@@ -248,7 +317,12 @@ class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
         return <View style={styles.ListItem}>
-            <Text>{"单据号：" + itemInfo.key}</Text>
+            <Text>{"单据号：" + itemInfo.varrordercode}</Text>
+            <Text>{"到货日期：" + itemInfo.dreceivedate}</Text>
+            <Text>{"库存组织：" + itemInfo.cstoreorganization_name}</Text>
+            <Text>{"业务流程：" + itemInfo.cbiztype_name}</Text>
+            <Text>{"业务员：" + itemInfo.cemployeeid_name}</Text>
+            <Text>{"部门：" + itemInfo.cdeptid_name}</Text>
         </View>
     }
 }

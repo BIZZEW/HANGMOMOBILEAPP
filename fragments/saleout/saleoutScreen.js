@@ -84,10 +84,6 @@ export default class ProcureScreen extends React.Component {
             this.setState({ value });
         };
 
-        this.onItemPress = value => {
-            this.props.navigation.navigate('销售出库')
-        }
-
         this.onFormdateChange = formdate => {
             this.setState({ formdate });
         };
@@ -291,7 +287,7 @@ export default class ProcureScreen extends React.Component {
                             display: (this.state.searchResult.length > 0 ? "none" : "flex"),
                         }}>
                             <Icon name="inbox" color="white" style={styles.emptyIcon} />
-                            <Text style={styles.emptyHint}>可点右下角按钮查询预出库单</Text>
+                            <Text style={styles.emptyHint}>可点右下角按钮查询销售出库单</Text>
                         </View>
 
                         <ScrollView
@@ -304,7 +300,7 @@ export default class ProcureScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.searchResult}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('预出库单', { item: item }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('销售出库单', { item: item }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}

@@ -9,8 +9,9 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProcureScreen from './fragments/procure/ProcureScreen';
 import ProcureDetailScreen from './fragments/procure/ProcureDetail/ProcureDetailScreen';
 import MaterialoutScreen from './fragments/materialout/MaterialoutScreen';
-import MaterialoutDetailScreen from './fragments/materialout/materialoutDetail/MaterialoutDetailScreen';
+import MaterialoutDetailScreen from './fragments/materialout/MaterialoutDetail/MaterialoutDetailScreen';
 import ProductinScreen from './fragments/productin/ProductinScreen';
+import ProductinDetailScreen from './fragments/productin/ProductinDetail/ProductinDetailScreen';
 import SaleoutScreen from './fragments/saleout/SaleoutScreen';
 import SaleoutDetailScreen from './fragments/saleout/SaleoutDetail/SaleoutDetailScreen';
 import MaterialDetailScreen from './fragments/public/MaterialDetailScreen';
@@ -31,6 +32,30 @@ const ProcureDetailStack = createStackNavigator(
   },
   {
     // initialRouteName: '杭摩PDA',
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+
+// 材料出库堆
+const MaterialoutDetailStack = createStackNavigator(
+  {
+    Home: MaterialoutDetailScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+
+// 产成品入库堆
+const ProductinDetailStack = createStackNavigator(
+  {
+    Home: ProductinDetailScreen,
+  },
+  {
     defaultNavigationOptions: {
       headerShown: false,
     },
@@ -62,23 +87,11 @@ const MaterialDetailStack = createStackNavigator(
   }
 );
 
-// 材料出库堆
-const MaterialoutDetailStack = createStackNavigator(
-  {
-    Home: MaterialoutDetailScreen,
-  },
-  {
-    defaultNavigationOptions: {
-      headerShown: false,
-    },
-  }
-);
-
 // 标签栏导航
 const TabNavigator = createBottomTabNavigator(
   {
     "采购入库": ProcureScreen,
-    "材料出库": MaterialoutScreen,
+    // "材料出库": MaterialoutScreen,
     "产成品入库": ProductinScreen,
     "销售出库": SaleoutScreen,
   },
@@ -111,9 +124,10 @@ const TabNavigator = createBottomTabNavigator(
 const HomeStack = createStackNavigator(
   {
     杭摩PDA: TabNavigator,
-    采购订单: ProcureDetailStack,
-    预出库单: SaleoutDetailStack,
-    材料出库详情: MaterialoutDetailStack,
+    采购入库单: ProcureDetailStack,
+    材料出库单: MaterialoutDetailStack,
+    产成品入库单: ProductinDetailStack,
+    销售出库单: SaleoutDetailStack,
     物料明细: MaterialDetailStack,
   },
   {

@@ -85,7 +85,7 @@ const formatNumber = n => {
     return n[1] ? n : '0' + n
 }
 
-class MaterialoutDetailScreen extends React.Component {
+class ProductinDetailScreen extends React.Component {
     constructor() {
         super(...arguments);
 
@@ -137,7 +137,7 @@ class MaterialoutDetailScreen extends React.Component {
                     params: JSON.stringify(origin)
                 }
 
-                axios.submitOrder(this, "/addmaterialout", qs.stringify(params));
+                axios.submitOrder(this, "/updprodin", qs.stringify(params));
             } else {
                 Toast.fail('您未操作任何一条物料，无法提交', 1);
             }
@@ -153,8 +153,8 @@ class MaterialoutDetailScreen extends React.Component {
 
     render() {
         const tabs = [
-            { title: '材料出库单信息' },
-            { title: '材料出库单明细' },
+            { title: '产成品入库单信息' },
+            { title: '产成品入库单明细' },
         ];
 
         return (
@@ -287,7 +287,7 @@ class MaterialoutDetailScreen extends React.Component {
                             onPress={() => this.submitConfirmed()}
                             style={styles.confirmBtn}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
-                            <Text style={styles.btnText}> 出库</Text>
+                            <Text style={styles.btnText}> 入库</Text>
                         </Button>
                     </View>
 
@@ -330,4 +330,4 @@ class ListItem extends React.Component {
     }
 }
 
-export default MaterialoutDetailScreen;
+export default ProductinDetailScreen;

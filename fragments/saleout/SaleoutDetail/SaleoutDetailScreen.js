@@ -133,7 +133,7 @@ class SaleoutDetailScreen extends React.Component {
                 params: JSON.stringify(origin)
             }
 
-            axios.submitOrder(this, "/addpurchase", qs.stringify(params));
+            axios.submitOrder(this, "/addsaleout", qs.stringify(params));
         }
     }
 
@@ -146,8 +146,8 @@ class SaleoutDetailScreen extends React.Component {
 
     render() {
         const tabs = [
-            { title: '预出库单信息' },
-            { title: '预出库单明细' },
+            { title: '销售出库单信息' },
+            { title: '销售出库单明细' },
         ];
 
         return (

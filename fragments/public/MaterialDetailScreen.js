@@ -85,7 +85,7 @@ class MaterialDetailScreen extends React.Component {
                 Toast.fail('需要填选的项为必输', 1);
             else {
                 const { navigation } = this.props;
-                navigation.navigate("采购订单");
+                navigation.navigate("采购入库单");
                 navigation.state.params.editConfirmed(this.state);
             }
         };

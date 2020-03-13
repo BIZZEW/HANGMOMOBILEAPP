@@ -85,7 +85,7 @@ export default class ProcureScreen extends React.Component {
         };
 
         this.onItemPress = value => {
-            this.props.navigation.navigate('采购订单')
+            this.props.navigation.navigate('采购入库单')
         }
 
         this.onFormdateChange = formdate => {
@@ -304,7 +304,7 @@ export default class ProcureScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.searchResult}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('采购订单', { item: item }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('采购入库单', { item: item }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}

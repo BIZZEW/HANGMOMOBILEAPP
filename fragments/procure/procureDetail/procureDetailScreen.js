@@ -93,11 +93,10 @@ class ProcureDetailScreen extends React.Component {
             data: [],
             value: [],
             detail: {},
+            editedFlag: false,
         };
 
         this.editConfirmed = data => {
-            // alert(JSON.stringify(data));
-
             let newDetail = this.state.detail;
             let newSubDetail = data.detail;
 
@@ -106,34 +105,42 @@ class ProcureDetailScreen extends React.Component {
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
-                detail: newDetail
+                detail: newDetail,
+                editedFlag: true,
             })
         }
 
         this.submitConfirmed = async () => {
-            let tmpList = this.state.detail.bitems;
+            if (this.state.editedFlag) {
+                let oldList = this.state.detail.bitems;
+                let newDetail = this.state.detail;
+                let newList = [];
 
-            for await (i of tmpList) {
-                if (!("cargdoc" in i) || !("ninum" in i)) {
-                    Toast.fail('请先填选所有物料明细中的数量和库位之后再提交', 1);
-                    return;
+                for await (i of oldList) {
+                    if (("cargdoc" in i) && ("ninum" in i)) {
+                        newList.push(i);
+                    }
                 }
+
+                newDetail.bitems = newList;
+
+                let username = await AsyncStorage.getItem('username');
+                let org = await AsyncStorage.getItem('pk_org');
+
+                let origin = {
+                    ...newDetail, pk_org: org, coperatorid: username, dbilldate: formatTime(new Date())
+                }
+
+                alert(JSON.stringify(origin));
+
+                let params = {
+                    params: JSON.stringify(origin)
+                }
+
+                axios.submitOrder(this, "/addpurchase", qs.stringify(params));
+            } else {
+                Toast.fail('您未操作任何一条物料，无法提交', 1);
             }
-
-            let username = await AsyncStorage.getItem('username');
-            let org = await AsyncStorage.getItem('pk_org');
-
-            let origin = {
-                ...this.state.detail, pk_org: org, coperatorid: username, dbilldate: formatTime(new Date())
-            }
-
-            alert(JSON.stringify(origin));
-
-            let params = {
-                params: JSON.stringify(origin)
-            }
-
-            axios.submitOrder(this, "/addpurchase", qs.stringify(params));
         }
     }
 
@@ -146,8 +153,8 @@ class ProcureDetailScreen extends React.Component {
 
     render() {
         const tabs = [
-            { title: '采购订单信息' },
-            { title: '采购订单明细' },
+            { title: '采购入库单信息' },
+            { title: '采购入库单明细' },
         ];
 
         return (
