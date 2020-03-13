@@ -50,7 +50,7 @@ export default class Axios {
         })
     }
 
-    static getArriveOrder(_this, url, data) {
+    static requestList(_this, url, data) {
         this.ajax({
             url,
             data,

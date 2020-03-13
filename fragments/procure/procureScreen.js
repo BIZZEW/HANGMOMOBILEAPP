@@ -112,7 +112,7 @@ export default class ProcureScreen extends React.Component {
                         params: JSON.stringify(origin)
                     }
 
-                    axios.getArriveOrder(this, "/queryarrive", qs.stringify(params));
+                    axios.requestList(this, "/queryarrive", qs.stringify(params));
                 })
             }
         }
