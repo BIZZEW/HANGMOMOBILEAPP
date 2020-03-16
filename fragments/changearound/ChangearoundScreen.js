@@ -60,25 +60,13 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class MaterialoutScreen extends React.Component {
+export default class ChangearoundScreen extends React.Component {
     constructor() {
         super(...arguments);
         this.onOpenChange = isOpen => {
             /* tslint:disable: no-console */
             console.log('是否打开了 Drawer', isOpen.toString());
         };
-
-        // this.onPress = () => {
-        //     setTimeout(() => {
-        //         this.setState({
-        //             data: [
-        //                 { value: "0", label: "黑火药1" },
-        //                 { value: "1", label: "黑火药2" },
-        //                 { value: "2", label: "黑火药3" },
-        //             ],
-        //         });
-        //     }, 500);
-        // };
 
         this.onChange = value => {
             this.setState({ value });
@@ -108,15 +96,12 @@ export default class MaterialoutScreen extends React.Component {
                         params: JSON.stringify(origin)
                     }
 
-                    axios.requestList(this, "/querymaterial", qs.stringify(params));
+                    axios.requestList(this, "/querywhstr", qs.stringify(params));
                 })
             }
         }
 
         this.state = {
-            // data: [],
-            // value: "",
-            // pickerValue: [],
             searchResult: [],
             supplier: "",
             formdate: "",
@@ -126,14 +111,8 @@ export default class MaterialoutScreen extends React.Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            title: "材料出库",
-            // headerStyle: {
-            //     backgroundColor: 'black',
-            // },
+            title: "转库",
             headerTintColor: '#1C86EE',
-            // headerTitleStyle: {
-            //     fontWeight: 'bold',
-            // },
         }
     };
 
@@ -148,59 +127,6 @@ export default class MaterialoutScreen extends React.Component {
             <>
                 <View>
                     <List>
-                        {/* <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
-                            </List.Item>
-                        </Picker>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            placeholder="请输入物料编码"
-                        >
-                            编码
-                        </InputItem>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.unit}
-                            onChange={value => {
-                                this.setState({
-                                    unit: value,
-                                });
-                            }}
-                            extra="元"
-                            placeholder="请输入规格"
-                        >
-                            规格
-                        </InputItem> */}
-
-
-                        {/* <InputItem
-                            clear
-                            // error
-                            value={this.state.supplier}
-                            onChange={value => {
-                                this.setState({
-                                    supplier: value,
-                                });
-                            }}
-                            placeholder="请输入单据编号"
-                        >
-                            单据编号
-                        </InputItem> */}
-
                         <InputItem
                             clear
                             // error
@@ -287,7 +213,7 @@ export default class MaterialoutScreen extends React.Component {
                             display: (this.state.searchResult.length > 0 ? "none" : "flex"),
                         }}>
                             <Icon name="inbox" color="white" style={styles.emptyIcon} />
-                            <Text style={styles.emptyHint}>可点右下角按钮查询材料出库单</Text>
+                            <Text style={styles.emptyHint}>可点右下角按钮查询转库单</Text>
                         </View>
 
                         <ScrollView
@@ -300,7 +226,7 @@ export default class MaterialoutScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.searchResult}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('材料出库单', { item: item }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('转库单', { item: item }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}

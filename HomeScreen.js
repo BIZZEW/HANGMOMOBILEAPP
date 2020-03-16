@@ -10,6 +10,8 @@ import ProcureScreen from './fragments/procure/ProcureScreen';
 import ProcureDetailScreen from './fragments/procure/ProcureDetail/ProcureDetailScreen';
 import MaterialoutScreen from './fragments/materialout/MaterialoutScreen';
 import MaterialoutDetailScreen from './fragments/materialout/MaterialoutDetail/MaterialoutDetailScreen';
+import ChangearoundScreen from './fragments/changearound/ChangearoundScreen';
+import ChangearoundDetailScreen from './fragments/changearound/ChangearoundDetail/ChangearoundDetailScreen';
 import ProductinScreen from './fragments/productin/ProductinScreen';
 import ProductinDetailScreen from './fragments/productin/ProductinDetail/ProductinDetailScreen';
 import SaleoutScreen from './fragments/saleout/SaleoutScreen';
@@ -42,6 +44,18 @@ const ProcureDetailStack = createStackNavigator(
 const MaterialoutDetailStack = createStackNavigator(
   {
     Home: MaterialoutDetailScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+
+// 转库堆
+const ChangearoundDetailStack = createStackNavigator(
+  {
+    Home: ChangearoundDetailScreen,
   },
   {
     defaultNavigationOptions: {
@@ -92,6 +106,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     "采购入库": ProcureScreen,
     // "材料出库": MaterialoutScreen,
+    "转库": ChangearoundScreen,
     "产成品入库": ProductinScreen,
     "销售出库": SaleoutScreen,
   },
@@ -104,6 +119,8 @@ const TabNavigator = createBottomTabNavigator(
         if (routeName === '采购入库')
           iconName = `cart-plus`;
         else if (routeName === '材料出库')
+          iconName = `cart-arrow-down`;
+        else if (routeName === '转库')
           iconName = `cart-arrow-down`;
         else if (routeName === '产成品入库')
           iconName = `sign-in-alt`;
@@ -126,6 +143,7 @@ const HomeStack = createStackNavigator(
     杭摩PDA: TabNavigator,
     采购入库单: ProcureDetailStack,
     材料出库单: MaterialoutDetailStack,
+    转库单: ChangearoundDetailStack,
     产成品入库单: ProductinDetailStack,
     销售出库单: SaleoutDetailStack,
     物料明细: MaterialDetailStack,
@@ -140,19 +158,29 @@ const HomeStack = createStackNavigator(
         headerStyle: { height: 40 },
         headerRight: () => (
           <Icon name="logout" style={styles.logoutIcon} onPress={() => {
-            Modal.alert('提示', "确认退出当前账户？", [
-              {
-                text: '取消',
-                onPress: () => console.log('cancel'),
-                style: 'cancel',
-              },
-              {
-                text: '确定', onPress: () => {
-                  AsyncStorage.clear();
-                  navigation.navigate('Auth');
+            AsyncStorage.getItem('logoutshow').then
+              (async (logoutshow) => {
+                if (logoutshow == "0") {
+                  await AsyncStorage.setItem('logoutshow', "1");
+                  Modal.alert('提示', "确认退出当前账户？", [
+                    {
+                      text: '取消',
+                      onPress: async () => {
+                        await AsyncStorage.setItem('logoutshow', "0");
+                        console.log('cancel');
+                      },
+                      style: 'cancel',
+                    },
+                    {
+                      text: '确定',
+                      onPress: async () => {
+                        AsyncStorage.clear();
+                        navigation.navigate('Auth');
+                      }
+                    },
+                  ]);
                 }
-              },
-            ]);
+              })
           }} />
         )
       }

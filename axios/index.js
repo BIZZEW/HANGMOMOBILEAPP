@@ -11,9 +11,18 @@ export default class Axios {
             data,
             method: "post"
         }).then(async (res) => {
-            await AsyncStorage.setItem('userToken', 'abc');
-            await AsyncStorage.setItem('username', username);
-            _this.props.navigation.navigate('App');
+            let storage = [
+                ['userToken', 'abc'],
+                ['username', username],
+                ['logoutshow', '0']
+            ]
+            // await AsyncStorage.setItem('userToken', 'abc');
+            // await AsyncStorage.setItem('username', username);
+            // await AsyncStorage.setItem('logoutshow', "0");
+            AsyncStorage.multiSet(storage, e => {
+                if (e) Toast.fail("登录失败，请重试", 1);
+                else _this.props.navigation.navigate('App');
+            });
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);
@@ -61,7 +70,7 @@ export default class Axios {
             let data = res.data;
 
             if (data.length == 0)
-                Toast.info('没有查询到到货单', 1)
+                Toast.info('没有查询数据', 1)
 
             _this.setState({
                 searchResult: data
@@ -132,7 +141,7 @@ export default class Axios {
                     if (res.errorcode == 0) {
                         resolve(res);
                     } else {
-                        alert(res.errormsg)
+                        Toast.fail(res.errormsg, 2);
                     }
                 } else {
                     reject(response.data)
