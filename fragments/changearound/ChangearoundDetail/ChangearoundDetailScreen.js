@@ -224,7 +224,7 @@ class ChangearoundDetailScreen extends React.Component {
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.varrordercode}
+                                            {this.state.detail.vbillcode}
                                         </Text>
                                     }
                                     multipleLine
@@ -234,52 +234,62 @@ class ChangearoundDetailScreen extends React.Component {
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.dreceivedate}
+                                            {this.state.detail.dbilldate}
                                         </Text>
                                     }
                                     multipleLine
                                 >
-                                    到货日期
+                                    单据日期
                                     </Item>
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.cstoreorganization_name}
+                                            {this.state.detail.vshldarrivedate}
                                         </Text>
                                     }
                                     multipleLine
                                 >
-                                    库存组织
+                                    应到货日期
                                     </Item>
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.cbiztype_name}
+                                            {this.state.detail.cshlddiliverdate}
                                         </Text>
                                     }
                                     multipleLine
                                 >
-                                    业务流程
+                                    应发货日期
                                     </Item>
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.cemployeeid_name}
+                                            {this.state.detail.outstorname}
                                         </Text>
                                     }
                                     multipleLine
                                 >
-                                    业务员
+                                    出库仓库名称
                                     </Item>
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.cdeptid_name}
+                                            {this.state.detail.instorname}
                                         </Text>
                                     }
                                     multipleLine
                                 >
-                                    部门
+                                    入库仓库名称
+                                    </Item>
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.vnote}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    备注
                                     </Item>
                             </List>
                         </ScrollView>
@@ -287,7 +297,7 @@ class ChangearoundDetailScreen extends React.Component {
                             onPress={() => this.submitConfirmed()}
                             style={styles.confirmBtn}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
-                            <Text style={styles.btnText}> 出库</Text>
+                            <Text style={styles.btnText}> 转库</Text>
                         </Button>
                     </View>
 

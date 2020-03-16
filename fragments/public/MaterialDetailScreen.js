@@ -77,11 +77,11 @@ class MaterialDetailScreen extends React.Component {
             detail: {},
             index: "",
             ninum: "",
-            inventory: "",
+            cargdoc: "",
         };
 
         this.materialConfirm = () => {
-            if (this.state.ninum.trim() === "" || this.state.inventory.trim() === "")
+            if (this.state.ninum.trim() === "" || this.state.cargdoc.trim() === "")
                 Toast.fail('需要填选的项为必输', 1);
             else {
                 const { navigation } = this.props;
@@ -95,16 +95,18 @@ class MaterialDetailScreen extends React.Component {
         let _this = this;
         //通过使用DeviceEventEmitter模块来监听事件
         DeviceEventEmitter.addListener('iDataScan', function (Event) {
-            alert("扫码结果为： " + Event.ScanResult);
+            // alert("扫码结果为： " + Event.ScanResult);
             _this.setState({
-                inventory: Event.ScanResult
+                cargdoc: Event.ScanResult
             })
         });
 
         let detail = this.props.navigation.state.params.item;
         let index = this.props.navigation.state.params.index;
+        let cargdoc = detail.cargdoc ? detail.cargdoc : "";
+        let ninum = detail.ninum ? detail.ninum : "";
         this.setState({
-            detail, index
+            detail, index, cargdoc, ninum
         })
     }
 
@@ -121,12 +123,12 @@ class MaterialDetailScreen extends React.Component {
                         <List renderHeader={'请填选'}>
                             <InputItem
                                 clear
-                                type="number"
-                                value={this.state.inventory}
+                                type="text"
+                                value={this.state.cargdoc}
                                 placeholder="请扫码获取库位"
                                 editable={false}
                             >
-                                库位
+                                货位
                             </InputItem>
 
                             <InputItem
@@ -143,6 +145,26 @@ class MaterialDetailScreen extends React.Component {
                         </List>
 
                         <List style={styles.detailList} renderHeader={'请查看'}>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.shen}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                剩余数量
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.naccumwarehousenum}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                累计数量
+                                    </Item>
                             <Item
                                 extra={
                                     <Text>

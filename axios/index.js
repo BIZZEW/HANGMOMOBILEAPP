@@ -70,7 +70,7 @@ export default class Axios {
             let data = res.data;
 
             if (data.length == 0)
-                Toast.info('没有查询数据', 1)
+                Toast.info('没有查询到数据', 1)
 
             _this.setState({
                 searchResult: data
@@ -91,7 +91,17 @@ export default class Axios {
             data,
             method: "post"
         }).then(async (res) => {
-            Toast.success('提交成功！', 1);
+            if (res.checkflag == "3" || res.checkflag == 3)
+                _this.continueConfirm();
+            else {
+                Toast.success('提交成功！', 1);
+
+                const { navigation } = _this.props;
+                setTimeout(() => {
+                    navigation.navigate('杭摩PDA');
+                    navigation.state.params.requireList();
+                }, 1000);
+            }
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);

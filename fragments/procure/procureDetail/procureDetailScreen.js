@@ -101,7 +101,7 @@ class ProcureDetailScreen extends React.Component {
             let newSubDetail = data.detail;
 
             newSubDetail.ninum = data.ninum;
-            newSubDetail.cargdoc = data.inventory;
+            newSubDetail.cargdoc = data.cargdoc;
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -110,7 +110,7 @@ class ProcureDetailScreen extends React.Component {
             })
         }
 
-        this.submitConfirmed = async () => {
+        this.submitConfirmed = async (ischeck) => {
             if (this.state.editedFlag) {
                 let oldList = this.state.detail.bitems;
                 let newDetail = this.state.detail;
@@ -128,10 +128,10 @@ class ProcureDetailScreen extends React.Component {
                 let org = await AsyncStorage.getItem('pk_org');
 
                 let origin = {
-                    ...newDetail, pk_org: org, coperatorid: username, dbilldate: formatTime(new Date())
+                    ...newDetail, pk_org: org, coperatorid: username, dbilldate: formatTime(new Date()), ischeck
                 }
 
-                alert(JSON.stringify(origin));
+                // alert(JSON.stringify(origin));
 
                 let params = {
                     params: JSON.stringify(origin)
@@ -141,6 +141,24 @@ class ProcureDetailScreen extends React.Component {
             } else {
                 Toast.fail('您未操作任何一条物料，无法提交', 1);
             }
+        }
+
+        this.continueConfirm = () => {
+            Modal.alert('提示', "当前单有存货，是否继续？", [
+                {
+                    text: '取消',
+                    onPress: async () => {
+                        console.log('cancel');
+                    },
+                    style: 'cancel',
+                },
+                {
+                    text: '确定',
+                    onPress: async () => {
+                        this.submitConfirmed('N');
+                    }
+                },
+            ]);
         }
     }
 
@@ -284,7 +302,7 @@ class ProcureDetailScreen extends React.Component {
                             </List>
                         </ScrollView>
                         <Button
-                            onPress={() => this.submitConfirmed()}
+                            onPress={() => this.submitConfirmed('Y')}
                             style={styles.confirmBtn}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 入库</Text>

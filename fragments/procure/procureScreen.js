@@ -68,18 +68,6 @@ export default class ProcureScreen extends React.Component {
             console.log('是否打开了 Drawer', isOpen.toString());
         };
 
-        // this.onPress = () => {
-        //     setTimeout(() => {
-        //         this.setState({
-        //             data: [
-        //                 { value: "0", label: "黑火药1" },
-        //                 { value: "1", label: "黑火药2" },
-        //                 { value: "2", label: "黑火药3" },
-        //             ],
-        //         });
-        //     }, 500);
-        // };
-
         this.onChange = value => {
             this.setState({ value });
         };
@@ -97,6 +85,12 @@ export default class ProcureScreen extends React.Component {
         };
 
         this.requireList = () => {
+            this.setState({
+                searchResult: []
+            })
+
+            let supplierBak = this.state.supplierBak;
+            this.setState({ supplier: supplierBak });
             if (this.state.supplier.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
                 Toast.fail('请先填选所有查询条件再查询', 1);
             else {
@@ -118,11 +112,9 @@ export default class ProcureScreen extends React.Component {
         }
 
         this.state = {
-            // data: [],
-            // value: "",
-            // pickerValue: [],
             searchResult: [],
             supplier: "",
+            supplierBak: "",
             formdate: "",
             enddate: "",
         };
@@ -148,73 +140,21 @@ export default class ProcureScreen extends React.Component {
 
     render() {
         const sidebar = (
-            // <Provider>
             <>
                 <View>
                     <List>
-                        {/* <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
-                            </List.Item>
-                        </Picker>
                         <InputItem
                             clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            placeholder="请输入物料编码"
-                        >
-                            编码
-                        </InputItem>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.unit}
-                            onChange={value => {
-                                this.setState({
-                                    unit: value,
-                                });
-                            }}
-                            extra="元"
-                            placeholder="请输入规格"
-                        >
-                            规格
-                        </InputItem> */}
-
-
-                        {/* <InputItem
-                            clear
-                            // error
+                            type="text"
                             value={this.state.supplier}
-                            onChange={value => {
-                                this.setState({
-                                    supplier: value,
-                                });
-                            }}
-                            placeholder="请输入单据编号"
-                        >
-                            单据编号
-                        </InputItem> */}
-
-                        <InputItem
-                            clear
-                            // error
-                            value={this.state.supplier}
-                            onChange={value => {
-                                this.setState({
-                                    supplier: value,
-                                });
+                            onChange={supplier => {
+                                // alert(supplier + "injected");
+                                this.setState({ supplier });
                             }}
                             placeholder="请输入供应商"
+                            onBlur={() => {
+                                this.setState({ supplierBak: this.state.supplier })
+                            }}
                         >
                             供应商
                         </InputItem>
@@ -266,7 +206,6 @@ export default class ProcureScreen extends React.Component {
                     取   消
                 </Button>
             </>
-            // </Provider >
         );
         return (
             <Provider>
@@ -280,7 +219,10 @@ export default class ProcureScreen extends React.Component {
                 >
                     <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}>
                         <Button
-                            onPress={() => this.drawer && this.drawer.openDrawer()}
+                            onPress={() => {
+                                this.drawer && this.drawer.openDrawer()
+                                this.setState({ supplier: this.state.supplierBak });
+                            }}
                             style={styles.searchBtn}>
                             <Icon name="search" size="sm" color="#fff" style={styles.searchBtnIcon} />
                         </Button>
@@ -304,7 +246,7 @@ export default class ProcureScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.searchResult}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('采购入库单', { item: item }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('采购入库单', { item: item, requireList: this.requireList }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}
