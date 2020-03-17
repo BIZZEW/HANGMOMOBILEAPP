@@ -27,6 +27,22 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: "#1C86EE"
     },
+    specialEntrance: {
+        height: 40,
+        position: "absolute",
+        zIndex: 100,
+        left: 20,
+        bottom: 20,
+        borderColor: "#fff",
+        borderWidth: 1,
+        borderRadius: 10,
+        backgroundColor: "#1C86EE",
+        color: "#000"
+    },
+    btnText: {
+        color: "#fff",
+        fontSize: 15,
+    },
     searchBtnIcon: {
         fontSize: 20,
         // color:"#51A0EE"
@@ -220,6 +236,12 @@ export default class ChangearoundScreen extends React.Component {
                                 this.drawer && this.drawer.openDrawer()
                                 this.setState({ supplier: this.state.supplierBak });
                             }}
+                            style={styles.specialEntrance}>
+                            <Text style={styles.btnText}>产成品转库</Text>
+                        </Button>
+                        <Button
+                            onPress={() => {
+                            }}
                             style={styles.searchBtn}>
                             <Icon name="search" size="sm" color="#fff" style={styles.searchBtnIcon} />
                         </Button>
@@ -231,6 +253,7 @@ export default class ChangearoundScreen extends React.Component {
                         }}>
                             <Icon name="inbox" color="white" style={styles.emptyIcon} />
                             <Text style={styles.emptyHint}>可点右下角按钮查询转库单</Text>
+                            <Text style={styles.emptyHint}>或左下角按钮去产成品转库</Text>
                         </View>
 
                         <ScrollView
