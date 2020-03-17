@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: 10,
         marginHorizontal: 15,
-        tintColor:"#1C86EE"
+        tintColor: "#1C86EE"
     },
     btnText: {
         color: "#fff",
@@ -129,10 +129,11 @@ class CAMaterialDetailScreen extends React.Component {
 
         let detail = this.props.navigation.state.params.item;
         let index = this.props.navigation.state.params.index;
-        let cargdoc = detail.cargdoc ? detail.cargdoc : "";
+        let incargdoc = detail.incargdoc ? detail.incargdoc : "";
+        let outcargdoc = detail.outcargdoc ? detail.outcargdoc : "";
         let num = detail.num ? detail.num : "";
         this.setState({
-            detail, index, cargdoc, num
+            detail, index, incargdoc, outcargdoc, num
         })
     }
 
