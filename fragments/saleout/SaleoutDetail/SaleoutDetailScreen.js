@@ -127,13 +127,13 @@ class SaleoutDetailScreen extends React.Component {
                 ...this.state.detail, pk_org: org, coperatorid: username, dbilldate: formatTime(new Date())
             }
 
-            alert(JSON.stringify(origin));
+            // alert(JSON.stringify(origin));
 
             let params = {
                 params: JSON.stringify(origin)
             }
 
-            axios.submitOrder(this, "/addsaleout", qs.stringify(params));
+            axios.submitOrder(this, "/signsaleout", qs.stringify(params));
         }
     }
 
