@@ -18,6 +18,7 @@ import SaleoutScreen from './fragments/saleout/SaleoutScreen';
 import SaleoutDetailScreen from './fragments/saleout/SaleoutDetail/SaleoutDetailScreen';
 import MaterialDetailScreen from './fragments/public/MaterialDetailScreen';
 import CAMaterialDetailScreen from './fragments/public/CAMaterialDetailScreen';
+import SOMaterialDetailScreen from './fragments/public/SOMaterialDetailScreen';
 import { Icon, Modal } from '@ant-design/react-native';
 
 const styles = StyleSheet.create({
@@ -114,6 +115,18 @@ const CAMaterialDetailStack = createStackNavigator(
   }
 );
 
+// 销售出库物料明细
+const SOMaterialDetailStack = createStackNavigator(
+  {
+    Home: SOMaterialDetailScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+
 // 标签栏导航
 const TabNavigator = createBottomTabNavigator(
   {
@@ -161,6 +174,7 @@ const HomeStack = createStackNavigator(
     销售出库单: SaleoutDetailStack,
     采购入库物料明细: MaterialDetailStack,
     转库物料明细: CAMaterialDetailStack,
+    销售出库物料明细: SOMaterialDetailStack,
   },
   {
     initialRouteName: '杭摩PDA',

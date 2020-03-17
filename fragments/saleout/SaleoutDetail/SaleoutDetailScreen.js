@@ -101,8 +101,8 @@ class SaleoutDetailScreen extends React.Component {
             let newDetail = this.state.detail;
             let newSubDetail = data.detail;
 
-            newSubDetail.ninum = data.ninum;
-            newSubDetail.cargdoc = data.inventory;
+            newSubDetail.noutnum = data.noutnum;
+            newSubDetail.csname = data.inventory;
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -114,7 +114,7 @@ class SaleoutDetailScreen extends React.Component {
             let tmpList = this.state.detail.bitems;
 
             for await (i of tmpList) {
-                if (!("cargdoc" in i) || !("ninum" in i)) {
+                if (!("csname" in i) || !("noutnum" in i)) {
                     Toast.fail('请先填选所有物料明细中的数量和库位之后再提交', 1);
                     return;
                 }
@@ -217,7 +217,7 @@ class SaleoutDetailScreen extends React.Component {
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.vreceivecode}
+                                            {this.state.detail.vbillcode}
                                         </Text>
                                     }
                                     multipleLine
@@ -232,27 +232,7 @@ class SaleoutDetailScreen extends React.Component {
                                     }
                                     multipleLine
                                 >
-                                    申请日期
-                                    </Item>
-                                <Item
-                                    extra={
-                                        <Text>
-                                            {this.state.detail.csalecorpid_name}
-                                        </Text>
-                                    }
-                                    multipleLine
-                                >
-                                    销售组织
-                                    </Item>
-                                <Item
-                                    extra={
-                                        <Text>
-                                            {this.state.detail.cbiztype_name}
-                                        </Text>
-                                    }
-                                    multipleLine
-                                >
-                                    业务流程
+                                    单据日期
                                     </Item>
                                 <Item
                                     extra={
@@ -273,6 +253,26 @@ class SaleoutDetailScreen extends React.Component {
                                     multipleLine
                                 >
                                     申请部门
+                                    </Item>
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.ctransmodeid_name}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    运输方式
+                                    </Item>
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.vnote}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    备注
                                     </Item>
                             </List>
                         </ScrollView>
@@ -295,7 +295,7 @@ class SaleoutDetailScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.detail.bitems}
                                 renderItem={({ item, index }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('采购入库物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('销售出库物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}
@@ -312,13 +312,13 @@ class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
         return <View style={styles.ListItem}>
-            <Text>{"物料主键：" + itemInfo.cbaseid}</Text>
+            <Text>{"物料编码：" + itemInfo.cbaseid_code}</Text>
             <Text>{"物料名称：" + itemInfo.cbaseid_name}</Text>
-            <Text>{"主单位：" + itemInfo.measname}</Text>
-            <Text>{"到货数量：" + itemInfo.narrvnum}</Text>
-            <Text>{"本币单价：" + itemInfo.nprice}</Text>
-            <Text>{"本币金额：" + itemInfo.nmoney}</Text>
+            <Text>{"含税金额：" + itemInfo.ntaxmny}</Text>
+            <Text>{"批次号：" + itemInfo.vbatchcode}</Text>
+            <Text>{"型号：" + itemInfo.cbaseid_type}</Text>
             <Text>{"规格：" + itemInfo.cbaseid_spec}</Text>
+            <Text>{"单位：" + itemInfo.measname}</Text>
         </View>
     }
 }

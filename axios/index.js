@@ -151,7 +151,7 @@ export default class Axios {
                     if (res.errorcode == 0) {
                         resolve(res);
                     } else {
-                        Toast.fail(res.errormsg, 2);
+                        Toast.fail(res.errormsg, 3);
                     }
                 } else {
                     reject(response.data)
