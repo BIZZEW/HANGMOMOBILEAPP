@@ -102,7 +102,7 @@ class SaleoutDetailScreen extends React.Component {
             let newSubDetail = data.detail;
 
             newSubDetail.noutnum = data.noutnum;
-            newSubDetail.csname = data.inventory;
+            newSubDetail.pk_checkcarg = data.pk_checkcarg;
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -114,7 +114,7 @@ class SaleoutDetailScreen extends React.Component {
             let tmpList = this.state.detail.bitems;
 
             for await (i of tmpList) {
-                if (!("csname" in i) || !("noutnum" in i)) {
+                if (!("pk_checkcarg" in i) || !("noutnum" in i)) {
                     Toast.fail('请先填选所有物料明细中的数量和库位之后再提交', 1);
                     return;
                 }
