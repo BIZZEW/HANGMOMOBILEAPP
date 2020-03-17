@@ -302,7 +302,7 @@ class ProductinDetailScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.detail.bitems}
                                 renderItem={({ item, index }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('采购入库物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}

@@ -51,13 +51,21 @@ const styles = StyleSheet.create({
         paddingBottom: 60,
     },
     confirmSearchBtn: {
-        width: "40%",
-        marginLeft: "30%",
-        marginRight: "30%",
-        marginTop: 20,
+        position: "absolute",
+        width: "35%",
+        left: "10%",
         borderWidth: 0,
-        borderColor: "#1C86EE"
-    }
+        borderColor: "#1C86EE",
+        bottom: 30,
+    },
+    cancelSearchBtn: {
+        position: "absolute",
+        width: "35%",
+        right: "10%",
+        borderWidth: 0,
+        borderColor: "#1C86EE",
+        bottom: 30,
+    },
 });
 
 export default class ChangearoundScreen extends React.Component {
@@ -81,6 +89,12 @@ export default class ChangearoundScreen extends React.Component {
         };
 
         this.requireList = () => {
+            this.setState({
+                searchResult: []
+            })
+
+            let supplierBak = this.state.supplierBak;
+            this.setState({ supplier: supplierBak });
             if (this.state.supplier.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
                 Toast.fail('请先填选所有查询条件再查询', 1);
             else {
@@ -104,6 +118,7 @@ export default class ChangearoundScreen extends React.Component {
         this.state = {
             searchResult: [],
             supplier: "",
+            supplierBak: "",
             formdate: "",
             enddate: "",
         };
@@ -123,20 +138,20 @@ export default class ChangearoundScreen extends React.Component {
 
     render() {
         const sidebar = (
-            // <Provider>
             <>
                 <View>
                     <List>
                         <InputItem
                             clear
-                            // error
+                            type="text"
                             value={this.state.supplier}
-                            onChange={value => {
-                                this.setState({
-                                    supplier: value,
-                                });
+                            onChange={supplier => {
+                                this.setState({ supplier });
                             }}
                             placeholder="请输入供应商"
+                            onBlur={() => {
+                                this.setState({ supplierBak: this.state.supplier })
+                            }}
                         >
                             供应商
                         </InputItem>
@@ -183,12 +198,11 @@ export default class ChangearoundScreen extends React.Component {
                         this.drawer.closeDrawer();
                     }}
                     type="primary"
-                    style={styles.confirmSearchBtn}
+                    style={styles.cancelSearchBtn}
                 >
                     取   消
                 </Button>
             </>
-            // </Provider >
         );
         return (
             <Provider>
@@ -202,7 +216,10 @@ export default class ChangearoundScreen extends React.Component {
                 >
                     <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}>
                         <Button
-                            onPress={() => this.drawer && this.drawer.openDrawer()}
+                            onPress={() => {
+                                this.drawer && this.drawer.openDrawer()
+                                this.setState({ supplier: this.state.supplierBak });
+                            }}
                             style={styles.searchBtn}>
                             <Icon name="search" size="sm" color="#fff" style={styles.searchBtnIcon} />
                         </Button>
@@ -226,7 +243,7 @@ export default class ChangearoundScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.searchResult}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('转库单', { item: item }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('转库单', { item: item, requireList: this.requireList }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}

@@ -66,12 +66,6 @@ const styles = StyleSheet.create({
         borderColor: "#1C86EE",
         bottom: 30,
     },
-    btnsWrapper: {
-        position: "relative",
-        width: "100%",
-        backgroundColor: "#fff",
-        marginTop: 20,
-    }
 });
 
 export default class ProcureScreen extends React.Component {

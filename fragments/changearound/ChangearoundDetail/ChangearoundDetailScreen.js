@@ -100,8 +100,9 @@ class ChangearoundDetailScreen extends React.Component {
             let newDetail = this.state.detail;
             let newSubDetail = data.detail;
 
-            newSubDetail.ninum = data.ninum;
-            newSubDetail.cargdoc = data.inventory;
+            newSubDetail.num = data.num;
+            newSubDetail.incargdoc = data.incargdoc;
+            newSubDetail.outcargdoc = data.outcargdoc;
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -117,7 +118,7 @@ class ChangearoundDetailScreen extends React.Component {
                 let newList = [];
 
                 for await (i of oldList) {
-                    if (("cargdoc" in i) && ("ninum" in i)) {
+                    if (("incargdoc" in i) && ("outcargdoc" in i) && ("num" in i)) {
                         newList.push(i);
                     }
                 }
@@ -131,13 +132,11 @@ class ChangearoundDetailScreen extends React.Component {
                     ...newDetail, pk_org: org, coperatorid: username, dbilldate: formatTime(new Date())
                 }
 
-                alert(JSON.stringify(origin));
-
                 let params = {
                     params: JSON.stringify(origin)
                 }
 
-                axios.submitOrder(this, "/addiclocad", qs.stringify(params));
+                axios.submitOrder(this, "/addwhstr", qs.stringify(params));
             } else {
                 Toast.fail('您未操作任何一条物料，无法提交', 1);
             }
@@ -312,7 +311,7 @@ class ChangearoundDetailScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.detail.bitems}
                                 renderItem={({ item, index }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('转库物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}
@@ -329,13 +328,12 @@ class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
         return <View style={styles.ListItem}>
-            <Text>{"物料主键：" + itemInfo.cbaseid}</Text>
+            <Text>{"物料编码：" + itemInfo.cbaseid_code}</Text>
             <Text>{"物料名称：" + itemInfo.cbaseid_name}</Text>
             <Text>{"主单位：" + itemInfo.measname}</Text>
-            <Text>{"到货数量：" + itemInfo.narrvnum}</Text>
-            <Text>{"本币单价：" + itemInfo.nprice}</Text>
-            <Text>{"本币金额：" + itemInfo.nmoney}</Text>
+            <Text>{"应转数量：" + itemInfo.dshldtransnum}</Text>
             <Text>{"规格：" + itemInfo.cbaseid_spec}</Text>
+            <Text>{"批次号：" + itemInfo.vbatchcode}</Text>
         </View>
     }
 }
