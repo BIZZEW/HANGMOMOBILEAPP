@@ -51,12 +51,26 @@ const styles = StyleSheet.create({
         paddingBottom: 60,
     },
     confirmSearchBtn: {
-        width: "40%",
-        marginLeft: "30%",
-        marginRight: "30%",
-        marginTop: 20,
+        position: "absolute",
+        width: "35%",
+        left: "10%",
         borderWidth: 0,
-        borderColor: "#1C86EE"
+        borderColor: "#1C86EE",
+        bottom: 30,
+    },
+    cancelSearchBtn: {
+        position: "absolute",
+        width: "35%",
+        right: "10%",
+        borderWidth: 0,
+        borderColor: "#1C86EE",
+        bottom: 30,
+    },
+    btnsWrapper: {
+        position: "relative",
+        width: "100%",
+        backgroundColor: "#fff",
+        marginTop: 20,
     }
 });
 
@@ -184,7 +198,6 @@ export default class ProcureScreen extends React.Component {
                         </DatePicker>
                     </List>
                 </View>
-
                 <Button
                     onPress={() => {
                         this.drawer.closeDrawer();
@@ -194,17 +207,17 @@ export default class ProcureScreen extends React.Component {
                     style={styles.confirmSearchBtn}
                 >
                     查   询
-                </Button>
+                    </Button>
 
                 <Button
                     onPress={() => {
                         this.drawer.closeDrawer();
                     }}
                     type="primary"
-                    style={styles.confirmSearchBtn}
+                    style={styles.cancelSearchBtn}
                 >
                     取   消
-                </Button>
+                    </Button>
             </>
         );
         return (
