@@ -5,7 +5,7 @@ import { Toast, Portal } from '@ant-design/react-native';
 
 export default class Axios {
 
-    static login(_this, url, data, username) {
+    static login(_this, url, data, coperatorid) {
         this.ajax({
             url,
             data,
@@ -13,12 +13,10 @@ export default class Axios {
         }).then(async (res) => {
             let storage = [
                 ['userToken', 'abc'],
-                ['username', username],
+                ['coperatorid', coperatorid],
                 ['logoutshow', '0']
             ]
-            // await AsyncStorage.setItem('userToken', 'abc');
-            // await AsyncStorage.setItem('username', username);
-            // await AsyncStorage.setItem('logoutshow', "0");
+
             AsyncStorage.multiSet(storage, e => {
                 if (e) Toast.fail("登录失败，请重试", 1);
                 else _this.props.navigation.navigate('App');

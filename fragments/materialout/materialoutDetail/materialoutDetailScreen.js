@@ -124,11 +124,11 @@ class MaterialoutDetailScreen extends React.Component {
 
                 newDetail.bitems = newList;
 
-                let username = await AsyncStorage.getItem('username');
+                let coperatorid = await AsyncStorage.getItem('coperatorid');
                 let org = await AsyncStorage.getItem('pk_org');
 
                 let origin = {
-                    ...newDetail, pk_org: org, coperatorid: username, dbilldate: formatTime(new Date())
+                    ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date())
                 }
 
                 alert(JSON.stringify(origin));

@@ -120,11 +120,11 @@ class SaleoutDetailScreen extends React.Component {
                 }
             }
 
-            let username = await AsyncStorage.getItem('username');
+            let coperatorid = await AsyncStorage.getItem('coperatorid');
             let org = await AsyncStorage.getItem('pk_org');
 
             let origin = {
-                ...this.state.detail, pk_org: org, coperatorid: username, dbilldate: formatTime(new Date())
+                ...this.state.detail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date())
             }
 
             // alert(JSON.stringify(origin));

@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
         height: 45,
         position: "absolute",
         zIndex: 100,
-        // right: 20,
         bottom: 10,
         borderColor: "#fff",
         borderWidth: 1,
@@ -68,7 +67,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginBottom: 10,
         borderRadius: 10,
-        // height: 200,
         padding: 20,
     },
     ScrollView: {
@@ -84,9 +82,6 @@ const formatTime = date => {
     const year = date.getFullYear()
     const month = date.getMonth() + 1
     const day = date.getDate()
-    const hour = date.getHours()
-    const minute = date.getMinutes()
-    const second = date.getSeconds()
 
     return [year, month, day].map(formatNumber).join('-')
 }
@@ -119,19 +114,23 @@ class CAMaterialDetailScreen extends React.Component {
                     navigation.navigate("转库单");
                     navigation.state.params.editConfirmed(this.state);
                 } else {
+                    let origin = {
+                        num: this.state.num,
+                        coutcspace: this.state.outcargdoc,
+                        cincspace: this.state.incargdoc,
+                        dbilldate: formatTime(new Date())
+                    }
+
                     // 产成品转库
                     AsyncStorage.multiGet(['coperatorid', 'pk_org'], (err, stores) => {
-                        if (err) Toast.fail("出错，请重试", 1);
+                        if (err) Toast.fail("出错了，请重试", 1);
                         else {
-                            let origin = {
-                                num: this.state.num,
-                                coutcspace: this.state.outcargdoc,
-                                cincspace: this.state.incargdoc,
-                                dbilldate: formatTime(new Date())
-                            }
-
-                            origin.coperatorid = stores[0][1];
-                            origin.pk_org = stores[1][1];
+                            stores.map((result, i, store) => {
+                                let key = store[i][0];
+                                let value = store[i][1];
+                                origin[key] = value;
+                            });
+                            origin.pk_corp = origin.pk_org;
 
                             alert(JSON.stringify(origin));
 
@@ -150,12 +149,6 @@ class CAMaterialDetailScreen extends React.Component {
             this.setState({
                 scanIndicator: e.nativeEvent.selectedSegmentIndex == 0,
             })
-        }
-
-        this.onSegmentValueChange = value => {
-            // this.setState({
-            //     scanIndicator: value == "入库货位",
-            // })
         }
     }
 
