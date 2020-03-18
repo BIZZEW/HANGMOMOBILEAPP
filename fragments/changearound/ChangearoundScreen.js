@@ -233,14 +233,14 @@ export default class ChangearoundScreen extends React.Component {
                     <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}>
                         <Button
                             onPress={() => {
-                                this.drawer && this.drawer.openDrawer()
-                                this.setState({ supplier: this.state.supplierBak });
                             }}
                             style={styles.specialEntrance}>
                             <Text style={styles.btnText}>产成品转库</Text>
                         </Button>
                         <Button
                             onPress={() => {
+                                this.drawer && this.drawer.openDrawer()
+                                this.setState({ supplier: this.state.supplierBak });
                             }}
                             style={styles.searchBtn}>
                             <Icon name="search" size="sm" color="#fff" style={styles.searchBtnIcon} />
