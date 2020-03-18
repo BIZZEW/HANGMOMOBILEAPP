@@ -97,6 +97,7 @@ class MaterialDetailScreen extends React.Component {
             _this.setState({
                 cargdoc: Event.ScanResult
             })
+            _this.inputRef.focus();
         });
 
         let detail = this.props.navigation.state.params.item;
@@ -125,6 +126,7 @@ class MaterialDetailScreen extends React.Component {
                                 value={this.state.cargdoc}
                                 placeholder="请扫码获取库位"
                                 editable={false}
+                                style={{ fontSize: 16 }}
                             >
                                 货位
                             </InputItem>
@@ -144,6 +146,8 @@ class MaterialDetailScreen extends React.Component {
                                     this.setState({ ninumLock: true });
                                 }}
                                 placeholder="请输入实际入库数量"
+                                style={{ fontSize: 16 }}
+                                ref={el => (this.inputRef = el)}
                             >
                                 入库数量
                             </InputItem>

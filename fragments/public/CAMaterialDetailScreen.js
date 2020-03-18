@@ -163,6 +163,7 @@ class CAMaterialDetailScreen extends React.Component {
                 _this.setState({
                     outcargdoc: Event.ScanResult
                 })
+            _this.inputRef.focus();
         });
 
         let showListVisible = this.props.navigation.state.params.showListVisible;
@@ -206,6 +207,7 @@ class CAMaterialDetailScreen extends React.Component {
                                     value={this.state.incargdoc}
                                     placeholder="请扫码获取入库货位"
                                     editable={false}
+                                    style={{ fontSize: 16 }}
                                 >
                                     入库货位
                             </InputItem>
@@ -219,6 +221,7 @@ class CAMaterialDetailScreen extends React.Component {
                                     value={this.state.outcargdoc}
                                     placeholder="请扫码获取出库货位"
                                     editable={false}
+                                    style={{ fontSize: 16 }}
                                 >
                                     出库货位
                             </InputItem>
@@ -239,6 +242,8 @@ class CAMaterialDetailScreen extends React.Component {
                                     this.setState({ numLock: true });
                                 }}
                                 placeholder="请输入实际转库数量"
+                                style={{ fontSize: 16 }}
+                                ref={el => (this.inputRef = el)}
                             >
                                 转库数量
                             </InputItem>

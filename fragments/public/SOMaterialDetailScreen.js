@@ -99,6 +99,7 @@ class SOMaterialDetailScreen extends React.Component {
             _this.setState({
                 pk_checkcarg: Event.ScanResult
             })
+            _this.inputRef.focus();
         });
 
         let detail = this.props.navigation.state.params.item;
@@ -127,6 +128,7 @@ class SOMaterialDetailScreen extends React.Component {
                                 value={this.state.pk_checkcarg}
                                 placeholder="请扫码获取库位"
                                 editable={false}
+                                style={{ fontSize: 16 }}
                             >
                                 货位
                             </InputItem>
@@ -146,6 +148,8 @@ class SOMaterialDetailScreen extends React.Component {
                                     this.setState({ noutnumLock: true });
                                 }}
                                 placeholder="请输入实际出库数量"
+                                style={{ fontSize: 16 }}
+                                ref={el => (this.inputRef = el)}
                             >
                                 入库数量
                             </InputItem>
