@@ -87,6 +87,7 @@ class CAMaterialDetailScreen extends React.Component {
             incargdoc: "",
             outcargdoc: "",
             scanIndicator: true,
+            showListVisible: false,
         };
 
         this.materialConfirm = () => {
@@ -127,14 +128,18 @@ class CAMaterialDetailScreen extends React.Component {
                 })
         });
 
-        let detail = this.props.navigation.state.params.item;
-        let index = this.props.navigation.state.params.index;
-        let incargdoc = detail.incargdoc ? detail.incargdoc : "";
-        let outcargdoc = detail.outcargdoc ? detail.outcargdoc : "";
-        let num = detail.num ? detail.num : "";
-        this.setState({
-            detail, index, incargdoc, outcargdoc, num
-        })
+        let showListVisible = this.props.navigation.state.params.showListVisible;
+
+        if (showListVisible) {
+            let detail = this.props.navigation.state.params.item;
+            let index = this.props.navigation.state.params.index;
+            let incargdoc = detail.incargdoc ? detail.incargdoc : "";
+            let outcargdoc = detail.outcargdoc ? detail.outcargdoc : "";
+            let num = detail.num ? detail.num : "";
+            this.setState({
+                showListVisible, detail, index, incargdoc, outcargdoc, num
+            })
+        }
     }
 
     render() {
@@ -193,7 +198,7 @@ class CAMaterialDetailScreen extends React.Component {
                             </InputItem>
                         </List>
 
-                        <List style={styles.detailList} renderHeader={'请查看'}>
+                        <List style={styles.detailList, { display: this.state.showListVisible ? "flex" : "none" }} renderHeader={'请查看'}>
                             <Item
                                 extra={
                                     <Text>
@@ -312,12 +317,6 @@ class CAMaterialDetailScreen extends React.Component {
                         <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                         <Text style={styles.btnText}> 确定</Text>
                     </Button>
-                    {/* <Button
-                        onPress={() => ScanModule.openScanner()}
-                        style={styles.scanBtn}>
-                        <Icon name="scan" size="sm" color="#fff" style={styles.btnIcon} />
-                        <Text style={styles.btnText}> 扫码</Text>
-                    </Button> */}
                 </View>
             </Provider >
         );
