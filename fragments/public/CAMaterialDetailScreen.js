@@ -1,8 +1,11 @@
 import React from 'react';
-import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
 import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal, Tabs, SegmentedControl } from '@ant-design/react-native';
-import ScanModule from "../../nativeCall/ScanModule";
 import { Toast, Portal } from '@ant-design/react-native';
+import ScanModule from "../../nativeCall/ScanModule";
+import axios from '../../axios/index';
+import qs from 'qs';
+
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -77,6 +80,22 @@ const styles = StyleSheet.create({
     }
 });
 
+const formatTime = date => {
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+    const second = date.getSeconds()
+
+    return [year, month, day].map(formatNumber).join('-')
+}
+
+const formatNumber = n => {
+    n = n.toString()
+    return n[1] ? n : '0' + n
+}
+
 class CAMaterialDetailScreen extends React.Component {
     constructor() {
         super(...arguments);
@@ -100,7 +119,29 @@ class CAMaterialDetailScreen extends React.Component {
                     navigation.navigate("转库单");
                     navigation.state.params.editConfirmed(this.state);
                 } else {
+                    // 产成品转库
+                    AsyncStorage.multiGet(['coperatorid', 'pk_org'], (err, stores) => {
+                        if (err) Toast.fail("出错，请重试", 1);
+                        else {
+                            let origin = {
+                                num: this.state.num,
+                                coutcspace: this.state.outcargdoc,
+                                cincspace: this.state.incargdoc,
+                                dbilldate: formatTime(new Date())
+                            }
 
+                            origin.coperatorid = stores[0][1];
+                            origin.pk_org = stores[1][1];
+
+                            alert(JSON.stringify(origin));
+
+                            let params = {
+                                params: JSON.stringify(origin)
+                            }
+
+                            axios.submitOrder(this, "/prowhstr", qs.stringify(params));
+                        }
+                    });
                 }
             }
         };
