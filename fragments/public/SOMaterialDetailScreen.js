@@ -140,7 +140,7 @@ class SOMaterialDetailScreen extends React.Component {
                                 onChange={noutnum => {
                                     this.setState({ noutnum });
                                 }}
-                                placeholder="请输入实际入库数量"
+                                placeholder="请输入实际出库数量"
                             >
                                 入库数量
                             </InputItem>

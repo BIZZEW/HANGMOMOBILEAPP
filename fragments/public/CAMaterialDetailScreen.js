@@ -95,9 +95,13 @@ class CAMaterialDetailScreen extends React.Component {
             if (this.state.num.trim() === "" || this.state.incargdoc.trim() === "" || this.state.outcargdoc.trim() === "")
                 Toast.fail('需要填选的项为必输', 1);
             else {
-                const { navigation } = this.props;
-                navigation.navigate("转库单");
-                navigation.state.params.editConfirmed(this.state);
+                if (this.state.showListVisible) {
+                    const { navigation } = this.props;
+                    navigation.navigate("转库单");
+                    navigation.state.params.editConfirmed(this.state);
+                } else {
+
+                }
             }
         };
 
