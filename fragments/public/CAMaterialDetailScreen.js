@@ -132,8 +132,6 @@ class CAMaterialDetailScreen extends React.Component {
                             });
                             origin.pk_corp = origin.pk_org;
 
-                            alert(JSON.stringify(origin));
-
                             let params = {
                                 params: JSON.stringify(origin)
                             }
