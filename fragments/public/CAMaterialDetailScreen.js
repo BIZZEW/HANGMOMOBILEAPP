@@ -18,12 +18,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: "#1C86EE",
     },
-    scanSwitch: {
+    scanSegment: {
         height: 30,
-        fontSize: 20,
-        marginTop: 10,
-        marginHorizontal: 15,
         tintColor: "#1C86EE"
+    },
+    segmentWrapper: {
+        paddingTop: 10,
+        paddingHorizontal: 16,
     },
     btnText: {
         color: "#fff",
@@ -153,12 +154,14 @@ class CAMaterialDetailScreen extends React.Component {
                         showsVerticalScrollIndicator={false}
                     >
                         <List renderHeader={'请填选'}>
-                            <SegmentedControl
-                                values={['扫入库货位条形码', '扫出库货位条形码']}
-                                onChange={this.onSegmentChange}
-                                onValueChange={this.onSegmentValueChange}
-                                style={styles.scanSwitch}
-                            />
+                            <View style={styles.segmentWrapper}>
+                                <SegmentedControl
+                                    values={['扫入库货位条形码', '扫出库货位条形码']}
+                                    onChange={this.onSegmentChange}
+                                    onValueChange={this.onSegmentValueChange}
+                                    style={styles.scanSegment}
+                                />
+                            </View>
                             <View
                                 style={{ display: this.state.scanIndicator ? "flex" : "none" }}>
                                 <InputItem
@@ -198,7 +201,7 @@ class CAMaterialDetailScreen extends React.Component {
                             </InputItem>
                         </List>
 
-                        <List style={styles.detailList, { display: this.state.showListVisible ? "flex" : "none" }} renderHeader={'请查看'}>
+                        <List style={{ ...styles.detailList, display: this.state.showListVisible ? "flex" : "none" }} renderHeader={'请查看'}>
                             <Item
                                 extra={
                                     <Text>
