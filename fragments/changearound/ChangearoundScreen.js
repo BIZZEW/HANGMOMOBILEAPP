@@ -236,7 +236,7 @@ export default class ChangearoundScreen extends React.Component {
                                 this.props.navigation.navigate('转库物料明细', { showListVisible: false, requireList: this.requireList });
                             }}
                             style={styles.specialEntrance}>
-                            <Text style={styles.btnText}>产成品转库</Text>
+                            <Text style={styles.btnText}>产成品</Text>
                         </Button>
                         <Button
                             onPress={() => {
