@@ -1,10 +1,9 @@
 import React from 'react';
-import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal, Tabs } from '@ant-design/react-native';
+import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet } from 'react-native';
+import { Button, List, Provider, InputItem, Icon } from '@ant-design/react-native';
 import ScanModule from "../../nativeCall/ScanModule";
-import { Toast, Portal } from '@ant-design/react-native';
+import { Toast } from '@ant-design/react-native';
 const Item = List.Item;
-const Brief = Item.Brief;
 
 const styles = StyleSheet.create({
     scanBtn: {
@@ -30,7 +29,6 @@ const styles = StyleSheet.create({
         height: 45,
         position: "absolute",
         zIndex: 100,
-        // right: 20,
         bottom: 10,
         borderColor: "#fff",
         borderWidth: 1,
@@ -57,7 +55,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginBottom: 10,
         borderRadius: 10,
-        // height: 200,
         padding: 20,
     },
     ScrollView: {
@@ -77,6 +74,7 @@ class MaterialDetailScreen extends React.Component {
             detail: {},
             index: "",
             ninum: "",
+            ninumLock: true,
             cargdoc: "",
         };
 
@@ -136,7 +134,14 @@ class MaterialDetailScreen extends React.Component {
                                 type="number"
                                 value={this.state.ninum}
                                 onChange={ninum => {
-                                    this.setState({ ninum });
+                                    if (!this.state.ninumLock)
+                                        this.setState({ ninum });
+                                }}
+                                onFocus={() => {
+                                    this.setState({ ninumLock: false });
+                                }}
+                                onBlur={() => {
+                                    this.setState({ ninumLock: true });
                                 }}
                                 placeholder="请输入实际入库数量"
                             >

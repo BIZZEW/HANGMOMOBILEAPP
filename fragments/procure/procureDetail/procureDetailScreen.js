@@ -1,11 +1,9 @@
 import React from 'react';
-import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
-import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal, Tabs, Toast } from '@ant-design/react-native';
-// import ScanModule from "../../../nativeCall/ScanModule";
+import { ScrollView, Text, View, StyleSheet, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
+import { Button, List, Provider, Icon, Modal, Tabs, Toast } from '@ant-design/react-native';
 import axios from '../../../axios/index';
 import qs from 'qs';
 const Item = List.Item;
-const Brief = Item.Brief;
 
 const styles = StyleSheet.create({
     scanBtn: {
@@ -31,7 +29,6 @@ const styles = StyleSheet.create({
         height: 45,
         position: "absolute",
         zIndex: 100,
-        // right: 20,
         bottom: 20,
         borderColor: "#fff",
         borderWidth: 1,
@@ -58,7 +55,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginBottom: 10,
         borderRadius: 10,
-        // height: 200,
         padding: 20,
     },
     ScrollView: {
@@ -73,9 +69,6 @@ const formatTime = date => {
     const year = date.getFullYear()
     const month = date.getMonth() + 1
     const day = date.getDate()
-    const hour = date.getHours()
-    const minute = date.getMinutes()
-    const second = date.getSeconds()
 
     return [year, month, day].map(formatNumber).join('-')
 }
@@ -130,8 +123,6 @@ class ProcureDetailScreen extends React.Component {
                 let origin = {
                     ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck
                 }
-
-                // alert(JSON.stringify(origin));
 
                 let params = {
                     params: JSON.stringify(origin)
@@ -197,7 +188,6 @@ class ProcureDetailScreen extends React.Component {
                             }}
                         >
                             {tabProps.tabs.map((tab, i) => (
-                                // change the style to fit your needs
                                 <TouchableOpacity
                                     activeOpacity={0.9}
                                     key={tab.key || i}
@@ -208,9 +198,7 @@ class ProcureDetailScreen extends React.Component {
                                     }}
                                     onPress={() => {
                                         const { goToTab, onTabClick } = tabProps;
-                                        // tslint:disable-next-line:no-unused-expression
                                         onTabClick && onTabClick(tabs[i], i);
-                                        // tslint:disable-next-line:no-unused-expression
                                         goToTab && goToTab(i);
                                     }}
                                 >

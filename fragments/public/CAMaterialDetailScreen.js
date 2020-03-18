@@ -1,13 +1,12 @@
 import React from 'react';
-import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
-import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Modal, Tabs, SegmentedControl } from '@ant-design/react-native';
-import { Toast, Portal } from '@ant-design/react-native';
+import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, AsyncStorage } from 'react-native';
+import { Button, List, Provider, InputItem, Icon, SegmentedControl } from '@ant-design/react-native';
+import { Toast } from '@ant-design/react-native';
 import ScanModule from "../../nativeCall/ScanModule";
 import axios from '../../axios/index';
 import qs from 'qs';
 
 const Item = List.Item;
-const Brief = Item.Brief;
 
 const styles = StyleSheet.create({
     scanBtn: {
@@ -99,6 +98,7 @@ class CAMaterialDetailScreen extends React.Component {
             detail: {},
             index: "",
             num: "",
+            numLock: true,
             incargdoc: "",
             outcargdoc: "",
             scanIndicator: true,
@@ -225,11 +225,18 @@ class CAMaterialDetailScreen extends React.Component {
                             </View>
 
                             <InputItem
-                                clear
+                                clear={true}
                                 type="number"
                                 value={this.state.num}
                                 onChange={num => {
-                                    this.setState({ num });
+                                    if (!this.state.numLock)
+                                        this.setState({ num });
+                                }}
+                                onFocus={() => {
+                                    this.setState({ numLock: false });
+                                }}
+                                onBlur={() => {
+                                    this.setState({ numLock: true });
                                 }}
                                 placeholder="请输入实际转库数量"
                             >

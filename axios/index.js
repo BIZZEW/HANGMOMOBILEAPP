@@ -143,7 +143,6 @@ export default class Axios {
             }).then((response) => {
                 // Loading.hide();
                 // alert(JSON.stringify(response));
-                Portal.remove(key);
                 if (response.status === 200) {
                     let res = response.data;
                     if (res.errorcode == 0) {
@@ -154,6 +153,7 @@ export default class Axios {
                 } else {
                     reject(response.data)
                 }
+                Portal.remove(key);
             }).catch((error) => {
                 // Loading.hide();
                 Portal.remove(key);

@@ -1,7 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, FlatList, AsyncStorage } from 'react-native';
-import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Moda, DatePicker, Toast } from '@ant-design/react-native';
-const Item = List.Item;
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
+import { Button, Drawer, List, Provider, InputItem, Icon, DatePicker, Toast } from '@ant-design/react-native';
 import axios from '../../axios/index';
 import qs from 'qs';
 
@@ -13,7 +12,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginBottom: 10,
         borderRadius: 10,
-        // height: 200,
         padding: 20,
     },
     searchBtn: {
@@ -29,7 +27,6 @@ const styles = StyleSheet.create({
     },
     searchBtnIcon: {
         fontSize: 20,
-        // color:"#51A0EE"
     },
     emptyIcon: {
         fontSize: 100,
@@ -64,21 +61,8 @@ export default class ProductinScreen extends React.Component {
     constructor() {
         super(...arguments);
         this.onOpenChange = isOpen => {
-            /* tslint:disable: no-console */
             console.log('是否打开了 Drawer', isOpen.toString());
         };
-
-        // this.onPress = () => {
-        //     setTimeout(() => {
-        //         this.setState({
-        //             data: [
-        //                 { value: "0", label: "黑火药1" },
-        //                 { value: "1", label: "黑火药2" },
-        //                 { value: "2", label: "黑火药3" },
-        //             ],
-        //         });
-        //     }, 500);
-        // };
 
         this.onChange = value => {
             this.setState({ value });
@@ -114,11 +98,9 @@ export default class ProductinScreen extends React.Component {
         }
 
         this.state = {
-            // data: [],
-            // value: "",
-            // pickerValue: [],
             searchResult: [],
             supplier: "",
+            supplierLock: true,
             formdate: "",
             enddate: "",
         };
@@ -127,13 +109,7 @@ export default class ProductinScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
             title: "产成品入库",
-            // headerStyle: {
-            //     backgroundColor: 'black',
-            // },
             headerTintColor: '#1C86EE',
-            // headerTitleStyle: {
-            //     fontWeight: 'bold',
-            // },
         }
     };
 
@@ -144,71 +120,22 @@ export default class ProductinScreen extends React.Component {
 
     render() {
         const sidebar = (
-            // <Provider>
             <>
                 <View>
                     <List>
-                        {/* <Picker
-                            data={this.state.data}
-                            cols={1}
-                            value={this.state.value}
-                            onChange={this.onChange}
-                        >
-                            <List.Item arrow="horizontal" onPress={this.onPress}>
-                                物料
-                            </List.Item>
-                        </Picker>
                         <InputItem
                             clear
-                            error
-                            value={this.state.material}
-                            onChange={value => {
-                                this.setState({
-                                    material: value,
-                                });
-                            }}
-                            placeholder="请输入物料编码"
-                        >
-                            编码
-                        </InputItem>
-                        <InputItem
-                            clear
-                            error
-                            value={this.state.unit}
-                            onChange={value => {
-                                this.setState({
-                                    unit: value,
-                                });
-                            }}
-                            extra="元"
-                            placeholder="请输入规格"
-                        >
-                            规格
-                        </InputItem> */}
-
-
-                        {/* <InputItem
-                            clear
-                            // error
+                            type="text"
                             value={this.state.supplier}
-                            onChange={value => {
-                                this.setState({
-                                    supplier: value,
-                                });
+                            onChange={supplier => {
+                                if (!this.state.supplierLock)
+                                    this.setState({ supplier });
                             }}
-                            placeholder="请输入单据编号"
-                        >
-                            单据编号
-                        </InputItem> */}
-
-                        <InputItem
-                            clear
-                            // error
-                            value={this.state.supplier}
-                            onChange={value => {
-                                this.setState({
-                                    supplier: value,
-                                });
+                            onFocus={() => {
+                                this.setState({ supplierLock: false });
+                            }}
+                            onBlur={() => {
+                                this.setState({ supplierLock: true });
                             }}
                             placeholder="请输入供应商"
                         >
@@ -262,7 +189,6 @@ export default class ProductinScreen extends React.Component {
                     取   消
                 </Button>
             </>
-            // </Provider >
         );
         return (
             <Provider>

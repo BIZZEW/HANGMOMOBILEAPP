@@ -1,7 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Image, FlatList, AsyncStorage } from 'react-native';
-import { Button, Drawer, List, WhiteSpace, Picker, Provider, InputItem, Icon, Moda, DatePicker, Toast } from '@ant-design/react-native';
-const Item = List.Item;
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
+import { Button, Drawer, List, Provider, InputItem, Icon, DatePicker, Toast } from '@ant-design/react-native';
 import axios from '../../axios/index';
 import qs from 'qs';
 
@@ -13,7 +12,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginBottom: 10,
         borderRadius: 10,
-        // height: 200,
         padding: 20,
     },
     searchBtn: {
@@ -29,7 +27,6 @@ const styles = StyleSheet.create({
     },
     searchBtnIcon: {
         fontSize: 20,
-        // color:"#51A0EE"
     },
     emptyIcon: {
         fontSize: 100,
@@ -72,7 +69,6 @@ export default class ProcureScreen extends React.Component {
     constructor() {
         super(...arguments);
         this.onOpenChange = isOpen => {
-            /* tslint:disable: no-console */
             console.log('是否打开了 Drawer', isOpen.toString());
         };
 
@@ -92,9 +88,7 @@ export default class ProcureScreen extends React.Component {
             this.setState({
                 searchResult: []
             })
-
-            let supplierBak = this.state.supplierBak;
-            this.setState({ supplier: supplierBak });
+            
             if (this.state.supplier.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
                 Toast.fail('请先填选所有查询条件再查询', 1);
             else {
@@ -118,7 +112,7 @@ export default class ProcureScreen extends React.Component {
         this.state = {
             searchResult: [],
             supplier: "",
-            supplierBak: "",
+            supplierLock: true,
             formdate: "",
             enddate: "",
         };
@@ -143,17 +137,19 @@ export default class ProcureScreen extends React.Component {
                     <List>
                         <InputItem
                             clear
-                            // error
+                            type="text"
                             value={this.state.supplier}
-                            onChange={value => {
-                                this.setState({
-                                    supplier: value,
-                                });
+                            onChange={supplier => {
+                                if (!this.state.supplierLock)
+                                    this.setState({ supplier });
+                            }}
+                            onFocus={() => {
+                                this.setState({ supplierLock: false });
+                            }}
+                            onBlur={() => {
+                                this.setState({ supplierLock: true });
                             }}
                             placeholder="请输入供应商"
-                            onBlur={() => {
-                                this.setState({ supplierBak: this.state.supplier })
-                            }}
                         >
                             供应商
                         </InputItem>
@@ -218,10 +214,7 @@ export default class ProcureScreen extends React.Component {
                 >
                     <View style={{ flex: 1, padding: 10, backgroundColor: '#1C86EE' }}>
                         <Button
-                            onPress={() => {
-                                this.drawer && this.drawer.openDrawer()
-                                this.setState({ supplier: this.state.supplierBak });
-                            }}
+                            onPress={() => this.drawer && this.drawer.openDrawer()}
                             style={styles.searchBtn}>
                             <Icon name="search" size="sm" color="#fff" style={styles.searchBtnIcon} />
                         </Button>
