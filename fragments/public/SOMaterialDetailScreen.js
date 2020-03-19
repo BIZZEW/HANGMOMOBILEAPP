@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1C86EE",
+        backgroundColor: "#1476D7",
     },
     btnText: {
         color: "#fff",
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1C86EE",
+        backgroundColor: "#1476D7",
     },
     detailList: {
         marginBottom: 80,
@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: "100%",
         width: "100%",
-        backgroundColor: '#1C86EE',
+        backgroundColor: '#1476D7',
     },
     FlatList: {
         flex: 1,
-        backgroundColor: '#1C86EE',
+        backgroundColor: '#1476D7',
         paddingBottom: 60,
     },
     ListItem: {
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     },
     ScrollView: {
         flex: 1,
-        backgroundColor: "#1C86EE",
+        backgroundColor: "#1476D7",
         width: "100%",
         paddingHorizontal: 10,
         paddingTop: 10,

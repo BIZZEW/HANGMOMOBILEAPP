@@ -25,7 +25,7 @@ import { Icon, Modal } from '@ant-design/react-native';
 const styles = StyleSheet.create({
   logoutIcon: {
     fontSize: 25,
-    color: "#1C86EE",
+    color: "#1476D7",
     marginRight: 10
   }
 });
@@ -170,7 +170,7 @@ const TabNavigator = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      activeTintColor: '#1C86EE',
+      activeTintColor: '#1476D7',
       inactiveTintColor: '#999999',
     },
   }
@@ -180,11 +180,13 @@ const TabNavigator = createBottomTabNavigator(
 const HomeStack = createStackNavigator(
   {
     杭摩PDA: TabNavigator,
+
     采购入库单: ProcureDetailStack,
     材料出库单: MaterialoutDetailStack,
     转库单: ChangearoundDetailStack,
     产成品入库单: ProductinDetailStack,
     销售出库单: SaleoutDetailStack,
+
     采购入库物料明细: MaterialDetailStack,
     转库物料明细: CAMaterialDetailStack,
     产成品入库物料明细: PIMaterialDetailStack,
@@ -196,9 +198,9 @@ const HomeStack = createStackNavigator(
       let tabState = getActiveChildNavigationOptions(navigation, screenProps);
       return {
         title: tabState.title,
-        headerTintColor: "#1C86EE",
+        headerTintColor: "#1476D7",
         headerStyle: { height: 40, },
-        headerTitleStyle: { fontSize: 18 },
+        headerTitleStyle: { fontSize: 18, color: "#1476D7" },
         headerRight: () => (
           <Icon name="logout" style={styles.logoutIcon} onPress={() => {
             AsyncStorage.getItem('logoutshow').then
