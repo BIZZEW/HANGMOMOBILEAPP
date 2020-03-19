@@ -84,14 +84,14 @@ class PIMaterialDetailScreen extends React.Component {
         this.state = {
             detail: {},
             index: "",
-            ninum: "",
-            ninumLock: true,
-            cargdoc: "",
+            ninnum: "",
+            ninnumLock: true,
+            pk_cargdoc: "",
             keyboardShown: false,
         };
 
         this.materialConfirm = () => {
-            if (this.state.ninum.trim() === "" || this.state.cargdoc.trim() === "")
+            if (this.state.ninnum.trim() === "" || this.state.pk_cargdoc.trim() === "")
                 Toast.fail('需要填选的项为必输', 1);
             else {
                 const { navigation } = this.props;
@@ -117,7 +117,7 @@ class PIMaterialDetailScreen extends React.Component {
         DeviceEventEmitter.addListener('iDataScan', function (Event) {
             // alert("扫码结果为： " + Event.ScanResult);
             _this.setState({
-                cargdoc: Event.ScanResult
+                pk_cargdoc: Event.ScanResult
             })
             if (_this.inputRef)
                 _this.inputRef.focus();
@@ -125,10 +125,10 @@ class PIMaterialDetailScreen extends React.Component {
 
         let detail = this.props.navigation.state.params.item;
         let index = this.props.navigation.state.params.index;
-        let cargdoc = detail.cargdoc ? detail.cargdoc : "";
-        let ninum = detail.ninum ? detail.ninum : "";
+        let pk_cargdoc = detail.pk_cargdoc ? detail.pk_cargdoc : "";
+        let ninnum = detail.ninnum ? detail.ninnum : "";
         this.setState({
-            detail, index, cargdoc, ninum
+            detail, index, pk_cargdoc, ninnum
         })
     }
 
@@ -146,7 +146,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <InputItem
                                 clear
                                 type="text"
-                                value={this.state.cargdoc}
+                                value={this.state.pk_cargdoc}
                                 placeholder="请扫码获取库位"
                                 editable={false}
                                 style={{ fontSize: 16 }}
@@ -157,16 +157,16 @@ class PIMaterialDetailScreen extends React.Component {
                             <InputItem
                                 clear
                                 type="number"
-                                value={this.state.ninum}
-                                onChange={ninum => {
-                                    if (!this.state.ninumLock)
-                                        this.setState({ ninum });
+                                value={this.state.ninnum}
+                                onChange={ninnum => {
+                                    if (!this.state.ninnumLock)
+                                        this.setState({ ninnum });
                                 }}
                                 onFocus={() => {
-                                    this.setState({ ninumLock: false });
+                                    this.setState({ ninnumLock: false });
                                 }}
                                 onBlur={() => {
-                                    this.setState({ ninumLock: true });
+                                    this.setState({ ninnumLock: true });
                                 }}
                                 placeholder="请输入实际入库数量"
                                 style={{ fontSize: 16 }}
@@ -180,37 +180,17 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.shen}
+                                        {this.state.detail.csname}
                                     </Text>
                                 }
                                 multipleLine
                             >
-                                剩余数量
+                                货位名称
                                     </Item>
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.naccumwarehousenum}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                累计数量
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.cbaseid}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                物料主键
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.cbaseid_code}
+                                        {this.state.detail.material_code}
                                     </Text>
                                 }
                                 multipleLine
@@ -220,7 +200,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.cbaseid_name}
+                                        {this.state.detail.material_name}
                                     </Text>
                                 }
                                 multipleLine
@@ -230,7 +210,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.cbaseid_spec}
+                                        {this.state.detail.guige}
                                     </Text>
                                 }
                                 multipleLine
@@ -240,7 +220,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.baseid_type}
+                                        {this.state.detail.xinghao}
                                     </Text>
                                 }
                                 multipleLine
@@ -255,37 +235,17 @@ class PIMaterialDetailScreen extends React.Component {
                                 }
                                 multipleLine
                             >
-                                主单位
+                                单位
                                     </Item>
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.narrvnum}
+                                        {this.state.detail.vbatchcode}
                                     </Text>
                                 }
                                 multipleLine
                             >
-                                到货数量
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.nprice}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                本币单价
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.nmoney}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                本币金额
+                                批次号
                                     </Item>
                             <Item
                                 extra={
@@ -296,6 +256,46 @@ class PIMaterialDetailScreen extends React.Component {
                                 multipleLine
                             >
                                 行号
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.cgeneralbid}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                产成品入库子表主键
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.cgeneralhid}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                主表主键
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.cinvbasid}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                存货基本档案主键
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.cinventoryid}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                存货管理档案主键
                                     </Item>
                         </List>
                     </ScrollView>

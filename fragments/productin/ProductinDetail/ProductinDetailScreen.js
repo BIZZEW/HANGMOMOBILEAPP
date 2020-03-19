@@ -93,8 +93,8 @@ class ProductinDetailScreen extends React.Component {
             let newDetail = this.state.detail;
             let newSubDetail = data.detail;
 
-            newSubDetail.ninum = data.ninum;
-            newSubDetail.cargdoc = data.inventory;
+            newSubDetail.ninnum = data.ninnum;
+            newSubDetail.pk_cargdoc = data.inventory;
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -110,7 +110,7 @@ class ProductinDetailScreen extends React.Component {
                 let newList = [];
 
                 for await (i of oldList) {
-                    if (("cargdoc" in i) && ("ninum" in i)) {
+                    if (("pk_cargdoc" in i) && ("ninnum" in i)) {
                         newList.push(i);
                     }
                 }
@@ -214,7 +214,7 @@ class ProductinDetailScreen extends React.Component {
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.varrordercode}
+                                            {this.state.detail.vbillcode}
                                         </Text>
                                     }
                                     multipleLine
@@ -224,12 +224,12 @@ class ProductinDetailScreen extends React.Component {
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.dreceivedate}
+                                            {this.state.detail.dbilldate}
                                         </Text>
                                     }
                                     multipleLine
                                 >
-                                    到货日期
+                                    单据日期
                                     </Item>
                                 <Item
                                     extra={
@@ -244,12 +244,12 @@ class ProductinDetailScreen extends React.Component {
                                 <Item
                                     extra={
                                         <Text>
-                                            {this.state.detail.cbiztype_name}
+                                            {this.state.detail.ctransmodeid_name}
                                         </Text>
                                     }
                                     multipleLine
                                 >
-                                    业务流程
+                                    发运
                                     </Item>
                                 <Item
                                     extra={
@@ -259,7 +259,7 @@ class ProductinDetailScreen extends React.Component {
                                     }
                                     multipleLine
                                 >
-                                    业务员
+                                    人员
                                     </Item>
                                 <Item
                                     extra={
@@ -270,6 +270,16 @@ class ProductinDetailScreen extends React.Component {
                                     multipleLine
                                 >
                                     部门
+                                    </Item>
+                                <Item
+                                    extra={
+                                        <Text>
+                                            {this.state.detail.vnote}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    备注
                                     </Item>
                             </List>
                         </ScrollView>
@@ -309,13 +319,15 @@ class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
         return <View style={styles.ListItem}>
-            <Text>{"物料主键：" + itemInfo.cbaseid}</Text>
-            <Text>{"物料名称：" + itemInfo.cbaseid_name}</Text>
-            <Text>{"主单位：" + itemInfo.measname}</Text>
-            <Text>{"到货数量：" + itemInfo.narrvnum}</Text>
-            <Text>{"本币单价：" + itemInfo.nprice}</Text>
-            <Text>{"本币金额：" + itemInfo.nmoney}</Text>
-            <Text>{"规格：" + itemInfo.cbaseid_spec}</Text>
+            <Text>{"物料编码：" + itemInfo.material_code}</Text>
+            <Text>{"物料名称：" + itemInfo.material_name}</Text>
+            <Text>{"入库数量：" + itemInfo.ninnum}</Text>
+            <Text>{"批次号：" + itemInfo.vbatchcode}</Text>
+            <Text>{"货位：" + itemInfo.csname}</Text>
+            <Text>{"规格：" + itemInfo.guige}</Text>
+            <Text>{"型号：" + itemInfo.xinghao}</Text>
+            <Text>{"单位：" + itemInfo.measname}</Text>
+            <Text>{"行号：" + itemInfo.crowno}</Text>
         </View>
     }
 }
