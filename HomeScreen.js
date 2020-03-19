@@ -197,7 +197,8 @@ const HomeStack = createStackNavigator(
       return {
         title: tabState.title,
         headerTintColor: "#1C86EE",
-        headerStyle: { height: 40 },
+        headerStyle: { height: 40, },
+        headerTitleStyle: { fontSize: 17 },
         headerRight: () => (
           <Icon name="logout" style={styles.logoutIcon} onPress={() => {
             AsyncStorage.getItem('logoutshow').then
