@@ -94,7 +94,7 @@ class ProductinDetailScreen extends React.Component {
             let newSubDetail = data.detail;
 
             newSubDetail.ninnum = data.ninnum;
-            newSubDetail.pk_cargdoc = data.inventory;
+            newSubDetail.pk_cargdoc = data.pk_cargdoc;
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -123,8 +123,6 @@ class ProductinDetailScreen extends React.Component {
                 let origin = {
                     ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date())
                 }
-
-                alert(JSON.stringify(origin));
 
                 let params = {
                     params: JSON.stringify(origin)
@@ -302,7 +300,7 @@ class ProductinDetailScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.detail.bitems}
                                 renderItem={({ item, index }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('采购入库物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('产成品入库物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}

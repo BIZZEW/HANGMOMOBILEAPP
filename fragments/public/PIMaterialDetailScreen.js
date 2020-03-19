@@ -257,7 +257,7 @@ class PIMaterialDetailScreen extends React.Component {
                             >
                                 行号
                                     </Item>
-                            <Item
+                            {/* <Item
                                 extra={
                                     <Text>
                                         {this.state.detail.cgeneralbid}
@@ -296,7 +296,7 @@ class PIMaterialDetailScreen extends React.Component {
                                 multipleLine
                             >
                                 存货管理档案主键
-                                    </Item>
+                                    </Item> */}
                         </List>
                     </ScrollView>
                     <Button

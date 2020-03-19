@@ -277,7 +277,7 @@ export default class ProductinScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.searchResult}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('产成品入库单', { item: item }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('产成品入库单', { item: item, requireList: this.requireList }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}
