@@ -90,12 +90,12 @@ export default class MaterialoutScreen extends React.Component {
         };
 
         this.requireList = () => {
-            if (this.state.supplier.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
+            if (this.state.formdate === "" || this.state.enddate === "")
                 Toast.fail('请先填选所有查询条件再查询', 1);
             else {
                 AsyncStorage.getItem('pk_org').then((org) => {
                     let origin = {
-                        supplier: this.state.supplier,
+                        // supplier: this.state.supplier,
                         formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
                         enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
                         pk_org: org,
@@ -112,8 +112,8 @@ export default class MaterialoutScreen extends React.Component {
 
         this.state = {
             searchResult: [],
-            supplier: "",
-            supplierLock: true,
+            // supplier: "",
+            // supplierLock: true,
             formdate: "",
             enddate: "",
         };
@@ -136,7 +136,7 @@ export default class MaterialoutScreen extends React.Component {
             <>
                 <View>
                     <List>
-                        <InputItem
+                        {/* <InputItem
                             clear
                             type="text"
                             value={this.state.supplier}
@@ -153,7 +153,7 @@ export default class MaterialoutScreen extends React.Component {
                             placeholder="请输入供应商"
                         >
                             供应商
-                        </InputItem>
+                        </InputItem> */}
 
                         <DatePicker
                             value={this.state.formdate}

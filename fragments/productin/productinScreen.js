@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage, Keyboard } from 'react-native';
 import { Button, Drawer, List, Provider, InputItem, Icon, DatePicker, Toast } from '@ant-design/react-native';
 import axios from '../../axios/index';
 import qs from 'qs';
@@ -48,13 +48,19 @@ const styles = StyleSheet.create({
         paddingBottom: 60,
     },
     confirmSearchBtn: {
-        width: "40%",
-        marginLeft: "30%",
-        marginRight: "30%",
-        marginTop: 20,
+        width: "35%",
+        left: "10%",
         borderWidth: 0,
-        borderColor: "#1C86EE"
-    }
+        borderColor: "#1C86EE",
+        bottom: 30,
+    },
+    cancelSearchBtn: {
+        width: "35%",
+        right: "10%",
+        borderWidth: 0,
+        borderColor: "#1C86EE",
+        bottom: 30,
+    },
 });
 
 export default class ProductinScreen extends React.Component {
@@ -77,12 +83,13 @@ export default class ProductinScreen extends React.Component {
         };
 
         this.requireList = () => {
-            if (this.state.supplier.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
+            if (this.state.vbillcode.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
                 Toast.fail('请先填选所有查询条件再查询', 1);
             else {
                 AsyncStorage.getItem('pk_org').then((org) => {
                     let origin = {
-                        supplier: this.state.supplier,
+                        // supplier: this.state.supplier,
+                        vbillcode: this.state.vbillcode,
                         formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
                         enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
                         pk_org: org,
@@ -97,12 +104,27 @@ export default class ProductinScreen extends React.Component {
             }
         }
 
+        this._keyboardDidShow = () => {
+            this.setState({
+                keyboardShown: true,
+            })
+        }
+
+        this._keyboardDidHide = () => {
+            this.setState({
+                keyboardShown: false,
+            })
+        }
+
         this.state = {
             searchResult: [],
-            supplier: "",
-            supplierLock: true,
+            // supplier: "",
+            // supplierLock: true,
+            vbillcode: "",
+            vbillcodeLock: true,
             formdate: "",
             enddate: "",
+            keyboardShown: false,
         };
     }
 
@@ -118,12 +140,22 @@ export default class ProductinScreen extends React.Component {
         this.props.navigation.navigate('Auth');
     };
 
+    componentDidMount() {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
     render() {
         const sidebar = (
             <>
                 <View>
                     <List>
-                        <InputItem
+                        {/* <InputItem
                             clear
                             type="text"
                             value={this.state.supplier}
@@ -137,9 +169,28 @@ export default class ProductinScreen extends React.Component {
                             onBlur={() => {
                                 this.setState({ supplierLock: true });
                             }}
-                            placeholder="请输入供应商"
+                            placeholder="请输入客商"
                         >
-                            供应商
+                            客商
+                        </InputItem> */}
+
+                        <InputItem
+                            clear
+                            type="text"
+                            value={this.state.vbillcode}
+                            onChange={vbillcode => {
+                                if (!this.state.vbillcodeLock)
+                                    this.setState({ vbillcode });
+                            }}
+                            onFocus={() => {
+                                this.setState({ vbillcodeLock: false });
+                            }}
+                            onBlur={() => {
+                                this.setState({ vbillcodeLock: true });
+                            }}
+                            placeholder="请输入单据号"
+                        >
+                            单据号
                         </InputItem>
 
                         <DatePicker
@@ -174,7 +225,7 @@ export default class ProductinScreen extends React.Component {
                         this.requireList();
                     }}
                     type="primary"
-                    style={styles.confirmSearchBtn}
+                    style={{ ...styles.confirmSearchBtn, display: this.state.keyboardShown ? "none" : "flex", position: this.state.keyboardShown ? "relative" : "absolute" }}
                 >
                     查   询
                 </Button>
@@ -184,7 +235,7 @@ export default class ProductinScreen extends React.Component {
                         this.drawer.closeDrawer();
                     }}
                     type="primary"
-                    style={styles.confirmSearchBtn}
+                    style={{ ...styles.cancelSearchBtn, display: this.state.keyboardShown ? "none" : "flex", position: this.state.keyboardShown ? "relative" : "absolute" }}
                 >
                     取   消
                 </Button>

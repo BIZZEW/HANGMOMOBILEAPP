@@ -18,6 +18,7 @@ import SaleoutScreen from './fragments/saleout/SaleoutScreen';
 import SaleoutDetailScreen from './fragments/saleout/SaleoutDetail/SaleoutDetailScreen';
 import MaterialDetailScreen from './fragments/public/MaterialDetailScreen';
 import CAMaterialDetailScreen from './fragments/public/CAMaterialDetailScreen';
+import PIMaterialDetailScreen from './fragments/public/PIMaterialDetailScreen';
 import SOMaterialDetailScreen from './fragments/public/SOMaterialDetailScreen';
 import { Icon, Modal } from '@ant-design/react-native';
 
@@ -115,6 +116,18 @@ const CAMaterialDetailStack = createStackNavigator(
   }
 );
 
+// 产成品入库物料明细
+const PIMaterialDetailStack = createStackNavigator(
+  {
+    Home: PIMaterialDetailScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+  }
+);
+
 // 销售出库物料明细
 const SOMaterialDetailStack = createStackNavigator(
   {
@@ -174,6 +187,7 @@ const HomeStack = createStackNavigator(
     销售出库单: SaleoutDetailStack,
     采购入库物料明细: MaterialDetailStack,
     转库物料明细: CAMaterialDetailStack,
+    产成品入库物料明细: PIMaterialDetailStack,
     销售出库物料明细: SOMaterialDetailStack,
   },
   {

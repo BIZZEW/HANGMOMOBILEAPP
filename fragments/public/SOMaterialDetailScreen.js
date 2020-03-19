@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet } from 'react-native';
+import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, Keyboard } from 'react-native';
 import { Button, List, Provider, InputItem, Icon } from '@ant-design/react-native';
 import ScanModule from "../../nativeCall/ScanModule";
 import { Toast } from '@ant-design/react-native';
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     },
     confirmBtn: {
         height: 45,
-        position: "absolute",
         zIndex: 100,
         bottom: 10,
         borderColor: "#fff",
@@ -70,12 +69,25 @@ class SOMaterialDetailScreen extends React.Component {
     constructor() {
         super(...arguments);
 
+        this._keyboardDidShow = () => {
+            this.setState({
+                keyboardShown: true,
+            })
+        }
+
+        this._keyboardDidHide = () => {
+            this.setState({
+                keyboardShown: false,
+            })
+        }
+
         this.state = {
             detail: {},
             index: "",
             noutnum: "",
             noutnumLock: true,
             pk_checkcarg: "",
+            keyboardShown: false,
         };
 
         this.materialConfirm = () => {
@@ -91,6 +103,16 @@ class SOMaterialDetailScreen extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
     componentWillMount() {
         let _this = this;
         //通过使用DeviceEventEmitter模块来监听事件
@@ -99,7 +121,8 @@ class SOMaterialDetailScreen extends React.Component {
             _this.setState({
                 pk_checkcarg: Event.ScanResult
             })
-            _this.inputRef.focus();
+            if (_this.inputRef)
+                _this.inputRef.focus();
         });
 
         let detail = this.props.navigation.state.params.item;
@@ -240,7 +263,8 @@ class SOMaterialDetailScreen extends React.Component {
                     </ScrollView>
                     <Button
                         onPress={() => this.materialConfirm()}
-                        style={styles.confirmBtn}>
+                        style={{ ...styles.confirmBtn, display: this.state.keyboardShown ? "none" : "flex", position: this.state.keyboardShown ? "relative" : "absolute" }}
+                    >
                         <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                         <Text style={styles.btnText}> 确定</Text>
                     </Button>
