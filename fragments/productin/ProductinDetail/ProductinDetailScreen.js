@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1476D7",
+        backgroundColor: "#1270CC",
     },
     btnText: {
         color: "#fff",
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1476D7",
+        backgroundColor: "#1270CC",
     },
     detailList: {
         marginBottom: 80,
@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: "100%",
         width: "100%",
-        backgroundColor: '#1476D7',
+        backgroundColor: '#1270CC',
     },
     FlatList: {
         flex: 1,
-        backgroundColor: '#1476D7',
+        backgroundColor: '#1270CC',
         paddingBottom: 60,
     },
     ListItem: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     ScrollView: {
         flex: 1,
-        backgroundColor: "#1476D7",
+        backgroundColor: "#1270CC",
         width: "100%",
         paddingHorizontal: 10
     }
@@ -103,7 +103,7 @@ class ProductinDetailScreen extends React.Component {
             })
         }
 
-        this.submitConfirmed = async () => {
+        this.submitConfirmed = async (ischeck) => {
             if (this.state.editedFlag) {
                 let oldList = this.state.detail.bitems;
                 let newDetail = this.state.detail;
@@ -121,7 +121,7 @@ class ProductinDetailScreen extends React.Component {
                 let org = await AsyncStorage.getItem('pk_org');
 
                 let origin = {
-                    ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date())
+                    ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck
                 }
 
                 let params = {
@@ -132,6 +132,24 @@ class ProductinDetailScreen extends React.Component {
             } else {
                 Toast.fail('您未操作任何一条物料，无法提交', 1);
             }
+        }
+
+        this.continueConfirm = (confirmText) => {
+            Modal.alert('提示', confirmText + "，是否继续？", [
+                {
+                    text: '取消',
+                    onPress: async () => {
+                        console.log('cancel');
+                    },
+                    style: 'cancel',
+                },
+                {
+                    text: '确定',
+                    onPress: async () => {
+                        this.submitConfirmed('N');
+                    }
+                },
+            ]);
         }
     }
 
@@ -166,7 +184,7 @@ class ProductinDetailScreen extends React.Component {
                                 alignItems: 'center',
                                 justifyContent: 'space-evenly',
                                 height: 50,
-                                backgroundColor: "#1476D7",
+                                backgroundColor: "#1270CC",
                             }}
                         >
                             {tabProps.tabs.map((tab, i) => (
@@ -186,7 +204,7 @@ class ProductinDetailScreen extends React.Component {
                                 >
                                     <Text
                                         style={{
-                                            color: tabProps.activeTab === i ? '#1476D7' : '#B0B0B0',
+                                            color: tabProps.activeTab === i ? '#1270CC' : '#B0B0B0',
                                             backgroundColor: tabProps.activeTab === i ? "#fff" : "#DFDFDF",
                                             paddingVertical: 5,
                                             textAlign: "center",
@@ -282,7 +300,7 @@ class ProductinDetailScreen extends React.Component {
                             </List>
                         </ScrollView>
                         <Button
-                            onPress={() => this.submitConfirmed()}
+                            onPress={() => this.submitConfirmed('Y')}
                             style={styles.confirmBtn}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 入库</Text>

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1476D7"
+        backgroundColor: "#1270CC"
     },
     searchBtnIcon: {
         fontSize: 20,
@@ -44,22 +44,24 @@ const styles = StyleSheet.create({
     },
     FlatList: {
         flex: 1,
-        backgroundColor: '#1476D7',
+        backgroundColor: '#1270CC',
         paddingBottom: 60,
     },
     confirmSearchBtn: {
         width: "35%",
         left: "10%",
         borderWidth: 0,
-        borderColor: "#1476D7",
+        borderColor: "#1270CC",
         bottom: 30,
+        backgroundColor:"#1270CC",
     },
     cancelSearchBtn: {
         width: "35%",
         right: "10%",
         borderWidth: 0,
-        borderColor: "#1476D7",
+        borderColor: "#1270CC",
         bottom: 30,
+        backgroundColor:"#1270CC",
     },
 });
 
@@ -139,7 +141,7 @@ export default class ProcureScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
             title: "采购入库",
-            headerTintColor: '#1476D7',
+            headerTintColor: '#1270CC',
         }
     };
 
@@ -253,7 +255,7 @@ export default class ProcureScreen extends React.Component {
                     onOpenChange={this.onOpenChange}
                     drawerBackgroundColor="#fff"
                 >
-                    <View style={{ flex: 1, padding: 10, backgroundColor: '#1476D7' }}>
+                    <View style={{ flex: 1, padding: 10, backgroundColor: '#1270CC' }}>
                         <Button
                             onPress={() => this.drawer && this.drawer.openDrawer()}
                             style={styles.searchBtn}>

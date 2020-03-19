@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1476D7"
+        backgroundColor: "#1270CC"
     },
     searchBtnIcon: {
         fontSize: 20,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
     FlatList: {
         flex: 1,
-        backgroundColor: '#1476D7',
+        backgroundColor: '#1270CC',
         paddingBottom: 60,
     },
     confirmSearchBtn: {
@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
         marginRight: "30%",
         marginTop: 20,
         borderWidth: 0,
-        borderColor: "#1476D7"
+        borderColor: "#1270CC",
+        backgroundColor:"#1270CC",
     }
 });
 
@@ -122,7 +123,7 @@ export default class MaterialoutScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
             title: "材料出库",
-            headerTintColor: '#1476D7',
+            headerTintColor: '#1270CC',
         }
     };
 
@@ -213,7 +214,7 @@ export default class MaterialoutScreen extends React.Component {
                     onOpenChange={this.onOpenChange}
                     drawerBackgroundColor="#fff"
                 >
-                    <View style={{ flex: 1, padding: 10, backgroundColor: '#1476D7' }}>
+                    <View style={{ flex: 1, padding: 10, backgroundColor: '#1270CC' }}>
                         <Button
                             onPress={() => this.drawer && this.drawer.openDrawer()}
                             style={styles.searchBtn}>

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1476D7",
+        backgroundColor: "#1270CC",
     },
     btnText: {
         color: "#fff",
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1476D7",
+        backgroundColor: "#1270CC",
     },
     detailList: {
         marginBottom: 80,
@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: "100%",
         width: "100%",
-        backgroundColor: '#1476D7',
+        backgroundColor: '#1270CC',
     },
     FlatList: {
         flex: 1,
-        backgroundColor: '#1476D7',
+        backgroundColor: '#1270CC',
         paddingBottom: 60,
     },
     ListItem: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     ScrollView: {
         flex: 1,
-        backgroundColor: "#1476D7",
+        backgroundColor: "#1270CC",
         width: "100%",
         paddingHorizontal: 10
     }
@@ -134,8 +134,8 @@ class ProcureDetailScreen extends React.Component {
             }
         }
 
-        this.continueConfirm = () => {
-            Modal.alert('提示', "当前单有存货，是否继续？", [
+        this.continueConfirm = (confirmText) => {
+            Modal.alert('提示', confirmText + "，是否继续？", [
                 {
                     text: '取消',
                     onPress: async () => {
@@ -184,7 +184,7 @@ class ProcureDetailScreen extends React.Component {
                                 alignItems: 'center',
                                 justifyContent: 'space-evenly',
                                 height: 50,
-                                backgroundColor: "#1476D7",
+                                backgroundColor: "#1270CC",
                             }}
                         >
                             {tabProps.tabs.map((tab, i) => (
@@ -204,7 +204,7 @@ class ProcureDetailScreen extends React.Component {
                                 >
                                     <Text
                                         style={{
-                                            color: tabProps.activeTab === i ? '#1476D7' : '#B0B0B0',
+                                            color: tabProps.activeTab === i ? '#1270CC' : '#B0B0B0',
                                             backgroundColor: tabProps.activeTab === i ? "#fff" : "#DFDFDF",
                                             paddingVertical: 5,
                                             textAlign: "center",

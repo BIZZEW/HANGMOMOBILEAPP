@@ -90,7 +90,7 @@ export default class Axios {
             method: "post"
         }).then(async (res) => {
             if (res.checkflag == "3" || res.checkflag == 3)
-                _this.continueConfirm();
+                _this.continueConfirm(res.errormsg);
             else {
                 Toast.success('提交成功！', 1);
 

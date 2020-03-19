@@ -11,9 +11,9 @@ import qs from 'qs'
 class SignInScreen extends React.Component {
     static navigationOptions = {
         title: '登录',
-        headerTintColor: "#1476D7",
+        headerTintColor: "#1270CC",
         headerStyle: { height: 40 },
-        headerTitleStyle: { fontSize: 18, color: "#1476D7" },
+        headerTitleStyle: { fontSize: 18, color: "#1065B8" },
     };
 
     constructor(props) {
@@ -122,6 +122,10 @@ class SignInScreen extends React.Component {
                             <Button
                                 onPress={this._signInAsync.bind(this)}
                                 type="primary"
+                                style={{
+                                    backgroundColor: "#1270CC",
+                                    borderColor: "#1270CC",
+                                }}
                             >
                                 登  录
                         </Button>

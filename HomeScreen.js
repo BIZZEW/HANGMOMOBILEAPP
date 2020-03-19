@@ -25,7 +25,7 @@ import { Icon, Modal } from '@ant-design/react-native';
 const styles = StyleSheet.create({
   logoutIcon: {
     fontSize: 25,
-    color: "#1476D7",
+    color: "#1270CC",
     marginRight: 10
   }
 });
@@ -170,7 +170,7 @@ const TabNavigator = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      activeTintColor: '#1476D7',
+      activeTintColor: '#1270CC',
       inactiveTintColor: '#999999',
     },
   }
@@ -198,9 +198,9 @@ const HomeStack = createStackNavigator(
       let tabState = getActiveChildNavigationOptions(navigation, screenProps);
       return {
         title: tabState.title,
-        headerTintColor: "#1476D7",
+        headerTintColor: "#1270CC",
         headerStyle: { height: 40, },
-        headerTitleStyle: { fontSize: 18, color: "#1476D7" },
+        headerTitleStyle: { fontSize: 18, color: "#1065B8" },
         headerRight: () => (
           <Icon name="logout" style={styles.logoutIcon} onPress={() => {
             AsyncStorage.getItem('logoutshow').then
