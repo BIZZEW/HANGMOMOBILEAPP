@@ -12,7 +12,7 @@ class SignInScreen extends React.Component {
     static navigationOptions = {
         title: '登录',
         headerStyle: { height: 40 },
-        headerTitleStyle: { fontSize: 17 },
+        headerTitleStyle: { fontSize: 18 },
     };
 
     constructor(props) {
