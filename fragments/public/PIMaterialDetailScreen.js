@@ -190,7 +190,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.material_code}
+                                        {this.state.detail.cbaseid_code}
                                     </Text>
                                 }
                                 multipleLine
@@ -200,7 +200,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.material_name}
+                                        {this.state.detail.cbaseid_name}
                                     </Text>
                                 }
                                 multipleLine
@@ -210,7 +210,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.guige}
+                                        {this.state.detail.cbaseid_spec}
                                     </Text>
                                 }
                                 multipleLine
@@ -220,7 +220,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.xinghao}
+                                        {this.state.detail.cbaseid_type}
                                     </Text>
                                 }
                                 multipleLine
@@ -257,46 +257,6 @@ class PIMaterialDetailScreen extends React.Component {
                             >
                                 行号
                                     </Item>
-                            {/* <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.cgeneralbid}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                产成品入库子表主键
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.cgeneralhid}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                主表主键
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.cinvbasid}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                存货基本档案主键
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.cinventoryid}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                存货管理档案主键
-                                    </Item> */}
                         </List>
                     </ScrollView>
                     <Button

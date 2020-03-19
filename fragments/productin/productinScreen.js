@@ -85,6 +85,10 @@ export default class ProductinScreen extends React.Component {
         };
 
         this.requireList = () => {
+            // this.setState({
+            //     searchResult: []
+            // })
+
             if (this.state.vbillcode.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
                 Toast.fail('请先填选所有查询条件再查询', 1);
             else {

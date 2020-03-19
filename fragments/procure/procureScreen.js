@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         borderColor: "#1270CC",
         bottom: 30,
-        backgroundColor:"#1270CC",
+        backgroundColor: "#1270CC",
     },
     cancelSearchBtn: {
         width: "35%",
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         borderColor: "#1270CC",
         bottom: 30,
-        backgroundColor:"#1270CC",
+        backgroundColor: "#1270CC",
     },
 });
 

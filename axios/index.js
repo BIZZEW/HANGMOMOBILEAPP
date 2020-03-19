@@ -88,8 +88,10 @@ export default class Axios {
             url,
             data,
             method: "post"
-        }).then(async (res) => {
-            if (res.checkflag == "3" || res.checkflag == 3)
+        }).then((res) => {
+            _this.setState({ submiting: false });
+
+            if (res.checkflag && res.checkflag == "3" || res.checkflag == 3)
                 _this.continueConfirm(res.errormsg);
             else {
                 Toast.success('提交成功！', 1);

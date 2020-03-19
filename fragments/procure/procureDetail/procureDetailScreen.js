@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1270CC",
     },
     detailList: {
         marginBottom: 80,
@@ -87,6 +86,7 @@ class ProcureDetailScreen extends React.Component {
             value: [],
             detail: {},
             editedFlag: false,
+            submiting: false,
         };
 
         this.editConfirmed = data => {
@@ -104,34 +104,39 @@ class ProcureDetailScreen extends React.Component {
         }
 
         this.submitConfirmed = async (ischeck) => {
-            if (this.state.editedFlag) {
-                let oldList = this.state.detail.bitems;
-                let newDetail = this.state.detail;
-                let newList = [];
+            if (!this.state.submiting) {
+                if (this.state.editedFlag) {
+                    this.setState({ submiting: true });
 
-                for await (i of oldList) {
-                    if (("cargdoc" in i) && ("ninum" in i)) {
-                        newList.push(i);
+                    let oldList = this.state.detail.bitems;
+                    let newDetail = this.state.detail;
+                    let newList = [];
+
+                    for await (i of oldList) {
+                        if (("cargdoc" in i) && ("ninum" in i)) {
+                            newList.push(i);
+                        }
                     }
+
+                    newDetail.bitems = newList;
+
+                    let coperatorid = await AsyncStorage.getItem('coperatorid');
+                    let org = await AsyncStorage.getItem('pk_org');
+
+                    let origin = {
+                        ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck
+                    }
+
+                    let params = {
+                        params: JSON.stringify(origin)
+                    }
+
+                    axios.submitOrder(this, "/addpurchase", qs.stringify(params));
+                } else {
+                    Toast.fail('您未操作任何一条物料，无法提交', 1);
                 }
-
-                newDetail.bitems = newList;
-
-                let coperatorid = await AsyncStorage.getItem('coperatorid');
-                let org = await AsyncStorage.getItem('pk_org');
-
-                let origin = {
-                    ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck
-                }
-
-                let params = {
-                    params: JSON.stringify(origin)
-                }
-
-                axios.submitOrder(this, "/addpurchase", qs.stringify(params));
-            } else {
-                Toast.fail('您未操作任何一条物料，无法提交', 1);
-            }
+            } else
+                Toast.info("提交中，请稍后", 1);
         }
 
         this.continueConfirm = (confirmText) => {
@@ -291,7 +296,10 @@ class ProcureDetailScreen extends React.Component {
                         </ScrollView>
                         <Button
                             onPress={() => this.submitConfirmed('Y')}
-                            style={styles.confirmBtn}>
+                            style={{
+                                ...styles.confirmBtn,
+                                backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
+                            }}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 入库</Text>
                         </Button>

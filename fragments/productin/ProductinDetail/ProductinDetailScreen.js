@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, View, StyleSheet, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
-import { Button, List, Provider, Icon, Tabs, Toast } from '@ant-design/react-native';
+import { Button, List, Provider, Icon, Modal, Tabs, Toast } from '@ant-design/react-native';
 import axios from '../../../axios/index';
 import qs from 'qs';
 const Item = List.Item;
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1270CC",
     },
     detailList: {
         marginBottom: 80,
@@ -87,6 +86,7 @@ class ProductinDetailScreen extends React.Component {
             value: [],
             detail: {},
             editedFlag: false,
+            submiting: false,
         };
 
         this.editConfirmed = data => {
@@ -104,34 +104,39 @@ class ProductinDetailScreen extends React.Component {
         }
 
         this.submitConfirmed = async (ischeck) => {
-            if (this.state.editedFlag) {
-                let oldList = this.state.detail.bitems;
-                let newDetail = this.state.detail;
-                let newList = [];
+            if (!this.state.submiting) {
+                if (this.state.editedFlag) {
+                    this.setState({ submiting: true });
 
-                for await (i of oldList) {
-                    if (("pk_cargdoc" in i) && ("ninnum" in i)) {
-                        newList.push(i);
+                    let oldList = this.state.detail.bitems;
+                    let newDetail = this.state.detail;
+                    let newList = [];
+
+                    for await (i of oldList) {
+                        if (("pk_cargdoc" in i) && ("ninnum" in i)) {
+                            newList.push(i);
+                        }
                     }
+
+                    newDetail.bitems = newList;
+
+                    let coperatorid = await AsyncStorage.getItem('coperatorid');
+                    let org = await AsyncStorage.getItem('pk_org');
+
+                    let origin = {
+                        ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck
+                    }
+
+                    let params = {
+                        params: JSON.stringify(origin)
+                    }
+
+                    axios.submitOrder(this, "/updprodin", qs.stringify(params));
+                } else {
+                    Toast.fail('您未操作任何一条物料，无法提交', 1);
                 }
-
-                newDetail.bitems = newList;
-
-                let coperatorid = await AsyncStorage.getItem('coperatorid');
-                let org = await AsyncStorage.getItem('pk_org');
-
-                let origin = {
-                    ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck
-                }
-
-                let params = {
-                    params: JSON.stringify(origin)
-                }
-
-                axios.submitOrder(this, "/updprodin", qs.stringify(params));
-            } else {
-                Toast.fail('您未操作任何一条物料，无法提交', 1);
-            }
+            } else
+                Toast.info("提交中，请稍后", 1);
         }
 
         this.continueConfirm = (confirmText) => {
@@ -301,7 +306,10 @@ class ProductinDetailScreen extends React.Component {
                         </ScrollView>
                         <Button
                             onPress={() => this.submitConfirmed('Y')}
-                            style={styles.confirmBtn}>
+                            style={{
+                                ...styles.confirmBtn,
+                                backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
+                            }}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 入库</Text>
                         </Button>
@@ -335,13 +343,12 @@ class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
         return <View style={styles.ListItem}>
-            <Text>{"物料编码：" + itemInfo.material_code}</Text>
-            <Text>{"物料名称：" + itemInfo.material_name}</Text>
-            <Text>{"入库数量：" + itemInfo.ninnum}</Text>
+            <Text>{"物料编码：" + itemInfo.cbaseid_code}</Text>
+            <Text>{"物料名称：" + itemInfo.cbaseid_name}</Text>
             <Text>{"批次号：" + itemInfo.vbatchcode}</Text>
             <Text>{"货位：" + itemInfo.csname}</Text>
-            <Text>{"规格：" + itemInfo.guige}</Text>
-            <Text>{"型号：" + itemInfo.xinghao}</Text>
+            <Text>{"规格：" + itemInfo.cbaseid_spec}</Text>
+            <Text>{"型号：" + itemInfo.cbaseid_type}</Text>
             <Text>{"单位：" + itemInfo.measname}</Text>
             <Text>{"行号：" + itemInfo.crowno}</Text>
         </View>

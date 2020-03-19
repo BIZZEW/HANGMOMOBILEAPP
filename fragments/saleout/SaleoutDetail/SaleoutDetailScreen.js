@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#1270CC",
     },
     detailList: {
         marginBottom: 80,
@@ -86,6 +85,8 @@ class SaleoutDetailScreen extends React.Component {
             data: [],
             value: [],
             detail: {},
+            editedFlag: false,
+            submiting: false,
         };
 
         this.editConfirmed = data => {
@@ -97,32 +98,45 @@ class SaleoutDetailScreen extends React.Component {
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
-                detail: newDetail
+                detail: newDetail,
+                editedFlag: true,
             })
         }
 
         this.submitConfirmed = async () => {
-            let tmpList = this.state.detail.bitems;
+            if (!this.state.submiting) {
+                if (this.state.editedFlag) {
+                    this.setState({ submiting: true });
 
-            for await (i of tmpList) {
-                if (!("pk_checkcarg" in i) || !("noutnum" in i)) {
-                    Toast.fail('请先填选所有物料明细中的数量和库位之后再提交', 1);
-                    return;
+                    let oldList = this.state.detail.bitems;
+                    let newDetail = this.state.detail;
+                    let newList = [];
+
+                    for await (i of oldList) {
+                        if (("pk_checkcarg" in i) && ("noutnum" in i)) {
+                            newList.push(i);
+                        }
+                    }
+
+                    newDetail.bitems = newList;
+
+                    let coperatorid = await AsyncStorage.getItem('coperatorid');
+                    let org = await AsyncStorage.getItem('pk_org');
+
+                    let origin = {
+                        ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date())
+                    }
+
+                    let params = {
+                        params: JSON.stringify(origin)
+                    }
+
+                    axios.submitOrder(this, "/signsaleout", qs.stringify(params));
+                } else {
+                    Toast.fail('您未操作任何一条物料，无法提交', 1);
                 }
-            }
-
-            let coperatorid = await AsyncStorage.getItem('coperatorid');
-            let org = await AsyncStorage.getItem('pk_org');
-
-            let origin = {
-                ...this.state.detail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date())
-            }
-
-            let params = {
-                params: JSON.stringify(origin)
-            }
-
-            axios.submitOrder(this, "/signsaleout", qs.stringify(params));
+            } else
+                Toast.info("提交中，请稍后", 1);
         }
     }
 
@@ -264,7 +278,10 @@ class SaleoutDetailScreen extends React.Component {
                         </ScrollView>
                         <Button
                             onPress={() => this.submitConfirmed()}
-                            style={styles.confirmBtn}>
+                            style={{
+                                ...styles.confirmBtn,
+                                backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
+                            }}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 出库</Text>
                         </Button>
