@@ -6,16 +6,16 @@ import { createAppContainer, getActiveChildNavigationOptions } from 'react-navig
 // import { createStackNavigator } from '@react-navigation/stack';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import ProcureScreen from './fragments/procure/ProcureScreen';
-import ProcureDetailScreen from './fragments/procure/ProcureDetail/ProcureDetailScreen';
+import ProcuScreen from './fragments/procu/ProcuScreen';
+import ProcuDetailScreen from './fragments/procu/ProcuDetail/ProcuDetailScreen';
 import MaterialoutScreen from './fragments/materialout/MaterialoutScreen';
 import MaterialoutDetailScreen from './fragments/materialout/MaterialoutDetail/MaterialoutDetailScreen';
 import ChangearoundScreen from './fragments/changearound/ChangearoundScreen';
 import ChangearoundDetailScreen from './fragments/changearound/ChangearoundDetail/ChangearoundDetailScreen';
-import ProductinScreen from './fragments/productin/ProductinScreen';
-import ProductinDetailScreen from './fragments/productin/ProductinDetail/ProductinDetailScreen';
-import SaleoutScreen from './fragments/saleout/SaleoutScreen';
-import SaleoutDetailScreen from './fragments/saleout/SaleoutDetail/SaleoutDetailScreen';
+import ProductScreen from './fragments/product/ProductScreen';
+import ProductDetailScreen from './fragments/product/ProductDetail/ProductDetailScreen';
+import SaleScreen from './fragments/sale/SaleScreen';
+import SaleDetailScreen from './fragments/sale/SaleDetail/SaleDetailScreen';
 import MaterialDetailScreen from './fragments/public/MaterialDetailScreen';
 import CAMaterialDetailScreen from './fragments/public/CAMaterialDetailScreen';
 import PIMaterialDetailScreen from './fragments/public/PIMaterialDetailScreen';
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
 });
 
 // 采购入库堆
-const ProcureDetailStack = createStackNavigator(
+const ProcuDetailStack = createStackNavigator(
   {
-    Home: ProcureDetailScreen,
+    Home: ProcuDetailScreen,
   },
   {
     // initialRouteName: '杭摩PDA',
@@ -68,9 +68,9 @@ const ChangearoundDetailStack = createStackNavigator(
 );
 
 // 产成品入库堆
-const ProductinDetailStack = createStackNavigator(
+const ProductDetailStack = createStackNavigator(
   {
-    Home: ProductinDetailScreen,
+    Home: ProductDetailScreen,
   },
   {
     defaultNavigationOptions: {
@@ -80,9 +80,9 @@ const ProductinDetailStack = createStackNavigator(
 );
 
 // 销售出库堆
-const SaleoutDetailStack = createStackNavigator(
+const SaleDetailStack = createStackNavigator(
   {
-    Home: SaleoutDetailScreen,
+    Home: SaleDetailScreen,
   },
   {
     // initialRouteName: '杭摩PDA',
@@ -143,11 +143,11 @@ const SOMaterialDetailStack = createStackNavigator(
 // 标签栏导航
 const TabNavigator = createBottomTabNavigator(
   {
-    "采购入库": ProcureScreen,
+    "采购入库": ProcuScreen,
     // "材料出库": MaterialoutScreen,
     "转库": ChangearoundScreen,
-    "产成品入库": ProductinScreen,
-    "销售出库": SaleoutScreen,
+    "产成品入库": ProductScreen,
+    "销售出库": SaleScreen,
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -181,11 +181,11 @@ const HomeStack = createStackNavigator(
   {
     杭摩PDA: TabNavigator,
 
-    采购入库单: ProcureDetailStack,
+    采购入库单: ProcuDetailStack,
     材料出库单: MaterialoutDetailStack,
     转库单: ChangearoundDetailStack,
-    产成品入库单: ProductinDetailStack,
-    销售出库单: SaleoutDetailStack,
+    产成品入库单: ProductDetailStack,
+    销售出库单: SaleDetailStack,
 
     采购入库物料明细: MaterialDetailStack,
     转库物料明细: CAMaterialDetailStack,
