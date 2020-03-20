@@ -93,10 +93,6 @@ export default class ProductScreen extends React.Component {
                 Toast.fail('请先填选所有查询条件再查询', 1);
             else {
                 AsyncStorage.getItem('pk_org').then((org) => {
-                    this.setState({
-                        pk_org: org
-                    })
-
                     let origin = {
                         vbillcode: this.state.vbillcode,
                         formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
@@ -123,18 +119,6 @@ export default class ProductScreen extends React.Component {
             this.setState({
                 keyboardShown: false,
             })
-        }
-
-        this.getNum = () => {
-            var allcomData = [];
-            for (let i = 0; i < this.state.searchResult.length; i++) {
-                allcomData.push(
-                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('产成品入库单', { item: this.state.searchResult[i], requireList: this.requireList }) }}>
-                        <ListItem itemInfo={this.state.searchResult[i]} />
-                    </TouchableOpacity>,
-                );
-            }
-            return allcomData;
         }
 
         this.state = {

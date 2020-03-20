@@ -76,10 +76,6 @@ export default class ProcuScreen extends React.Component {
             this.setState({ value });
         };
 
-        this.onItemPress = value => {
-            this.props.navigation.navigate('采购入库单')
-        }
-
         this.onFormdateChange = formdate => {
             this.setState({ formdate });
         };
