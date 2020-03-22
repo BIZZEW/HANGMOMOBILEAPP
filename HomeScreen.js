@@ -39,18 +39,6 @@ const ProcuDetailStack = createStackNavigator(
   }
 );
 
-// 材料出库堆
-const MaterialoutDetailStack = createStackNavigator(
-  {
-    Home: MaterialoutDetailScreen,
-  },
-  {
-    defaultNavigationOptions: {
-      headerShown: false,
-    },
-  }
-);
-
 // 转库堆
 const ChangearoundDetailStack = createStackNavigator(
   {
@@ -152,8 +140,6 @@ const TabNavigator = createBottomTabNavigator(
         let iconName;
         if (routeName === '采购入库')
           iconName = `cart-plus`;
-        else if (routeName === '材料出库')
-          iconName = `cart-arrow-down`;
         else if (routeName === '转库')
           iconName = `cart-arrow-down`;
         else if (routeName === '产成品入库')
@@ -184,7 +170,6 @@ const HomeStack = createStackNavigator(
     杭摩PDA: TabNavigator,
 
     采购入库单: ProcuDetailStack,
-    材料出库单: MaterialoutDetailStack,
     转库单: ChangearoundDetailStack,
     产成品入库单: ProductDetailStack,
     销售出库单: SaleDetailStack,
