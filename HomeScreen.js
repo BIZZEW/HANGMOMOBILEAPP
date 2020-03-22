@@ -6,7 +6,6 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProcuScreen from './fragments/procu/ProcuScreen';
 import ProcuDetailScreen from './fragments/procu/ProcuDetail/ProcuDetailScreen';
-import MaterialoutDetailScreen from './fragments/materialout/MaterialoutDetail/MaterialoutDetailScreen';
 import ChangearoundScreen from './fragments/changearound/ChangearoundScreen';
 import ChangearoundDetailScreen from './fragments/changearound/ChangearoundDetail/ChangearoundDetailScreen';
 import ProductScreen from './fragments/product/ProductScreen';
