@@ -74,7 +74,6 @@ class LoginScreen extends React.Component {
                     <List>
                         <InputItem
                             clear
-                            // error
                             value={this.state.username}
                             onChange={value => {
                                 this.setState({
@@ -87,7 +86,6 @@ class LoginScreen extends React.Component {
                         </InputItem>
                         <InputItem
                             clear
-                            // error
                             type="password"
                             value={this.state.password}
                             onChange={value => {
