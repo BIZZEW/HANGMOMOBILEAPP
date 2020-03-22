@@ -1,14 +1,11 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet, AsyncStorage } from 'react-native';
+import { StyleSheet, AsyncStorage } from 'react-native';
 import Ionicons from 'react-native-vector-icons/FontAwesome5';
-import { createAppContainer, getActiveChildNavigationOptions } from 'react-navigation';
-// import { createSwitchNavigator } from 'react-navigation';
-// import { createStackNavigator } from '@react-navigation/stack';
+import { getActiveChildNavigationOptions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProcuScreen from './fragments/procu/ProcuScreen';
 import ProcuDetailScreen from './fragments/procu/ProcuDetail/ProcuDetailScreen';
-import MaterialoutScreen from './fragments/materialout/MaterialoutScreen';
 import MaterialoutDetailScreen from './fragments/materialout/MaterialoutDetail/MaterialoutDetailScreen';
 import ChangearoundScreen from './fragments/changearound/ChangearoundScreen';
 import ChangearoundDetailScreen from './fragments/changearound/ChangearoundDetail/ChangearoundDetailScreen';
@@ -36,7 +33,6 @@ const ProcuDetailStack = createStackNavigator(
     Home: ProcuDetailScreen,
   },
   {
-    // initialRouteName: '杭摩PDA',
     defaultNavigationOptions: {
       headerShown: false,
     },
@@ -144,7 +140,6 @@ const SOMaterialDetailStack = createStackNavigator(
 const TabNavigator = createBottomTabNavigator(
   {
     "采购入库": ProcuScreen,
-    // "材料出库": MaterialoutScreen,
     "转库": ChangearoundScreen,
     "产成品入库": ProductScreen,
     "销售出库": SaleScreen,
@@ -168,12 +163,19 @@ const TabNavigator = createBottomTabNavigator(
 
         return <IconComponent name={iconName} size={15} color={tintColor} />;
       },
+      tabBarOnPress: (tab) => {
+        AsyncStorage.getItem('logoutshow').then
+          ((logoutshow) => {
+            if (logoutshow == "0")
+              tab.navigation.navigate(tab.navigation.state.key);
+          })
+      }
     }),
     tabBarOptions: {
       activeTintColor: '#1270CC',
       inactiveTintColor: '#999999',
     },
-  }
+  },
 );
 
 // 应用内堆
@@ -196,6 +198,15 @@ const HomeStack = createStackNavigator(
     initialRouteName: '杭摩PDA',
     defaultNavigationOptions: ({ navigation, screenProps }) => {
       let tabState = getActiveChildNavigationOptions(navigation, screenProps);
+
+      AsyncStorage.setItem("logoutshow", "0", async e => {
+        if (e) {
+          Toast.fail("登录失败，请重试", 1);
+          await AsyncStorage.clear();
+          navigation.navigate('Auth');
+        }
+      });
+
       return {
         title: tabState.title,
         headerTintColor: "#1270CC",
@@ -223,7 +234,8 @@ const HomeStack = createStackNavigator(
                         navigation.navigate('Auth');
                       }
                     },
-                  ]);
+                  ],
+                    onBackHandler = () => { return false; });
                 }
               })
           }} />

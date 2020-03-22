@@ -1,8 +1,8 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, Button, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import SignInScreen from './authPages/SignInScreen';
+import LoginScreen from './authPages/LoginScreen';
 import HomeStack from './HomeScreen';
 import "./fragments/common/RootView";
 
@@ -13,25 +13,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-class OtherScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Lots of features here',
-  };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Button title="I'm done, sign me out" onPress={this._signOutAsync} />
-        <StatusBar barStyle="default" />
-      </View>
-    );
-  }
-
-  _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('Auth');
-  };
-}
 class AuthLoadingScreen extends React.Component {
   constructor() {
     super();
@@ -58,7 +40,7 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 
-const AuthStack = createStackNavigator({ SignIn: SignInScreen });
+const AuthStack = createStackNavigator({ Login: LoginScreen });
 
 export default createAppContainer(createSwitchNavigator(
   {

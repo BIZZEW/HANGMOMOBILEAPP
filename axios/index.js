@@ -14,7 +14,6 @@ export default class Axios {
             let storage = [
                 ['userToken', 'abc'],
                 ['coperatorid', coperatorid],
-                ['logoutshow', '0']
             ]
 
             AsyncStorage.multiSet(storage, e => {
@@ -29,6 +28,17 @@ export default class Axios {
             else
                 Toast.offline('服务器访问失败，请稍后重试', 1);
         })
+    }
+
+    static login2(_this, url, data, coperatorid) {
+        let storage = [
+            ['userToken', 'abc'],
+        ]
+
+        AsyncStorage.multiSet(storage, e => {
+            if (e) Toast.fail("登录失败，请重试", 1);
+            else _this.props.navigation.navigate('App');
+        });
     }
 
     static getUserList(_this, url, data) {

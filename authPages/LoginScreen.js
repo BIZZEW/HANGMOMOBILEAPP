@@ -1,14 +1,10 @@
 import React from 'react';
 import { Image, ScrollView, AsyncStorage } from 'react-native';
-// import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-// import { createStackNavigator } from 'react-navigation-stack';
 import { Button, InputItem, List, WhiteSpace, WingBlank, Toast, Provider, Picker } from '@ant-design/react-native';
 import axios from '../axios/index';
 import qs from 'qs'
-// import Loading from "../fragments/common/Loading";
 
-
-class SignInScreen extends React.Component {
+class LoginScreen extends React.Component {
     static navigationOptions = {
         title: '登录',
         headerTintColor: "#1270CC",
@@ -42,7 +38,7 @@ class SignInScreen extends React.Component {
             this.setState({ org });
         };
 
-        this._signInAsync = () => {
+        this._loginAsync = () => {
             var origin = {
                 user_code: this.state.username,
                 password: this.state.password
@@ -52,12 +48,12 @@ class SignInScreen extends React.Component {
                 params: JSON.stringify(origin)
             }
 
-            // if (this.state.username.trim() === "" || this.state.password.trim() === "")
-            //     Toast.fail('用户名或密码为空', 1);
-            // else if (this.state.org === "")
-            //     Toast.fail('组织未选', 1);
-            // else
-            axios.login2(this, "/login", qs.stringify(params), this.state.username);
+            if (this.state.username.trim() === "" || this.state.password.trim() === "")
+                Toast.fail('用户名或密码为空', 1);
+            else if (this.state.org === "")
+                Toast.fail('组织未选', 1);
+            else
+                axios.login(this, "/login", qs.stringify(params), this.state.username);
         };
     }
 
@@ -120,7 +116,7 @@ class SignInScreen extends React.Component {
                     <WingBlank size="lg">
                         <WingBlank size="lg">
                             <Button
-                                onPress={this._signInAsync.bind(this)}
+                                onPress={this._loginAsync.bind(this)}
                                 type="primary"
                                 style={{
                                     backgroundColor: "#1270CC",
@@ -137,4 +133,4 @@ class SignInScreen extends React.Component {
     }
 }
 
-export default SignInScreen;
+export default LoginScreen;
