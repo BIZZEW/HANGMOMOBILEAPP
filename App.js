@@ -3,7 +3,7 @@ import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View } from 're
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import LoginScreen from './authPages/LoginScreen';
-import HomeStack from './HomeScreen';
+import HomeStack from './fragments/home/HomeScreen';
 import "./fragments/common/RootView";
 
 const styles = StyleSheet.create({

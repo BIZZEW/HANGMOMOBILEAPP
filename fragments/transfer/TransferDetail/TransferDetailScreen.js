@@ -77,7 +77,7 @@ const formatNumber = n => {
     return n[1] ? n : '0' + n
 }
 
-class ChangearoundDetailScreen extends React.Component {
+class TransferDetailScreen extends React.Component {
     constructor() {
         super(...arguments);
 
@@ -336,4 +336,4 @@ class ListItem extends React.Component {
     }
 }
 
-export default ChangearoundDetailScreen;
+export default TransferDetailScreen;

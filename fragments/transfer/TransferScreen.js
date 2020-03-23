@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         borderColor: "#1270CC",
         bottom: 30,
-        backgroundColor:"#1270CC",
+        backgroundColor: "#1270CC",
     },
     cancelSearchBtn: {
         width: "35%",
@@ -77,11 +77,11 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         borderColor: "#1270CC",
         bottom: 30,
-        backgroundColor:"#1270CC",
+        backgroundColor: "#1270CC",
     },
 });
 
-export default class ChangearoundScreen extends React.Component {
+export default class TransferScreen extends React.Component {
     constructor() {
         super(...arguments);
         this.onOpenChange = isOpen => {
@@ -110,7 +110,6 @@ export default class ChangearoundScreen extends React.Component {
             else {
                 AsyncStorage.getItem('pk_org').then((org) => {
                     let origin = {
-                        // supplier: this.state.supplier,
                         vbillcode: this.state.vbillcode,
                         formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
                         enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
@@ -140,8 +139,6 @@ export default class ChangearoundScreen extends React.Component {
 
         this.state = {
             searchResult: [],
-            // supplier: "",
-            // supplierLock: true,
             vbillcode: "",
             vbillcodeLock: true,
             formdate: "",
@@ -177,25 +174,6 @@ export default class ChangearoundScreen extends React.Component {
             <>
                 <View>
                     <List>
-                        {/* <InputItem
-                            clear
-                            type="text"
-                            value={this.state.supplier}
-                            onChange={supplier => {
-                                if (!this.state.supplierLock)
-                                    this.setState({ supplier });
-                            }}
-                            onFocus={() => {
-                                this.setState({ supplierLock: false });
-                            }}
-                            onBlur={() => {
-                                this.setState({ supplierLock: true });
-                            }}
-                            placeholder="请输入供应商"
-                        >
-                            供应商
-                        </InputItem> */}
-
                         <InputItem
                             clear
                             type="text"
