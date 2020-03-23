@@ -175,7 +175,7 @@ class BackImage extends React.Component { //创建一个返回按钮的组件
 // 应用内堆
 const HomeStack = createStackNavigator(
     {
-        // 一级查询界面
+        // 一级单据查询界面
         主页: TabNavigator,
         // 二级单据详情界面
         采购入库单: ProcuDetailStack,
