@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     },
     scanSegment: {
         height: 30,
-        tintColor: "#1270CC"
+        tintColor: "#1270CC",
     },
     segmentWrapper: {
         paddingTop: 10,
@@ -220,6 +220,7 @@ class TransferMaterialDetailScreen extends React.Component {
                                     onChange={this.onSegmentChange}
                                     onValueChange={this.onSegmentValueChange}
                                     style={styles.scanSegment}
+                                    tintColor={'#1270CC'}
                                 />
                             </View>
                             <View
@@ -231,8 +232,7 @@ class TransferMaterialDetailScreen extends React.Component {
                                     placeholder="请扫码获取入库货位"
                                     editable={false}
                                     style={{ fontSize: 16 }}
-                                >
-                                    入库货位
+                                >入库货位
                             </InputItem>
                             </View>
 
@@ -245,8 +245,7 @@ class TransferMaterialDetailScreen extends React.Component {
                                     placeholder="请扫码获取出库货位"
                                     editable={false}
                                     style={{ fontSize: 16 }}
-                                >
-                                    出库货位
+                                >出库货位
                             </InputItem>
                             </View>
 
