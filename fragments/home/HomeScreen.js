@@ -167,7 +167,7 @@ const TabNavigator = createBottomTabNavigator(
 class BackImage extends React.Component { //创建一个返回按钮的组件
     render() {
         return (
-            <Icon name="caret-left" size={18} color={"#1270CC"} />
+            <Icon name="caret-left" size={25} color={"#1270CC"} />
         );
     }
 }
@@ -175,13 +175,14 @@ class BackImage extends React.Component { //创建一个返回按钮的组件
 // 应用内堆
 const HomeStack = createStackNavigator(
     {
+        // 一级查询界面
         主页: TabNavigator,
-
+        // 二级单据详情界面
         采购入库单: ProcuDetailStack,
         转库单: TransferDetailStack,
         产成品入库单: ProductDetailStack,
         销售出库单: SaleDetailStack,
-
+        // 三级物料明细界面
         采购入库物料明细: ProcuMaterialDetailStack,
         转库物料明细: TransferMaterialDetailStack,
         产成品入库物料明细: ProductMaterialDetailStack,
