@@ -1,7 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, Keyboard } from 'react-native';
 import { Button, List, Provider, InputItem, Icon } from '@ant-design/react-native';
-import ScanModule from "../../nativeCall/ScanModule";
 import { Toast } from '@ant-design/react-native';
 const Item = List.Item;
 
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     }
 });
 
-class SOMaterialDetailScreen extends React.Component {
+class SaleMaterialDetailScreen extends React.Component {
     constructor() {
         super(...arguments);
 
@@ -274,4 +273,4 @@ class SOMaterialDetailScreen extends React.Component {
     }
 }
 
-export default SOMaterialDetailScreen;
+export default SaleMaterialDetailScreen;

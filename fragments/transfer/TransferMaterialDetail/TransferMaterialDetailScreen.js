@@ -1,8 +1,10 @@
 import React from 'react';
-import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, Keyboard } from 'react-native';
-import { Button, List, Provider, InputItem, Icon } from '@ant-design/react-native';
-import ScanModule from "../../nativeCall/ScanModule";
+import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, AsyncStorage, Keyboard } from 'react-native';
+import { Button, List, Provider, InputItem, Icon, SegmentedControl } from '@ant-design/react-native';
 import { Toast } from '@ant-design/react-native';
+import axios from '../../../axios/index';
+import qs from 'qs';
+
 const Item = List.Item;
 
 const styles = StyleSheet.create({
@@ -16,6 +18,14 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: "#1270CC",
+    },
+    scanSegment: {
+        height: 30,
+        tintColor: "#1270CC"
+    },
+    segmentWrapper: {
+        paddingTop: 10,
+        paddingHorizontal: 16,
     },
     btnText: {
         color: "#fff",
@@ -65,7 +75,20 @@ const styles = StyleSheet.create({
     }
 });
 
-class MaterialDetailScreen extends React.Component {
+const formatTime = date => {
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+
+    return [year, month, day].map(formatNumber).join('-')
+}
+
+const formatNumber = n => {
+    n = n.toString()
+    return n[1] ? n : '0' + n
+}
+
+class TransferMaterialDetailScreen extends React.Component {
     constructor() {
         super(...arguments);
 
@@ -84,21 +107,58 @@ class MaterialDetailScreen extends React.Component {
         this.state = {
             detail: {},
             index: "",
-            ninum: "",
-            ninumLock: true,
-            cargdoc: "",
+            num: "",
+            numLock: true,
+            incargdoc: "",
+            outcargdoc: "",
+            scanIndicator: true,
+            showListVisible: false,
             keyboardShown: false,
         };
 
         this.materialConfirm = () => {
-            if (this.state.ninum.trim() === "" || this.state.cargdoc.trim() === "")
+            if (this.state.num.trim() === "" || this.state.incargdoc.trim() === "" || this.state.outcargdoc.trim() === "")
                 Toast.fail('需要填选的项为必输', 1);
             else {
-                const { navigation } = this.props;
-                navigation.navigate("采购入库单");
-                navigation.state.params.editConfirmed(this.state);
+                if (this.state.showListVisible) {
+                    const { navigation } = this.props;
+                    navigation.navigate("转库单");
+                    navigation.state.params.editConfirmed(this.state);
+                } else {
+                    let origin = {
+                        num: this.state.num,
+                        coutcspace: this.state.outcargdoc,
+                        cincspace: this.state.incargdoc,
+                        dbilldate: formatTime(new Date())
+                    }
+
+                    // 产成品转库
+                    AsyncStorage.multiGet(['coperatorid', 'pk_org'], (err, stores) => {
+                        if (err) Toast.fail("出错了，请重试", 1);
+                        else {
+                            stores.map((result, i, store) => {
+                                let key = store[i][0];
+                                let value = store[i][1];
+                                origin[key] = value;
+                            });
+                            origin.pk_corp = origin.pk_org;
+
+                            let params = {
+                                params: JSON.stringify(origin)
+                            }
+
+                            axios.submitOrder(this, "/prowhstr", qs.stringify(params));
+                        }
+                    });
+                }
             }
         };
+
+        this.onSegmentChange = e => {
+            this.setState({
+                scanIndicator: e.nativeEvent.selectedSegmentIndex == 0,
+            })
+        }
     }
 
     componentDidMount() {
@@ -116,20 +176,31 @@ class MaterialDetailScreen extends React.Component {
         //通过使用DeviceEventEmitter模块来监听事件
         DeviceEventEmitter.addListener('iDataScan', function (Event) {
             // alert("扫码结果为： " + Event.ScanResult);
-            _this.setState({
-                cargdoc: Event.ScanResult
-            })
+            if (_this.state.scanIndicator) {
+                _this.setState({
+                    incargdoc: Event.ScanResult
+                })
+            } else {
+                _this.setState({
+                    outcargdoc: Event.ScanResult
+                })
+            }
             if (_this.inputRef)
                 _this.inputRef.focus();
         });
 
-        let detail = this.props.navigation.state.params.item;
-        let index = this.props.navigation.state.params.index;
-        let cargdoc = detail.cargdoc ? detail.cargdoc : "";
-        let ninum = detail.ninum ? detail.ninum : "";
-        this.setState({
-            detail, index, cargdoc, ninum
-        })
+        let showListVisible = this.props.navigation.state.params.showListVisible;
+
+        if (showListVisible) {
+            let detail = this.props.navigation.state.params.item;
+            let index = this.props.navigation.state.params.index;
+            let incargdoc = detail.incargdoc ? detail.incargdoc : "";
+            let outcargdoc = detail.outcargdoc ? detail.outcargdoc : "";
+            let num = detail.num ? detail.num : "";
+            this.setState({
+                showListVisible, detail, index, incargdoc, outcargdoc, num
+            })
+        }
     }
 
     render() {
@@ -143,40 +214,65 @@ class MaterialDetailScreen extends React.Component {
                         showsVerticalScrollIndicator={false}
                     >
                         <List renderHeader={'请填选'}>
-                            <InputItem
-                                clear
-                                type="text"
-                                value={this.state.cargdoc}
-                                placeholder="请扫码获取库位"
-                                editable={false}
-                                style={{ fontSize: 16 }}
-                            >
-                                货位
+                            <View style={styles.segmentWrapper}>
+                                <SegmentedControl
+                                    values={['扫入库货位条形码', '扫出库货位条形码']}
+                                    onChange={this.onSegmentChange}
+                                    onValueChange={this.onSegmentValueChange}
+                                    style={styles.scanSegment}
+                                />
+                            </View>
+                            <View
+                                style={{ display: this.state.scanIndicator ? "flex" : "none" }}>
+                                <InputItem
+                                    clear
+                                    type="text"
+                                    value={this.state.incargdoc}
+                                    placeholder="请扫码获取入库货位"
+                                    editable={false}
+                                    style={{ fontSize: 16 }}
+                                >
+                                    入库货位
                             </InputItem>
+                            </View>
+
+                            <View
+                                style={{ display: this.state.scanIndicator ? "none" : "flex" }}>
+                                <InputItem
+                                    clear
+                                    type="text"
+                                    value={this.state.outcargdoc}
+                                    placeholder="请扫码获取出库货位"
+                                    editable={false}
+                                    style={{ fontSize: 16 }}
+                                >
+                                    出库货位
+                            </InputItem>
+                            </View>
 
                             <InputItem
-                                clear
+                                ref={el => (this.inputRef = el)}
+                                clear={true}
                                 type="number"
-                                value={this.state.ninum}
-                                onChange={ninum => {
-                                    if (!this.state.ninumLock)
-                                        this.setState({ ninum });
+                                value={this.state.num}
+                                onChange={num => {
+                                    if (!this.state.numLock)
+                                        this.setState({ num });
                                 }}
                                 onFocus={() => {
-                                    this.setState({ ninumLock: false });
+                                    this.setState({ numLock: false });
                                 }}
                                 onBlur={() => {
-                                    this.setState({ ninumLock: true });
+                                    this.setState({ numLock: true });
                                 }}
-                                placeholder="请输入实际入库数量"
+                                placeholder="请输入实际转库数量"
                                 style={{ fontSize: 16 }}
-                                ref={el => (this.inputRef = el)}
                             >
-                                入库数量
+                                转库数量
                             </InputItem>
                         </List>
 
-                        <List style={styles.detailList} renderHeader={'请查看'}>
+                        <List style={{ ...styles.detailList, display: this.state.showListVisible ? "flex" : "none" }} renderHeader={'请查看'}>
                             <Item
                                 extra={
                                     <Text>
@@ -190,22 +286,12 @@ class MaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.naccumwarehousenum}
+                                        {this.state.detail.nadjustnum}
                                     </Text>
                                 }
                                 multipleLine
                             >
-                                累计数量
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.cbaseid}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                物料主键
+                                已调整数量
                                     </Item>
                             <Item
                                 extra={
@@ -255,37 +341,17 @@ class MaterialDetailScreen extends React.Component {
                                 }
                                 multipleLine
                             >
-                                主单位
+                                单位
                                     </Item>
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.narrvnum}
+                                        {this.state.detail.dshldtransnum}
                                     </Text>
                                 }
                                 multipleLine
                             >
-                                到货数量
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.nprice}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                本币单价
-                                    </Item>
-                            <Item
-                                extra={
-                                    <Text>
-                                        {this.state.detail.nmoney}
-                                    </Text>
-                                }
-                                multipleLine
-                            >
-                                本币金额
+                                应转数量
                                     </Item>
                             <Item
                                 extra={
@@ -297,6 +363,26 @@ class MaterialDetailScreen extends React.Component {
                             >
                                 行号
                                     </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.vrownote}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                备注
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.vbatchcode}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                批次号
+                                    </Item>
                         </List>
                     </ScrollView>
                     <Button
@@ -306,16 +392,10 @@ class MaterialDetailScreen extends React.Component {
                         <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                         <Text style={styles.btnText}> 确定</Text>
                     </Button>
-                    {/* <Button
-                        onPress={() => ScanModule.openScanner()}
-                        style={styles.scanBtn}>
-                        <Icon name="scan" size="sm" color="#fff" style={styles.btnIcon} />
-                        <Text style={styles.btnText}> 扫码</Text>
-                    </Button> */}
                 </View>
             </Provider >
         );
     }
 }
 
-export default MaterialDetailScreen;
+export default TransferMaterialDetailScreen;

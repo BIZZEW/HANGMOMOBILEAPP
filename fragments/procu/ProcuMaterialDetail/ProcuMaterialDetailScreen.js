@@ -1,7 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, View, DeviceEventEmitter, StyleSheet, Keyboard } from 'react-native';
 import { Button, List, Provider, InputItem, Icon } from '@ant-design/react-native';
-import ScanModule from "../../nativeCall/ScanModule";
 import { Toast } from '@ant-design/react-native';
 const Item = List.Item;
 
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     }
 });
 
-class PIMaterialDetailScreen extends React.Component {
+class ProcuMaterialDetailScreen extends React.Component {
     constructor() {
         super(...arguments);
 
@@ -84,18 +83,18 @@ class PIMaterialDetailScreen extends React.Component {
         this.state = {
             detail: {},
             index: "",
-            ninnum: "",
-            ninnumLock: true,
-            pk_cargdoc: "",
+            ninum: "",
+            ninumLock: true,
+            cargdoc: "",
             keyboardShown: false,
         };
 
         this.materialConfirm = () => {
-            if (this.state.ninnum.trim() === "" || this.state.pk_cargdoc.trim() === "")
+            if (this.state.ninum.trim() === "" || this.state.cargdoc.trim() === "")
                 Toast.fail('需要填选的项为必输', 1);
             else {
                 const { navigation } = this.props;
-                navigation.navigate("产成品入库单");
+                navigation.navigate("采购入库单");
                 navigation.state.params.editConfirmed(this.state);
             }
         };
@@ -117,7 +116,7 @@ class PIMaterialDetailScreen extends React.Component {
         DeviceEventEmitter.addListener('iDataScan', function (Event) {
             // alert("扫码结果为： " + Event.ScanResult);
             _this.setState({
-                pk_cargdoc: Event.ScanResult
+                cargdoc: Event.ScanResult
             })
             if (_this.inputRef)
                 _this.inputRef.focus();
@@ -125,10 +124,10 @@ class PIMaterialDetailScreen extends React.Component {
 
         let detail = this.props.navigation.state.params.item;
         let index = this.props.navigation.state.params.index;
-        let pk_cargdoc = detail.pk_cargdoc ? detail.pk_cargdoc : "";
-        let ninnum = detail.ninnum ? detail.ninnum : "";
+        let cargdoc = detail.cargdoc ? detail.cargdoc : "";
+        let ninum = detail.ninum ? detail.ninum : "";
         this.setState({
-            detail, index, pk_cargdoc, ninnum
+            detail, index, cargdoc, ninum
         })
     }
 
@@ -146,7 +145,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <InputItem
                                 clear
                                 type="text"
-                                value={this.state.pk_cargdoc}
+                                value={this.state.cargdoc}
                                 placeholder="请扫码获取库位"
                                 editable={false}
                                 style={{ fontSize: 16 }}
@@ -157,16 +156,16 @@ class PIMaterialDetailScreen extends React.Component {
                             <InputItem
                                 clear
                                 type="number"
-                                value={this.state.ninnum}
-                                onChange={ninnum => {
-                                    if (!this.state.ninnumLock)
-                                        this.setState({ ninnum });
+                                value={this.state.ninum}
+                                onChange={ninum => {
+                                    if (!this.state.ninumLock)
+                                        this.setState({ ninum });
                                 }}
                                 onFocus={() => {
-                                    this.setState({ ninnumLock: false });
+                                    this.setState({ ninumLock: false });
                                 }}
                                 onBlur={() => {
-                                    this.setState({ ninnumLock: true });
+                                    this.setState({ ninumLock: true });
                                 }}
                                 placeholder="请输入实际入库数量"
                                 style={{ fontSize: 16 }}
@@ -180,12 +179,32 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.csname}
+                                        {this.state.detail.shen}
                                     </Text>
                                 }
                                 multipleLine
                             >
-                                货位名称
+                                剩余数量
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.naccumwarehousenum}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                累计数量
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.cbaseid}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                物料主键
                                     </Item>
                             <Item
                                 extra={
@@ -220,7 +239,7 @@ class PIMaterialDetailScreen extends React.Component {
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.cbaseid_type}
+                                        {this.state.detail.baseid_type}
                                     </Text>
                                 }
                                 multipleLine
@@ -235,17 +254,37 @@ class PIMaterialDetailScreen extends React.Component {
                                 }
                                 multipleLine
                             >
-                                单位
+                                主单位
                                     </Item>
                             <Item
                                 extra={
                                     <Text>
-                                        {this.state.detail.vbatchcode}
+                                        {this.state.detail.narrvnum}
                                     </Text>
                                 }
                                 multipleLine
                             >
-                                批次号
+                                到货数量
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.nprice}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                本币单价
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.nmoney}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                本币金额
                                     </Item>
                             <Item
                                 extra={
@@ -272,4 +311,4 @@ class PIMaterialDetailScreen extends React.Component {
     }
 }
 
-export default PIMaterialDetailScreen;
+export default ProcuMaterialDetailScreen;
