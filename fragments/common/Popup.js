@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, Animated, TouchableOpacity, BackHandler } from 'react-native';
-import styles from '../../res/styles'
+import styles from '../../res/styles';
 
 const { width, height } = Dimensions.get('window');
 var _this = null;

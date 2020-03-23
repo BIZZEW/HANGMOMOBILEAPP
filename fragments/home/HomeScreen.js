@@ -20,7 +20,7 @@ import ProductMaterialDetailScreen from '../product/ProductMaterialDetail/Produc
 import SaleScreen from '../sale/SaleScreen';
 import SaleDetailScreen from '../sale/SaleDetail/SaleDetailScreen';
 import SaleMaterialDetailScreen from '../sale/SaleMaterialDetail/SaleMaterialDetailScreen';
-import styles from '../../res/styles'
+import styles from '../../res/styles';
 import { Icon, Modal } from '@ant-design/react-native';
 
 // 采购入库堆

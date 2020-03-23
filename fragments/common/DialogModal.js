@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Modal, TouchableOpacity } from 'react-native';
-import styles from '../../res/styles'
+import styles from '../../res/styles';
 
 export default class DialogModal extends Component {
 

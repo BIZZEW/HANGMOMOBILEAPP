@@ -84,6 +84,15 @@ const styles = StyleSheet.create(
             justifyContent: "center",
             alignItems: "center",
         },
+        LoadingInside: {
+            width: 100,
+            height: 100,
+            backgroundColor: "rgba(0,0,0,0.6)",
+            opacity: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 7
+        },
         // 弹出框
         PopupPage: {
             position: "absolute",
@@ -188,6 +197,71 @@ const styles = StyleSheet.create(
         btnText: {
             color: "#fff",
             fontSize: 15,
+        },
+        // 二级单据详情界面
+        scanBtn: {
+            height: 45,
+            position: "absolute",
+            zIndex: 100,
+            left: 20,
+            bottom: 20,
+            borderColor: "#fff",
+            borderWidth: 1,
+            borderRadius: 10,
+            backgroundColor: "#1270CC",
+        },
+        detailBtnText: {
+            color: "#fff",
+            fontSize: 20,
+        },
+        btnIcon: {
+            marginRight: 10,
+            fontSize: 15,
+        },
+        confirmBtn: {
+            height: 45,
+            position: "absolute",
+            zIndex: 100,
+            bottom: 20,
+            borderColor: "#fff",
+            borderWidth: 1,
+            borderRadius: 10,
+        },
+        detailList: {
+            marginBottom: 80,
+            borderRadius: 10,
+        },
+        tabsContent: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: "100%",
+            width: "100%",
+            backgroundColor: '#1270CC',
+        },
+        detailScrollView: {
+            flex: 1,
+            backgroundColor: "#1270CC",
+            width: "100%",
+            paddingHorizontal: 10
+        },
+        tabText: {
+            paddingVertical: 5,
+            textAlign: "center",
+            width: "100%",
+            fontSize: 15,
+        },
+        tabWrapper: {
+            paddingHorizontal: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+            height: 50,
+            backgroundColor: "#1270CC",
+        },
+        tabComp: {
+            width: '50%',
+            padding: 0,
+            margin: 0,
         },
     });
 

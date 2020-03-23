@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, ScrollView, AsyncStorage } from 'react-native';
 import { Button, InputItem, List, WhiteSpace, WingBlank, Toast, Provider, Picker } from '@ant-design/react-native';
 import axios from '../../axios/index';
-import styles from '../../res/styles'
+import styles from '../../res/styles';
 import qs from 'qs'
 
 class LoginScreen extends React.Component {

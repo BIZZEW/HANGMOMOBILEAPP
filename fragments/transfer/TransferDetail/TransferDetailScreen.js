@@ -1,68 +1,10 @@
 import React from 'react';
-import { ScrollView, Text, View, StyleSheet, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
+import { ScrollView, Text, View, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
 import { Button, List, Provider, Icon, Tabs, Toast } from '@ant-design/react-native';
 import axios from '../../../axios/index';
+import styles from '../../../res/styles';
 import qs from 'qs';
 const Item = List.Item;
-
-const styles = StyleSheet.create({
-    scanBtn: {
-        height: 45,
-        position: "absolute",
-        zIndex: 100,
-        left: 20,
-        bottom: 20,
-        borderColor: "#fff",
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: "#1270CC",
-    },
-    btnText: {
-        color: "#fff",
-        fontSize: 20,
-    },
-    btnIcon: {
-        marginRight: 10,
-        fontSize: 15,
-    },
-    confirmBtn: {
-        height: 45,
-        position: "absolute",
-        zIndex: 100,
-        bottom: 20,
-        borderColor: "#fff",
-        borderWidth: 1,
-        borderRadius: 10,
-    },
-    detailList: {
-        marginBottom: 80,
-        borderRadius: 10,
-    },
-    tabsContent: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: "100%",
-        width: "100%",
-        backgroundColor: '#1270CC',
-    },
-    FlatList: {
-        flex: 1,
-        backgroundColor: '#1270CC',
-        paddingBottom: 60,
-    },
-    ListItem: {
-        backgroundColor: "#fff",
-        marginBottom: 10,
-        borderRadius: 10,
-        padding: 20,
-    },
-    ScrollView: {
-        flex: 1,
-        backgroundColor: "#1270CC",
-        width: "100%",
-        paddingHorizontal: 10
-    }
-});
 
 const formatTime = date => {
     const year = date.getFullYear()
@@ -166,24 +108,13 @@ class TransferDetailScreen extends React.Component {
                     }}
                     renderTabBar={tabProps => (
                         <View
-                            style={{
-                                paddingHorizontal: 10,
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-evenly',
-                                height: 50,
-                                backgroundColor: "#1270CC",
-                            }}
+                            style={styles.tabWrapper}
                         >
                             {tabProps.tabs.map((tab, i) => (
                                 <TouchableOpacity
                                     activeOpacity={0.9}
                                     key={tab.key || i}
-                                    style={{
-                                        width: '50%',
-                                        padding: 0,
-                                        margin: 0,
-                                    }}
+                                    style={styles.tabComp}
                                     onPress={() => {
                                         const { goToTab, onTabClick } = tabProps;
                                         onTabClick && onTabClick(tabs[i], i);
@@ -192,12 +123,9 @@ class TransferDetailScreen extends React.Component {
                                 >
                                     <Text
                                         style={{
+                                            ...styles.tabText,
                                             color: tabProps.activeTab === i ? '#1270CC' : '#B0B0B0',
                                             backgroundColor: tabProps.activeTab === i ? "#fff" : "#DFDFDF",
-                                            paddingVertical: 5,
-                                            textAlign: "center",
-                                            width: "100%",
-                                            fontSize: 15,
                                         }}
                                     >
                                         {tab.title}
@@ -209,7 +137,7 @@ class TransferDetailScreen extends React.Component {
                 >
                     <View style={styles.tabsContent}>
                         <ScrollView
-                            style={styles.ScrollView}
+                            style={styles.detailScrollView}
                             automaticallyAdjustContentInsets={false}
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
@@ -303,7 +231,7 @@ class TransferDetailScreen extends React.Component {
                             automaticallyAdjustContentInsets={false}
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
-                            style={styles.ScrollView}
+                            style={styles.detailScrollView}
                         >
                             <FlatList
                                 style={styles.FlatList}

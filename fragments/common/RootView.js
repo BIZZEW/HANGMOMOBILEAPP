@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { AppRegistry, View } from 'react-native';
-import styles from '../../res/styles'
+import styles from '../../res/styles';
 import Loading from './Loading';
 import Popup from './Popup';
+
 const originRegister = AppRegistry.registerComponent;
 AppRegistry.registerComponent = (appKey, component) => {
     return originRegister(appKey, function () {
