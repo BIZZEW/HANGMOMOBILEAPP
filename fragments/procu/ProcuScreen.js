@@ -69,7 +69,6 @@ export default class ProcuScreen extends React.Component {
     constructor() {
         super(...arguments);
         this.onOpenChange = isOpen => {
-            console.log('是否打开了 Drawer', isOpen.toString());
         };
 
         this.onChange = value => {

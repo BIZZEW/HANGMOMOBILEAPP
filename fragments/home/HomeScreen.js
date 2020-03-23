@@ -191,7 +191,6 @@ const HomeStack = createStackNavigator(
                 headerStyle: { height: 40, },
                 headerTitleStyle: { fontSize: 18, color: "#1065B8" },
                 headerRight: () => {
-                    console.log(JSON.stringify(tabState));
                     if (tabState.title) {
                         return <Icon name="logout" style={styles.logoutIcon} onPress={() => {
                             if (global.logoutshow == 0) {
@@ -201,7 +200,6 @@ const HomeStack = createStackNavigator(
                                         text: '取消',
                                         onPress: async () => {
                                             global.logoutshow = 0;
-                                            console.log('cancel');
                                         },
                                         style: 'cancel',
                                     },
