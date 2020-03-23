@@ -190,32 +190,38 @@ const HomeStack = createStackNavigator(
                 headerTintColor: "#1270CC",
                 headerStyle: { height: 40, },
                 headerTitleStyle: { fontSize: 18, color: "#1065B8" },
-                headerRight: () => (
-                    <Icon name="logout" style={styles.logoutIcon} onPress={() => {
-                        if (global.logoutshow == 0) {
-                            global.logoutshow = 1;
-                            Modal.alert('提示', "确认退出当前账户？", [
-                                {
-                                    text: '取消',
-                                    onPress: async () => {
-                                        global.logoutshow = 0;
-                                        console.log('cancel');
+                headerRight: () => {
+                    console.log(JSON.stringify(tabState));
+                    if (tabState.title) {
+                        return <Icon name="logout" style={styles.logoutIcon} onPress={() => {
+                            if (global.logoutshow == 0) {
+                                global.logoutshow = 1;
+                                Modal.alert('提示', "确认退出当前账户？", [
+                                    {
+                                        text: '取消',
+                                        onPress: async () => {
+                                            global.logoutshow = 0;
+                                            console.log('cancel');
+                                        },
+                                        style: 'cancel',
                                     },
-                                    style: 'cancel',
-                                },
-                                {
-                                    text: '确定',
-                                    onPress: async () => {
-                                        global.logoutshow = 0;
-                                        AsyncStorage.clear();
-                                        navigation.navigate('Auth');
-                                    }
-                                },
-                            ],
-                                onBackHandler = () => { return false; });
-                        }
-                    }} />
-                )
+                                    {
+                                        text: '确定',
+                                        onPress: async () => {
+                                            global.logoutshow = 0;
+                                            AsyncStorage.clear();
+                                            navigation.navigate('Auth');
+                                        }
+                                    },
+                                ],
+                                    onBackHandler = () => { return false; }
+                                );
+                            }
+                        }} />
+                    }
+                    else
+                        return (<></>)
+                }
             }
         }
     }
