@@ -1,12 +1,12 @@
 import React from 'react';
 import { Image, ScrollView, AsyncStorage } from 'react-native';
 import { Button, InputItem, List, WhiteSpace, WingBlank, Toast, Provider, Picker } from '@ant-design/react-native';
-import axios from '../axios/index';
+import axios from '../../axios/index';
 import qs from 'qs'
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
-        title: '登录',
+        title: '杭摩库管',
         headerTintColor: "#1270CC",
         headerStyle: { height: 40 },
         headerTitleStyle: { fontSize: 18, color: "#1065B8" },
@@ -68,7 +68,7 @@ class LoginScreen extends React.Component {
                 >
                     <WhiteSpace size="lg" />
                     <WhiteSpace size="lg" />
-                    <Image source={require('../logo.png')} style={{ width: 60, height: 60, alignSelf: "center" }} />
+                    <Image source={require('../../logo.png')} style={{ width: 60, height: 60, alignSelf: "center" }} />
                     <WhiteSpace size="lg" />
                     <WhiteSpace size="lg" />
                     <List>

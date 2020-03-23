@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import LoginScreen from './authPages/LoginScreen';
+import LoginScreen from './fragments/login/LoginScreen';
 import HomeStack from './fragments/home/HomeScreen';
 import "./fragments/common/RootView";
 
