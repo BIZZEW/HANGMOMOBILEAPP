@@ -170,7 +170,7 @@ const TabNavigator = createBottomTabNavigator(
 // 应用内堆
 const HomeStack = createStackNavigator(
     {
-        杭摩PDA: TabNavigator,
+        主页: TabNavigator,
 
         采购入库单: ProcuDetailStack,
         转库单: TransferDetailStack,
@@ -183,7 +183,7 @@ const HomeStack = createStackNavigator(
         销售出库物料明细: SaleMaterialDetailStack,
     },
     {
-        initialRouteName: '杭摩PDA',
+        initialRouteName: '主页',
         defaultNavigationOptions: ({ navigation, screenProps }) => {
             let tabState = getActiveChildNavigationOptions(navigation, screenProps);
 

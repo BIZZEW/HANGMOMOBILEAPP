@@ -108,7 +108,7 @@ export default class Axios {
 
                 const { navigation } = _this.props;
                 setTimeout(() => {
-                    navigation.navigate('杭摩PDA');
+                    navigation.navigate('主页');
                     navigation.state.params.requireList();
                 }, 1000);
             }
