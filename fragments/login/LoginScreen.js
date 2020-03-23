@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, ScrollView, AsyncStorage } from 'react-native';
 import { Button, InputItem, List, WhiteSpace, WingBlank, Toast, Provider, Picker } from '@ant-design/react-native';
 import axios from '../../axios/index';
+import styles from '../../res/styles'
 import qs from 'qs'
 
 class LoginScreen extends React.Component {
@@ -61,14 +62,14 @@ class LoginScreen extends React.Component {
         return (
             <Provider>
                 <ScrollView
-                    style={{ flex: 1 }}
+                    style={styles.ScrollView}
                     automaticallyAdjustContentInsets={false}
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
                     <WhiteSpace size="lg" />
                     <WhiteSpace size="lg" />
-                    <Image source={require('../../logo.png')} style={{ width: 60, height: 60, alignSelf: "center" }} />
+                    <Image source={require('../../logo.png')} style={styles.logo} />
                     <WhiteSpace size="lg" />
                     <WhiteSpace size="lg" />
                     <List>
@@ -116,10 +117,7 @@ class LoginScreen extends React.Component {
                             <Button
                                 onPress={this._loginAsync.bind(this)}
                                 type="primary"
-                                style={{
-                                    backgroundColor: "#1270CC",
-                                    borderColor: "#1270CC",
-                                }}
+                                style={styles.loginBtn}
                             >
                                 登  录
                         </Button>

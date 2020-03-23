@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('window')
+import { Text, View, ActivityIndicator, Dimensions } from 'react-native';
+import styles from '../../res/styles'
+
 _this = null;
 class Loading extends Component {
     constructor(props) {
@@ -40,15 +41,3 @@ class Loading extends Component {
     }
 }
 export default Loading;
-const styles = StyleSheet.create({
-    LoadingPage: {
-        position: "absolute",
-        left: 0,
-        top: 0,
-        backgroundColor: "rgba(0,0,0,0)",
-        width: width,
-        height: height,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-});

@@ -20,16 +20,8 @@ import ProductMaterialDetailScreen from '../product/ProductMaterialDetail/Produc
 import SaleScreen from '../sale/SaleScreen';
 import SaleDetailScreen from '../sale/SaleDetail/SaleDetailScreen';
 import SaleMaterialDetailScreen from '../sale/SaleMaterialDetail/SaleMaterialDetailScreen';
-
+import styles from '../../res/styles'
 import { Icon, Modal } from '@ant-design/react-native';
-
-const styles = StyleSheet.create({
-    logoutIcon: {
-        fontSize: 25,
-        color: "#1270CC",
-        marginRight: 10
-    }
-});
 
 // 采购入库堆
 const ProcuDetailStack = createStackNavigator(

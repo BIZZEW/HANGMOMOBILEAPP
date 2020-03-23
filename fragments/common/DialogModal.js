@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    Modal,
-    TouchableOpacity
-} from 'react-native';
-
+import { Text, View, Modal, TouchableOpacity } from 'react-native';
+import styles from '../../res/styles'
 
 export default class DialogModal extends Component {
 
@@ -52,69 +46,3 @@ export default class DialogModal extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    dialogContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.6)'
-    },
-    innerContainer: {
-        borderRadius: 10,
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        padding: 20,
-    },
-    contentTitle: {
-        marginBottom: 10,
-    },
-    titleTextStyle: {
-        fontSize: 20,
-        letterSpacing: 20,
-    },
-    contentContainer: {
-        width: "80%",
-        borderTopColor: '#cccccc',
-        margin: 10
-    },
-    dialogContentTextStyle: {
-        fontSize: 15,
-        color: '#000',
-    },
-    btnContainer: {
-        width: "80%",
-        height: 40,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 15,
-    },
-    dialogConfirmButton: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 40,
-        marginLeft: 20,
-        backgroundColor: "#1270CC",
-        borderRadius: 8,
-    },
-    dialogCancelButton: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 40,
-        backgroundColor: "#1270CC",
-        borderRadius: 8,
-    },
-    hidemodalTxt: {
-        textAlign: 'center',
-        fontSize: 16,
-        color: '#fff'
-    },
-});

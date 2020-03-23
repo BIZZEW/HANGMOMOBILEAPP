@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, Animated, TouchableOpacity, BackHandler } from 'react-native';
-// import { Number } from 'core-js';
+import { Text, View, Dimensions, Animated, TouchableOpacity, BackHandler } from 'react-native';
+import styles from '../../res/styles'
+
 const { width, height } = Dimensions.get('window');
 var _this = null;
 class Popup extends Component {
@@ -168,15 +169,3 @@ class Popup extends Component {
     }
 }
 export default Popup;
-const styles = StyleSheet.create({
-    PopupPage: {
-        position: "absolute",
-        left: 0,
-        top: 0,
-        backgroundColor: "rgba(0,0,0,0.4)",
-        width: width,
-        height: height,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-});

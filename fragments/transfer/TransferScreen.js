@@ -1,85 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage, Keyboard } from 'react-native';
+import { ScrollView, Text, View, TouchableOpacity, FlatList, AsyncStorage, Keyboard } from 'react-native';
 import { Button, Drawer, List, Provider, InputItem, Icon, DatePicker, Toast } from '@ant-design/react-native';
 import axios from '../../axios/index';
+import styles from '../../res/styles'
 import qs from 'qs';
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    ListItem: {
-        backgroundColor: "#fff",
-        marginBottom: 10,
-        borderRadius: 10,
-        padding: 20,
-    },
-    searchBtn: {
-        height: 40,
-        position: "absolute",
-        zIndex: 100,
-        right: 20,
-        bottom: 20,
-        borderColor: "#fff",
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: "#1270CC"
-    },
-    specialEntrance: {
-        height: 40,
-        position: "absolute",
-        zIndex: 100,
-        left: 20,
-        bottom: 20,
-        borderColor: "#fff",
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: "#1270CC",
-        color: "#000"
-    },
-    btnText: {
-        color: "#fff",
-        fontSize: 15,
-    },
-    searchBtnIcon: {
-        fontSize: 20,
-    },
-    emptyIcon: {
-        fontSize: 100,
-        color: "#51A0EE",
-    },
-    emptyView: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-        zIndex: -1,
-    },
-    emptyHint: {
-        fontSize: 15,
-        color: "#fff"
-    },
-    FlatList: {
-        flex: 1,
-        backgroundColor: '#1270CC',
-        paddingBottom: 60,
-    },
-    confirmSearchBtn: {
-        width: "35%",
-        left: "10%",
-        borderWidth: 0,
-        borderColor: "#1270CC",
-        bottom: 30,
-        backgroundColor: "#1270CC",
-    },
-    cancelSearchBtn: {
-        width: "35%",
-        right: "10%",
-        borderWidth: 0,
-        borderColor: "#1270CC",
-        bottom: 30,
-        backgroundColor: "#1270CC",
-    },
-});
 
 export default class TransferScreen extends React.Component {
     constructor() {
@@ -250,7 +174,7 @@ export default class TransferScreen extends React.Component {
                     onOpenChange={this.onOpenChange}
                     drawerBackgroundColor="#fff"
                 >
-                    <View style={{ flex: 1, padding: 10, backgroundColor: '#1270CC' }}>
+                    <View style={styles.searchWrapper}>
                         <Button
                             onPress={() => {
                                 this.props.navigation.navigate('转库物料明细', { showListVisible: false, requireList: (() => { }) });
@@ -264,9 +188,7 @@ export default class TransferScreen extends React.Component {
                             <Icon name="search" size="sm" color="#fff" style={styles.searchBtnIcon} />
                         </Button>
                         <View style={{
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            height: '100%',
+                            ...styles.emptyView,
                             display: (this.state.searchResult.length > 0 ? "none" : "flex"),
                         }}>
                             <Icon name="inbox" color="white" style={styles.emptyIcon} />
@@ -275,7 +197,7 @@ export default class TransferScreen extends React.Component {
                         </View>
 
                         <ScrollView
-                            style={{ flex: 1 }}
+                            style={styles.ScrollView}
                             automaticallyAdjustContentInsets={false}
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
