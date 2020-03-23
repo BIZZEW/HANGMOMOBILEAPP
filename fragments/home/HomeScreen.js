@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, AsyncStorage } from 'react-native';
+import { StyleSheet, AsyncStorage, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/FontAwesome5';
 import { getActiveChildNavigationOptions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -164,6 +164,14 @@ const TabNavigator = createBottomTabNavigator(
     },
 );
 
+class BackImage extends React.Component { //创建一个返回按钮的组件
+    render() {
+        return (
+            <Icon name="caret-left" size={18} color={"#1270CC"} />
+        );
+    }
+}
+
 // 应用内堆
 const HomeStack = createStackNavigator(
     {
@@ -190,6 +198,7 @@ const HomeStack = createStackNavigator(
                 headerTintColor: "#1270CC",
                 headerStyle: { height: 40, },
                 headerTitleStyle: { fontSize: 18, color: "#1065B8" },
+                headerBackImage: <BackImage />,
                 headerRight: () => {
                     if (tabState.title) {
                         return <Icon name="logout" style={styles.logoutIcon} onPress={() => {
