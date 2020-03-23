@@ -69,7 +69,7 @@ class LoginScreen extends React.Component {
                 >
                     <WhiteSpace size="lg" />
                     <WhiteSpace size="lg" />
-                    <Image source={require('../../logo.png')} style={styles.logo} />
+                    <Image source={require('../../res/logo.png')} style={styles.logo} />
                     <WhiteSpace size="lg" />
                     <WhiteSpace size="lg" />
                     <List>

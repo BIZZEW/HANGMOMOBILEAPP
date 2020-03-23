@@ -263,6 +263,34 @@ const styles = StyleSheet.create(
             padding: 0,
             margin: 0,
         },
+        // 三级物料明细界面
+        materialConfirmBtn: {
+            height: 45,
+            zIndex: 100,
+            bottom: 10,
+            borderColor: "#fff",
+            borderWidth: 1,
+            borderRadius: 10,
+            backgroundColor: "#1270CC",
+        },
+        materialScrollView: {
+            flex: 1,
+            backgroundColor: "#1270CC",
+            width: "100%",
+            paddingHorizontal: 10,
+            paddingTop: 10,
+        },
+        materialInput: {
+            fontSize: 16
+        },
+        scanSegment: {
+            height: 30,
+            tintColor: "#1270CC",
+        },
+        segmentWrapper: {
+            paddingTop: 10,
+            paddingHorizontal: 16,
+        },
     });
 
 module.exports = styles;
