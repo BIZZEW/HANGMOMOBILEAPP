@@ -228,7 +228,7 @@ const HomeStack = createStackNavigator(
                         }} />
                     }
                     else
-                        return (<></>)
+                        return <></>
                 }
             }
         }
