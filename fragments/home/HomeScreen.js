@@ -153,11 +153,8 @@ const TabNavigator = createBottomTabNavigator(
                 return <IconComponent name={iconName} size={15} color={tintColor} />;
             },
             tabBarOnPress: (tab) => {
-                AsyncStorage.getItem('logoutshow').then
-                    ((logoutshow) => {
-                        if (logoutshow == "0")
-                            tab.navigation.navigate(tab.navigation.state.key);
-                    })
+                if (global.logoutshow == 0)
+                    tab.navigation.navigate(tab.navigation.state.key);
             }
         }),
         tabBarOptions: {
@@ -185,15 +182,8 @@ const HomeStack = createStackNavigator(
     {
         initialRouteName: '主页',
         defaultNavigationOptions: ({ navigation, screenProps }) => {
+            global.logoutshow = 0;
             let tabState = getActiveChildNavigationOptions(navigation, screenProps);
-
-            AsyncStorage.setItem("logoutshow", "0", async e => {
-                if (e) {
-                    Toast.fail("登录失败，请重试", 1);
-                    await AsyncStorage.clear();
-                    navigation.navigate('Auth');
-                }
-            });
 
             return {
                 title: tabState.title,
@@ -202,30 +192,28 @@ const HomeStack = createStackNavigator(
                 headerTitleStyle: { fontSize: 18, color: "#1065B8" },
                 headerRight: () => (
                     <Icon name="logout" style={styles.logoutIcon} onPress={() => {
-                        AsyncStorage.getItem('logoutshow').then
-                            (async (logoutshow) => {
-                                if (logoutshow == "0") {
-                                    await AsyncStorage.setItem('logoutshow', "1");
-                                    Modal.alert('提示', "确认退出当前账户？", [
-                                        {
-                                            text: '取消',
-                                            onPress: async () => {
-                                                await AsyncStorage.setItem('logoutshow', "0");
-                                                console.log('cancel');
-                                            },
-                                            style: 'cancel',
-                                        },
-                                        {
-                                            text: '确定',
-                                            onPress: async () => {
-                                                AsyncStorage.clear();
-                                                navigation.navigate('Auth');
-                                            }
-                                        },
-                                    ],
-                                        onBackHandler = () => { return false; });
-                                }
-                            })
+                        if (global.logoutshow == 0) {
+                            global.logoutshow = 1;
+                            Modal.alert('提示', "确认退出当前账户？", [
+                                {
+                                    text: '取消',
+                                    onPress: async () => {
+                                        global.logoutshow = 0;
+                                        console.log('cancel');
+                                    },
+                                    style: 'cancel',
+                                },
+                                {
+                                    text: '确定',
+                                    onPress: async () => {
+                                        global.logoutshow = 0;
+                                        AsyncStorage.clear();
+                                        navigation.navigate('Auth');
+                                    }
+                                },
+                            ],
+                                onBackHandler = () => { return false; });
+                        }
                     }} />
                 )
             }
