@@ -155,7 +155,7 @@ const TabNavigator = createBottomTabNavigator(
             activeBackgroundColor: '#F8F8F8',
             style: { height: 60, padding: 5, },
             labelStyle: { fontSize: 12, fontWeight: "bold", margin: 0, padding: 0, letterSpacing: 2 },
-            tabStyle: { borderRadius: 10, padding: 5, borderColor: '#FBFBFB' }
+            tabStyle: { borderRadius: 5, padding: 5, borderColor: '#FBFBFB' }
         },
     },
 );
