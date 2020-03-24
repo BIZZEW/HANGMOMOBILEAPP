@@ -142,7 +142,7 @@ const TabNavigator = createBottomTabNavigator(
                 else if (routeName === '销售出库')
                     iconName = `sign-out-alt`;
 
-                return <IconComponent name={iconName} size={15} color={tintColor} />;
+                return <IconComponent name={iconName} size={14} color={tintColor} />;
             },
             tabBarOnPress: (tab) => {
                 if (global.logoutshow == 0)
@@ -152,10 +152,10 @@ const TabNavigator = createBottomTabNavigator(
         tabBarOptions: {
             activeTintColor: '#1270CC',
             inactiveTintColor: '#999999',
-            activeBackgroundColor: '#F8F8F8',
-            style: { height: 60, padding: 5, },
-            labelStyle: { fontSize: 12, fontWeight: "bold", margin: 0, padding: 0, letterSpacing: 2 },
-            tabStyle: { borderRadius: 5, padding: 5, borderColor: '#FBFBFB' }
+            activeBackgroundColor: '#DFDFDF',
+            style: { height: 55, padding: 4, },
+            labelStyle: { fontSize: 11, fontWeight: "bold", margin: 0, padding: 0, letterSpacing: 1 },
+            tabStyle: { borderRadius: 5, padding: 3, borderColor: '#FBFBFB' }
         },
     },
 );
