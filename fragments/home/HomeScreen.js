@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, AsyncStorage, Image } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import Ionicons from 'react-native-vector-icons/FontAwesome5';
 import { getActiveChildNavigationOptions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
