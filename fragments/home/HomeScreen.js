@@ -152,6 +152,10 @@ const TabNavigator = createBottomTabNavigator(
         tabBarOptions: {
             activeTintColor: '#1270CC',
             inactiveTintColor: '#999999',
+            activeBackgroundColor: '#F8F8F8',
+            style: { height: 60, padding: 5, },
+            labelStyle: { fontSize: 12, fontWeight: "bold", margin: 0, padding: 0, letterSpacing: 2 },
+            tabStyle: { borderRadius: 10, padding: 5, borderColor: '#FBFBFB' }
         },
     },
 );
@@ -189,8 +193,8 @@ const HomeStack = createStackNavigator(
             return {
                 title: tabState.title,
                 headerTintColor: "#1270CC",
-                headerStyle: { height: 40, },
-                headerTitleStyle: { fontSize: 18, color: "#1065B8" },
+                headerStyle: { height: 36, },
+                headerTitleStyle: { fontSize: 18, color: "#1065B8", fontWeight: "bold", letterSpacing: 2, },
                 headerBackImage: <BackImage />,
                 headerRight: () => {
                     if (tabState.title) {

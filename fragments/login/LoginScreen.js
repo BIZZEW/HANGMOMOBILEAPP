@@ -10,7 +10,7 @@ class LoginScreen extends React.Component {
         title: '杭摩库管',
         headerTintColor: "#1270CC",
         headerStyle: { height: 40 },
-        headerTitleStyle: { fontSize: 18, color: "#1065B8" },
+        headerTitleStyle: { fontSize: 18, color: "#1065B8", fontWeight: "bold" },
     };
 
     constructor(props) {
