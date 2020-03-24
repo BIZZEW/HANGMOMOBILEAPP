@@ -12,7 +12,6 @@
         "buildRelease": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew clean && ./gradlew assembleRelease"
     },
     "dependencies": {
-        "@ant-design/icons-react-native": "^1.0.2",
         "@ant-design/react-native": "^3.2.2",
         "@react-native-community/masked-view": "^0.1.5",
         "@react-native-community/viewpager": "^3.3.0",
