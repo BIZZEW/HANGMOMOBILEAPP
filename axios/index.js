@@ -11,15 +11,17 @@ export default class Axios {
             data,
             method: "post"
         }).then(async (res) => {
-            let storage = [
-                ['userToken', 'abc'],
-                ['coperatorid', coperatorid],
-            ]
+            if (res.errorcode == 0) {
+                let storage = [
+                    ['userToken', 'abc'],
+                    ['coperatorid', coperatorid],
+                ]
 
-            AsyncStorage.multiSet(storage, e => {
-                if (e) Toast.fail("登录失败，请重试", 1);
-                else _this.props.navigation.navigate('App');
-            });
+                AsyncStorage.multiSet(storage, e => {
+                    if (e) Toast.fail("登录失败，请重试", 1);
+                    else _this.props.navigation.navigate('App');
+                });
+            }
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);
@@ -47,16 +49,18 @@ export default class Axios {
             data,
             method: "post"
         }).then(async (res) => {
-            let data = res.data;
+            if (res.errorcode == 0) {
+                let data = res.data;
 
-            _this.setState({
-                orgs: data.map(function (item) {
-                    return {
-                        value: item.pk_corp,
-                        label: item.unitname,
-                    }
-                }),
-            });
+                _this.setState({
+                    orgs: data.map(function (item) {
+                        return {
+                            value: item.pk_corp,
+                            label: item.unitname,
+                        }
+                    }),
+                });
+            }
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);
@@ -73,16 +77,16 @@ export default class Axios {
             data,
             method: "post"
         }).then(async (res) => {
-            // alert(JSON.stringify(res));
+            if (res.errorcode == 0) {
+                let data = res.data;
 
-            let data = res.data;
+                if (data.length == 0)
+                    Toast.info('没有查询到数据', 1)
 
-            if (data.length == 0)
-                Toast.info('没有查询到数据', 1)
-
-            _this.setState({
-                searchResult: data
-            })
+                _this.setState({
+                    searchResult: data
+                })
+            }
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);
@@ -101,16 +105,18 @@ export default class Axios {
         }).then((res) => {
             _this.setState({ submiting: false });
 
-            if (res.checkflag && res.checkflag == "3" || res.checkflag == 3)
-                _this.continueConfirm(res.errormsg);
-            else {
-                Toast.success('提交成功！', 1);
+            if (res.errorcode == 0) {
+                if (res.checkflag && res.checkflag == "3" || res.checkflag == 3)
+                    _this.continueConfirm(res.errormsg);
+                else {
+                    Toast.success('提交成功！', 1);
 
-                const { navigation } = _this.props;
-                setTimeout(() => {
-                    navigation.navigate('主页');
-                    navigation.state.params.requireList();
-                }, 1000);
+                    const { navigation } = _this.props;
+                    setTimeout(() => {
+                        navigation.navigate('主页');
+                        navigation.state.params.requireList();
+                    }, 1000);
+                }
             }
         }).catch((error) => {
             if (String(error).toLowerCase().indexOf('timeout') != -1)
@@ -139,8 +145,9 @@ export default class Axios {
     static ajax(options) {
         // Loading.show();
         const key = Toast.loading('加载中，请稍后...');
+        let baseApi = 'http://10.32.100.110:80/service';
+        let baseApi2 = 'http://10.100.6.25:80/service';
         let baseApi0 = 'https://tcc.taobao.com/cc/json';
-        let baseApi = 'http://10.100.6.25:80/service';
         // let baseApi = 'http://192.168.43.50:80/service';
         let baseApi1 = 'http://rap2api.taobao.org/app/mock/239516/example/1576031001727';
 
@@ -161,6 +168,7 @@ export default class Axios {
                         resolve(res);
                     } else {
                         Toast.fail(res.errormsg, 3);
+                        resolve(res);
                     }
                 } else {
                     reject(response.data)
