@@ -193,7 +193,7 @@ export default class TransferScreen extends React.Component {
                         }}>
                             <Icon name="inbox" color="white" style={styles.emptyIcon} />
                             <Text style={styles.emptyHint}>可点右下角按钮查询转库单</Text>
-                            <Text style={styles.emptyHint}>或左下角按钮去产成品转库</Text>
+                            <Text style={styles.emptyHint}>或点左下角按钮去自制转库</Text>
                         </View>
 
                         <ScrollView
