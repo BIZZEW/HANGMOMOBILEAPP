@@ -180,7 +180,7 @@ export default class TransferScreen extends React.Component {
                                 this.props.navigation.navigate('转库物料明细', { showListVisible: false, requireList: (() => { }) });
                             }}
                             style={styles.specialEntrance}>
-                            <Text style={styles.btnText}>产成品</Text>
+                            <Text style={styles.btnText}>自制转库</Text>
                         </Button>
                         <Button
                             onPress={() => this.drawer && this.drawer.openDrawer()}
