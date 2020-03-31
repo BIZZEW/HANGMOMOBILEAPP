@@ -114,7 +114,7 @@ class SaleMaterialDetailScreen extends React.Component {
                                 style={styles.materialInput}
                                 ref={el => (this.inputRef = el)}
                             >
-                                入库数量
+                                出库数量
                             </InputItem>
                         </List>
 
