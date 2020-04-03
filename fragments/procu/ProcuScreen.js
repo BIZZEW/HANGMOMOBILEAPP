@@ -28,25 +28,26 @@ export default class ProcuScreen extends React.Component {
                 searchResult: []
             })
 
-            if (this.state.supplier.trim() === "" || this.state.vbillcode.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
-                Toast.fail('请先填选所有查询条件再查询', 1);
-            else {
-                AsyncStorage.getItem('pk_org').then((org) => {
-                    let origin = {
-                        supplier: this.state.supplier,
-                        vbillcode: this.state.vbillcode,
-                        formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
-                        enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
-                        pk_org: org,
-                    }
+            // if (this.state.supplier.trim() === "" || this.state.vbillcode.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
+            //     Toast.fail('请先填选所有查询条件再查询', 1);
+            // else {
+            AsyncStorage.getItem('pk_org').then((org) => {
+                let origin = {
+                    supplier: this.state.supplier,
+                    vbillcode: this.state.vbillcode,
+                    pk_source: this.state.material,
+                    formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
+                    enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
+                    pk_org: org,
+                }
 
-                    let params = {
-                        params: JSON.stringify(origin)
-                    }
+                let params = {
+                    params: JSON.stringify(origin)
+                }
 
-                    axios.requestList(this, "/queryarrive", qs.stringify(params));
-                })
-            }
+                axios.requestList(this, "/queryarrive", qs.stringify(params));
+            })
+            // }
         }
 
         this._keyboardDidShow = () => {
@@ -65,6 +66,8 @@ export default class ProcuScreen extends React.Component {
             searchResult: [],
             supplier: "",
             supplierLock: true,
+            material: "",
+            materialLock: true,
             vbillcode: "",
             vbillcodeLock: true,
             formdate: "",
@@ -112,6 +115,25 @@ export default class ProcuScreen extends React.Component {
                             placeholder="请输入供应商"
                         >
                             供应商
+                        </InputItem>
+
+                        <InputItem
+                            clear
+                            type="text"
+                            value={this.state.material}
+                            onChange={material => {
+                                if (!this.state.materialLock)
+                                    this.setState({ material });
+                            }}
+                            onFocus={() => {
+                                this.setState({ materialLock: false });
+                            }}
+                            onBlur={() => {
+                                this.setState({ materialLock: true });
+                            }}
+                            placeholder="请输入物料"
+                        >
+                            物料
                         </InputItem>
 
                         <InputItem

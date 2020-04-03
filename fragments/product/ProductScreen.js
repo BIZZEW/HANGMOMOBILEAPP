@@ -28,24 +28,25 @@ export default class ProductScreen extends React.Component {
                 searchResult: []
             })
 
-            if (this.state.vbillcode.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
-                Toast.fail('请先填选所有查询条件再查询', 1);
-            else {
-                AsyncStorage.getItem('pk_org').then((org) => {
-                    let origin = {
-                        vbillcode: this.state.vbillcode,
-                        formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
-                        enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
-                        pk_org: org,
-                    }
+            // if (this.state.vbillcode.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
+            //     Toast.fail('请先填选所有查询条件再查询', 1);
+            // else {
+            AsyncStorage.getItem('pk_org').then((org) => {
+                let origin = {
+                    vbillcode: this.state.vbillcode,
+                    pk_source: this.state.material,
+                    formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
+                    enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
+                    pk_org: org,
+                }
 
-                    let params = {
-                        params: JSON.stringify(origin)
-                    }
+                let params = {
+                    params: JSON.stringify(origin)
+                }
 
-                    axios.requestList(this, "/queryprodin", qs.stringify(params));
-                })
-            }
+                axios.requestList(this, "/queryprodin", qs.stringify(params));
+            })
+            // }
         }
 
         this._keyboardDidShow = () => {
@@ -64,6 +65,8 @@ export default class ProductScreen extends React.Component {
             searchResult: [],
             vbillcode: "",
             vbillcodeLock: true,
+            material: "",
+            materialLock: true,
             formdate: "",
             enddate: "",
             keyboardShown: false,
@@ -96,6 +99,25 @@ export default class ProductScreen extends React.Component {
                         <InputItem
                             clear
                             type="text"
+                            value={this.state.material}
+                            onChange={material => {
+                                if (!this.state.materialLock)
+                                    this.setState({ material });
+                            }}
+                            onFocus={() => {
+                                this.setState({ materialLock: false });
+                            }}
+                            onBlur={() => {
+                                this.setState({ materialLock: true });
+                            }}
+                            placeholder="请输入物料"
+                        >
+                            物料
+                        </InputItem>
+
+                        <InputItem
+                            clear
+                            type="text"
                             value={this.state.vbillcode}
                             onChange={vbillcode => {
                                 if (!this.state.vbillcodeLock)
@@ -110,6 +132,25 @@ export default class ProductScreen extends React.Component {
                             placeholder="请输入单据号"
                         >
                             单据号
+                        </InputItem>
+
+                        <InputItem
+                            clear
+                            type="text"
+                            value={this.state.material}
+                            onChange={material => {
+                                if (!this.state.materialLock)
+                                    this.setState({ material });
+                            }}
+                            onFocus={() => {
+                                this.setState({ materialLock: false });
+                            }}
+                            onBlur={() => {
+                                this.setState({ materialLock: true });
+                            }}
+                            placeholder="请输入物料"
+                        >
+                            物料
                         </InputItem>
 
                         <DatePicker
