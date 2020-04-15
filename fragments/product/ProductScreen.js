@@ -134,25 +134,6 @@ export default class ProductScreen extends React.Component {
                             单据号
                         </InputItem>
 
-                        <InputItem
-                            clear
-                            type="text"
-                            value={this.state.material}
-                            onChange={material => {
-                                if (!this.state.materialLock)
-                                    this.setState({ material });
-                            }}
-                            onFocus={() => {
-                                this.setState({ materialLock: false });
-                            }}
-                            onBlur={() => {
-                                this.setState({ materialLock: true });
-                            }}
-                            placeholder="请输入物料"
-                        >
-                            物料
-                        </InputItem>
-
                         <DatePicker
                             value={this.state.formdate}
                             mode="date"

@@ -32,6 +32,8 @@ class ProductDetailScreen extends React.Component {
             submiting: false,
             isShowDialog: false,
             confirmText: "",
+            // 暂存标志
+            stage: 'N',
         };
 
         this.editConfirmed = data => {
@@ -69,7 +71,7 @@ class ProductDetailScreen extends React.Component {
                     let org = await AsyncStorage.getItem('pk_org');
 
                     let origin = {
-                        ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck
+                        ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck, zancun: this.state.stage
                     }
 
                     let params = {
@@ -244,13 +246,22 @@ class ProductDetailScreen extends React.Component {
                             </List>
                         </ScrollView>
                         <Button
-                            onPress={() => this.submitConfirmed('Y')}
+                            onPress={() => { this.submitConfirmed('Y'); this.setState({ stage: 'N' }) }}
                             style={{
-                                ...styles.confirmBtn,
+                                ...styles.confirmBtnRt,
                                 backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
                             }}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 入库</Text>
+                        </Button>
+                        <Button
+                            onPress={() => { this.submitConfirmed('Y'); this.setState({ stage: 'Y' }) }}
+                            style={{
+                                ...styles.saveBtn,
+                                backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
+                            }}>
+                            <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
+                            <Text style={styles.btnText}> 暂存</Text>
                         </Button>
                     </View>
 

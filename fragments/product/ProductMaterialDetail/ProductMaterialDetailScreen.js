@@ -24,10 +24,11 @@ class ProductMaterialDetailScreen extends React.Component {
         this.state = {
             detail: {},
             index: "",
-            ninnum: "",
-            ninnumLock: true,
-            pk_cargdoc: "",
+            // ninnum: "",
+            // ninnumLock: true,
+            pk_cargdoc: [],
             keyboardShown: false,
+            currentScanInfo: 0,
         };
 
         this.materialConfirm = () => {
@@ -39,6 +40,17 @@ class ProductMaterialDetailScreen extends React.Component {
                 navigation.state.params.editConfirmed(this.state);
             }
         };
+
+        this.scanConfirmed = pk_cargdoc => {
+            let currentScanInfo = 0;
+            if (pk_cargdoc)
+                currentScanInfo = pk_cargdoc.length
+            let detail = this.state.detail;
+            detail.pk_cargdoc = pk_cargdoc;
+            this.setState({
+                detail, pk_cargdoc, currentScanInfo
+            })
+        }
     }
 
     componentDidMount() {
@@ -52,23 +64,17 @@ class ProductMaterialDetailScreen extends React.Component {
     }
 
     componentWillMount() {
-        let _this = this;
-        //通过使用DeviceEventEmitter模块来监听事件
-        DeviceEventEmitter.addListener('iDataScan', function (Event) {
-            // alert("扫码结果为： " + Event.ScanResult);
-            _this.setState({
-                pk_cargdoc: Event.ScanResult
-            })
-            if (_this.inputRef)
-                _this.inputRef.focus();
-        });
-
         let detail = this.props.navigation.state.params.item;
         let index = this.props.navigation.state.params.index;
-        let pk_cargdoc = detail.pk_cargdoc ? detail.pk_cargdoc : "";
-        let ninnum = detail.ninnum ? detail.ninnum : "";
+        let pk_cargdoc = detail.pk_cargdoc || [];
+        // let pk_cargdoc = [];
+        let currentScanInfo = 0;
+        if (pk_cargdoc)
+            currentScanInfo = pk_cargdoc.length
+        // let ninnum = detail.ninnum ? detail.ninnum : "";
         this.setState({
-            detail, index, pk_cargdoc, ninnum
+            detail, index, pk_cargdoc, currentScanInfo
+            // , ninnum
         })
     }
 
@@ -83,37 +89,14 @@ class ProductMaterialDetailScreen extends React.Component {
                         showsVerticalScrollIndicator={false}
                     >
                         <List renderHeader={'请填选'}>
-                            <InputItem
-                                clear
-                                type="text"
-                                value={this.state.pk_cargdoc}
-                                placeholder="请扫码获取库位"
-                                editable={false}
-                                style={styles.materialInput}
+                            <Button
+                                onPress={() => { this.props.navigation.navigate('产成品入库记录列表', { scanInfoList: JSON.stringify(this.state.pk_cargdoc), scanConfirmed: this.scanConfirmed }) }}
+                                style={{ ...styles.scanInfoBtn }}
                             >
-                                货位
-                            </InputItem>
+                                <Icon name="edit" size="sm" color="#fff" style={styles.btnIcon} />
+                                <Text style={styles.btnText}>  当前 {this.state.currentScanInfo} 条入库记录</Text>
+                            </Button>
 
-                            <InputItem
-                                clear
-                                type="number"
-                                value={this.state.ninnum}
-                                onChange={ninnum => {
-                                    if (!this.state.ninnumLock)
-                                        this.setState({ ninnum });
-                                }}
-                                onFocus={() => {
-                                    this.setState({ ninnumLock: false });
-                                }}
-                                onBlur={() => {
-                                    this.setState({ ninnumLock: true });
-                                }}
-                                placeholder="请输入实际入库数量"
-                                style={styles.materialInput}
-                                ref={el => (this.inputRef = el)}
-                            >
-                                入库数量
-                            </InputItem>
                         </List>
 
                         <List style={styles.detailList} renderHeader={'请查看'}>
