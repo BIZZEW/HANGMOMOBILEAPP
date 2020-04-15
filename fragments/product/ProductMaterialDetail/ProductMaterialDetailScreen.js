@@ -88,7 +88,7 @@ class ProductMaterialDetailScreen extends React.Component {
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                     >
-                        <List renderHeader={'请填选'}>
+                        <List renderHeader={'请编辑'}>
                             <Button
                                 onPress={() => { this.props.navigation.navigate('产成品入库记录列表', { scanInfoList: JSON.stringify(this.state.pk_cargdoc), scanConfirmed: this.scanConfirmed }) }}
                                 style={{ ...styles.scanInfoBtn }}

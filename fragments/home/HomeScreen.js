@@ -17,7 +17,6 @@ import ProductScreen from '../product/ProductScreen';
 import ProductDetailScreen from '../product/ProductDetail/ProductDetailScreen';
 import ProductMaterialDetailScreen from '../product/ProductMaterialDetail/ProductMaterialDetailScreen';
 import ProductScanListScreen from '../product/ProductScan/ProductScanListScreen';
-import ProductScanDetailScreen from '../product/ProductScan/ProductScanDetailScreen';
 
 import SaleScreen from '../sale/SaleScreen';
 import SaleDetailScreen from '../sale/SaleDetail/SaleDetailScreen';
@@ -133,18 +132,6 @@ const ProductScanListStack = createStackNavigator(
     }
 );
 
-// 产成品入库库位详情
-const ProductScanDetailStack = createStackNavigator(
-    {
-        Home: ProductScanDetailScreen,
-    },
-    {
-        defaultNavigationOptions: {
-            headerShown: false,
-        },
-    }
-);
-
 // 标签栏导航
 const TabNavigator = createBottomTabNavigator(
     {
@@ -211,8 +198,6 @@ const HomeStack = createStackNavigator(
         销售出库物料明细: SaleMaterialDetailStack,
         // 四级库位列表界面
         产成品入库记录列表: ProductScanListStack,
-        // 五级库位详情界面
-        产成品入库库位详情: ProductScanDetailStack,
     },
     {
         initialRouteName: '主页',

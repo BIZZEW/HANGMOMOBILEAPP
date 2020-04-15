@@ -129,6 +129,15 @@ const styles = StyleSheet.create(
             borderRadius: 10,
             padding: 20,
         },
+        ListItemSp: {
+            backgroundColor: "#fff",
+            marginBottom: 10,
+            borderRadius: 10,
+            padding: 15,
+            height: 70,
+            fontSize: 18,
+            lineHeight: 25,
+        },
         searchBtn: {
             height: 40,
             position: "absolute",
@@ -243,7 +252,7 @@ const styles = StyleSheet.create(
             borderColor: "#fff",
             borderWidth: 1,
             borderRadius: 10,
-            right:20,
+            right: 20,
         },
         saveBtn: {
             height: 45,
@@ -253,7 +262,7 @@ const styles = StyleSheet.create(
             borderColor: "#fff",
             borderWidth: 1,
             borderRadius: 10,
-            left:20,
+            left: 20,
         },
         detailList: {
             marginBottom: 80,
