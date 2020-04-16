@@ -51,7 +51,7 @@ class SaleDetailScreen extends React.Component {
                     this.setState({ submiting: true });
 
                     let oldList = this.state.detail.bitems;
-                    let newDetail = this.state.detail;
+                    let newDetail = JSON.parse(JSON.stringify(this.state.detail));
                     let newList = [];
 
                     for await (let i of oldList) {

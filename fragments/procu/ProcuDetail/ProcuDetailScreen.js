@@ -53,7 +53,7 @@ class ProcuDetailScreen extends React.Component {
 
                     let oldList = this.state.detail.bitems;
                     let bakList = this.state.bakDetail.bitems;
-                    let newDetail = this.state.detail;
+                    let newDetail = JSON.parse(JSON.stringify(this.state.detail));
                     let newList = [];
 
                     try {
