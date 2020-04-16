@@ -6,7 +6,7 @@ import { Toast } from '@ant-design/react-native';
 import styles from '../../../res/styles'
 const Item = List.Item;
 
-class ProductScanListScreen extends React.Component {
+class ProcuScanListScreen extends React.Component {
     constructor() {
         super(...arguments);
 
@@ -110,7 +110,7 @@ class ProductScanListScreen extends React.Component {
             //     Toast.info('当前没有入库记录', 1);
             // else {
             const { navigation } = this.props;
-            navigation.navigate("产成品入库物料明细");
+            navigation.navigate("采购入库物料明细");
             navigation.state.params.scanConfirmed(this.state.scanInfoList);
             // }
         };
@@ -315,7 +315,7 @@ class ProductScanListScreen extends React.Component {
     }
 }
 
-export default ProductScanListScreen;
+export default ProcuScanListScreen;
 
 class ListItem extends React.Component {
     render() {

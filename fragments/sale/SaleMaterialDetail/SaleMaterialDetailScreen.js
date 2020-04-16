@@ -32,9 +32,9 @@ class SaleMaterialDetailScreen extends React.Component {
 
         this.materialConfirm = () => {
             if (this.state.noutnum.trim() === "" || this.state.pk_checkcarg.trim() === "")
-                Toast.fail('需要填选的项为必输', 1);
+                Toast.info('需要填选的项为必输', 1);
             else if (this.state.detail.pk_cargdoc != this.state.pk_checkcarg)
-                Toast.fail('货位不符，请检查扫的条形码是否正确', 3);
+                Toast.info('货位不符，请检查扫的条形码是否正确', 3);
             else {
                 const { navigation } = this.props;
                 navigation.navigate("销售出库单");
@@ -65,7 +65,7 @@ class SaleMaterialDetailScreen extends React.Component {
                 _this.inputRef.focus();
         });
 
-        let detail = this.props.navigation.state.params.item;
+        let detail = JSON.parse(JSON.stringify(this.props.navigation.state.params.item));
         let index = this.props.navigation.state.params.index;
         let pk_checkcarg = detail.pk_checkcarg ? detail.pk_checkcarg : "";
         let noutnum = detail.noutnum ? detail.noutnum : "";

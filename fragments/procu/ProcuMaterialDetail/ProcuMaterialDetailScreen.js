@@ -24,21 +24,40 @@ class ProcuMaterialDetailScreen extends React.Component {
         this.state = {
             detail: {},
             index: "",
-            ninum: "",
-            ninumLock: true,
-            cargdoc: "",
+            // ninum: "",
+            // ninumLock: true,
+            cargdoc: [],
             keyboardShown: false,
+            currentScanInfo: 0,
         };
 
         this.materialConfirm = () => {
-            if (this.state.ninum.trim() === "" || this.state.cargdoc.trim() === "")
-                Toast.fail('需要填选的项为必输', 1);
-            else {
+            if (this.state.cargdoc && this.state.cargdoc.length >= 0) {
                 const { navigation } = this.props;
                 navigation.navigate("采购入库单");
                 navigation.state.params.editConfirmed(this.state);
             }
+            else
+                Toast.info('请录入至少一条入库记录', 1);
         };
+
+        this.scanConfirmed = cargdoc => {
+            let currentScanInfo, ninum = 0;
+            if (cargdoc) {
+                currentScanInfo = cargdoc.length
+
+                for (let i of cargdoc)
+                    ninum += parseInt(i.sl);
+            }
+
+            let detail = this.state.detail;
+            detail.cargdoc = cargdoc;
+            detail.ninum = ninum;
+
+            this.setState({
+                detail, cargdoc, currentScanInfo
+            })
+        }
     }
 
     componentDidMount() {
@@ -52,23 +71,14 @@ class ProcuMaterialDetailScreen extends React.Component {
     }
 
     componentWillMount() {
-        let _this = this;
-        //通过使用DeviceEventEmitter模块来监听事件
-        DeviceEventEmitter.addListener('iDataScan', function (Event) {
-            // alert("扫码结果为： " + Event.ScanResult);
-            _this.setState({
-                cargdoc: Event.ScanResult
-            })
-            if (_this.inputRef)
-                _this.inputRef.focus();
-        });
-
-        let detail = this.props.navigation.state.params.item;
+        let detail = JSON.parse(JSON.stringify(this.props.navigation.state.params.item));
         let index = this.props.navigation.state.params.index;
-        let cargdoc = detail.cargdoc ? detail.cargdoc : "";
-        let ninum = detail.ninum ? detail.ninum : "";
+        let cargdoc = detail.cargdoc || [];
+        let currentScanInfo = 0;
+        if (cargdoc)
+            currentScanInfo = cargdoc.length
         this.setState({
-            detail, index, cargdoc, ninum
+            detail, index, cargdoc, currentScanInfo
         })
     }
 
@@ -82,41 +92,27 @@ class ProcuMaterialDetailScreen extends React.Component {
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                     >
-                        <List renderHeader={'请填选'}>
-                            <InputItem
-                                clear
-                                type="text"
-                                value={this.state.cargdoc}
-                                placeholder="请扫码获取库位"
-                                editable={false}
-                                style={styles.materialInput}
+                        <List renderHeader={'请编辑'}>
+                            <Button
+                                onPress={() => { this.props.navigation.navigate('采购入库记录列表', { scanInfoList: JSON.stringify(this.state.cargdoc), scanConfirmed: this.scanConfirmed }) }}
+                                style={{ ...styles.scanInfoBtn }}
                             >
-                                货位
-                            </InputItem>
-
-                            <InputItem
-                                clear
-                                type="number"
-                                value={this.state.ninum}
-                                onChange={ninum => {
-                                    if (!this.state.ninumLock)
-                                        this.setState({ ninum });
-                                }}
-                                onFocus={() => {
-                                    this.setState({ ninumLock: false });
-                                }}
-                                onBlur={() => {
-                                    this.setState({ ninumLock: true });
-                                }}
-                                placeholder="请输入实际入库数量"
-                                style={styles.materialInput}
-                                ref={el => (this.inputRef = el)}
-                            >
-                                入库数量
-                            </InputItem>
+                                <Icon name="edit" size="sm" color="#fff" style={styles.btnIcon} />
+                                <Text style={styles.btnText}>  当前 {this.state.currentScanInfo} 条入库记录</Text>
+                            </Button>
                         </List>
 
                         <List style={styles.detailList} renderHeader={'请查看'}>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.ninum}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                数量
+                                    </Item>
                             <Item
                                 extra={
                                     <Text>

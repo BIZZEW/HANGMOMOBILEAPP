@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProcuScreen from '../procu/ProcuScreen';
 import ProcuDetailScreen from '../procu/ProcuDetail/ProcuDetailScreen';
 import ProcuMaterialDetailScreen from '../procu/ProcuMaterialDetail/ProcuMaterialDetailScreen';
+import ProcuScanListScreen from '../procu/ProcuScan/ProcuScanListScreen';
 
 import TransferScreen from '../transfer/TransferScreen';
 import TransferDetailScreen from '../transfer/TransferDetail/TransferDetailScreen';
@@ -120,6 +121,18 @@ const SaleMaterialDetailStack = createStackNavigator(
     }
 );
 
+// 采购入库记录列表
+const ProcuScanListStack = createStackNavigator(
+    {
+        Home: ProcuScanListScreen,
+    },
+    {
+        defaultNavigationOptions: {
+            headerShown: false,
+        },
+    }
+);
+
 // 产成品入库记录列表
 const ProductScanListStack = createStackNavigator(
     {
@@ -197,6 +210,7 @@ const HomeStack = createStackNavigator(
         产成品入库物料明细: ProductMaterialDetailStack,
         销售出库物料明细: SaleMaterialDetailStack,
         // 四级库位列表界面
+        采购入库记录列表: ProcuScanListStack,
         产成品入库记录列表: ProductScanListStack,
     },
     {

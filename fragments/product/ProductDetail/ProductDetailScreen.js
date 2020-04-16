@@ -28,6 +28,7 @@ class ProductDetailScreen extends React.Component {
             data: [],
             value: [],
             detail: {},
+            bakDetail: {},
             editedFlag: false,
             submiting: false,
             isShowDialog: false,
@@ -39,9 +40,6 @@ class ProductDetailScreen extends React.Component {
         this.editConfirmed = data => {
             let newDetail = this.state.detail;
             let newSubDetail = data.detail;
-
-            newSubDetail.ninnum = data.ninnum;
-            newSubDetail.pk_cargdoc = data.pk_cargdoc;
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -56,13 +54,25 @@ class ProductDetailScreen extends React.Component {
                     this.setState({ submiting: true });
 
                     let oldList = this.state.detail.bitems;
+                    let bakList = this.state.bakDetail.bitems;
                     let newDetail = this.state.detail;
                     let newList = [];
 
-                    for await (i of oldList) {
-                        if (("pk_cargdoc" in i) && ("ninnum" in i)) {
-                            newList.push(i);
-                        }
+                    try {
+                        await oldList.forEach((item, index) => {
+                            var bakNum = bakList[index].ninnum, oldNum = item.ninnum;
+                            if (typeof (bakNum) == "undefined" || (bakNum.trim() == ""))
+                                bakNum = 0;
+
+                            if (bakNum != oldNum && oldNum > 0)
+                                newList.push(item);
+                        });
+                    } catch (e) { alert(e) }
+
+                    if (newList.length == 0) {
+                        Toast.info('您未操作任何一条物料，无法提交', 1);
+                        this.setState({ submiting: false });
+                        return;
                     }
 
                     newDetail.bitems = newList;
@@ -74,13 +84,15 @@ class ProductDetailScreen extends React.Component {
                         ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck, zancun: this.state.stage
                     }
 
+                    // alert(JSON.stringify(origin));
+
                     let params = {
                         params: JSON.stringify(origin)
                     }
 
                     axios.submitOrder(this, "/updprodin", qs.stringify(params));
                 } else {
-                    Toast.fail('您未操作任何一条物料，无法提交', 1);
+                    Toast.info('您未操作任何一条物料，无法提交', 1);
                 }
             } else
                 Toast.info("提交中，请稍后", 1);
@@ -107,9 +119,11 @@ class ProductDetailScreen extends React.Component {
     }
 
     componentWillMount() {
-        let detail = this.props.navigation.state.params.item;
+        let originDetail = this.props.navigation.state.params.item;
+        let detail = JSON.parse(JSON.stringify(originDetail));
+        let bakDetail = JSON.parse(JSON.stringify(originDetail));
         this.setState({
-            detail
+            detail, bakDetail,
         })
     }
 
@@ -296,11 +310,12 @@ class ListItem extends React.Component {
             <Text>{"物料编码：" + itemInfo.cbaseid_code}</Text>
             <Text>{"物料名称：" + itemInfo.cbaseid_name}</Text>
             <Text>{"批次号：" + itemInfo.vbatchcode}</Text>
-            <Text>{"货位：" + itemInfo.csname}</Text>
+            {/* <Text>{"货位：" + itemInfo.csname}</Text> */}
             <Text>{"规格：" + itemInfo.cbaseid_spec}</Text>
             <Text>{"型号：" + itemInfo.cbaseid_type}</Text>
             <Text>{"单位：" + itemInfo.measname}</Text>
             <Text>{"行号：" + itemInfo.crowno}</Text>
+            <Text>{"数量：" + itemInfo.ninnum}</Text>
         </View>
     }
 }

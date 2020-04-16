@@ -29,7 +29,7 @@ export default class ProductScreen extends React.Component {
             })
 
             // if (this.state.vbillcode.trim() === "" || this.state.formdate === "" || this.state.enddate === "")
-            //     Toast.fail('请先填选所有查询条件再查询', 1);
+            //     Toast.info('请先填选所有查询条件再查询', 1);
             // else {
             AsyncStorage.getItem('pk_org').then((org) => {
                 let origin = {

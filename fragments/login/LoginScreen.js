@@ -50,9 +50,9 @@ class LoginScreen extends React.Component {
             }
 
             if (this.state.username.trim() === "" || this.state.password.trim() === "")
-                Toast.fail('用户名或密码为空', 1);
+                Toast.info('用户名或密码为空', 1);
             else if (this.state.org === "")
-                Toast.fail('组织未选', 1);
+                Toast.info('组织未选', 1);
             else
                 axios.login(this, "/login", qs.stringify(params), this.state.username);
         };

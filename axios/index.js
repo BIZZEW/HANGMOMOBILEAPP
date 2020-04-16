@@ -98,6 +98,7 @@ export default class Axios {
     }
 
     static submitOrder(_this, url, data) {
+        // alert("submitOrder triggered!");
         this.ajax({
             url,
             data,
@@ -143,6 +144,7 @@ export default class Axios {
     }
 
     static ajax(options) {
+        // alert("ajax triggered!");
         // Loading.show();
         const key = Toast.loading('加载中，请稍后...');
         let baseApi = 'http://49.4.90.227:81/service';
@@ -151,12 +153,13 @@ export default class Axios {
         let baseApi2 = 'http://10.100.6.25:80/service';
         let baseApi3 = 'http://10.32.100.110:80/service';
         let baseApi4 = 'http://192.168.43.50:80/service';
+        let baseApi5 = 'http://10.100.6.19:80/service';
 
         return new Promise((resolve, reject) => {
             axios({
                 url: options.url,
                 method: options.method,
-                baseURL: baseApi,
+                baseURL: baseApi5,
                 timeout: 8000,
                 params: (options.params) || "",
                 data: (options.data) || "",

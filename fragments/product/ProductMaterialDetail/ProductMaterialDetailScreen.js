@@ -32,21 +32,28 @@ class ProductMaterialDetailScreen extends React.Component {
         };
 
         this.materialConfirm = () => {
-            if (this.state.ninnum.trim() === "" || this.state.pk_cargdoc.trim() === "")
-                Toast.fail('需要填选的项为必输', 1);
-            else {
+            if (this.state.pk_cargdoc && this.state.pk_cargdoc.length >= 0) {
                 const { navigation } = this.props;
                 navigation.navigate("产成品入库单");
                 navigation.state.params.editConfirmed(this.state);
             }
+            else
+                Toast.info('请录入至少一条入库记录', 1);
         };
 
         this.scanConfirmed = pk_cargdoc => {
-            let currentScanInfo = 0;
-            if (pk_cargdoc)
+            let currentScanInfo, ninnum = 0;
+            if (pk_cargdoc) {
                 currentScanInfo = pk_cargdoc.length
+
+                for (let i of pk_cargdoc)
+                    ninnum += parseInt(i.sl);
+            }
+
             let detail = this.state.detail;
             detail.pk_cargdoc = pk_cargdoc;
+            detail.ninnum = ninnum;
+
             this.setState({
                 detail, pk_cargdoc, currentScanInfo
             })
@@ -64,17 +71,14 @@ class ProductMaterialDetailScreen extends React.Component {
     }
 
     componentWillMount() {
-        let detail = this.props.navigation.state.params.item;
+        let detail = JSON.parse(JSON.stringify(this.props.navigation.state.params.item));
         let index = this.props.navigation.state.params.index;
         let pk_cargdoc = detail.pk_cargdoc || [];
-        // let pk_cargdoc = [];
         let currentScanInfo = 0;
         if (pk_cargdoc)
             currentScanInfo = pk_cargdoc.length
-        // let ninnum = detail.ninnum ? detail.ninnum : "";
         this.setState({
             detail, index, pk_cargdoc, currentScanInfo
-            // , ninnum
         })
     }
 
@@ -96,7 +100,6 @@ class ProductMaterialDetailScreen extends React.Component {
                                 <Icon name="edit" size="sm" color="#fff" style={styles.btnIcon} />
                                 <Text style={styles.btnText}>  当前 {this.state.currentScanInfo} 条入库记录</Text>
                             </Button>
-
                         </List>
 
                         <List style={styles.detailList} renderHeader={'请查看'}>
@@ -109,6 +112,16 @@ class ProductMaterialDetailScreen extends React.Component {
                                 multipleLine
                             >
                                 货位名称
+                                    </Item>
+                            <Item
+                                extra={
+                                    <Text>
+                                        {this.state.detail.ninnum}
+                                    </Text>
+                                }
+                                multipleLine
+                            >
+                                数量
                                     </Item>
                             <Item
                                 extra={

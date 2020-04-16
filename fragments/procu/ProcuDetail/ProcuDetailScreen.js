@@ -28,6 +28,7 @@ class ProcuDetailScreen extends React.Component {
             data: [],
             value: [],
             detail: {},
+            bakDetail: {},
             editedFlag: false,
             submiting: false,
             isShowDialog: false,
@@ -37,9 +38,6 @@ class ProcuDetailScreen extends React.Component {
         this.editConfirmed = data => {
             let newDetail = this.state.detail;
             let newSubDetail = data.detail;
-
-            newSubDetail.ninum = data.ninum;
-            newSubDetail.cargdoc = data.cargdoc;
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -54,13 +52,25 @@ class ProcuDetailScreen extends React.Component {
                     this.setState({ submiting: true });
 
                     let oldList = this.state.detail.bitems;
+                    let bakList = this.state.bakDetail.bitems;
                     let newDetail = this.state.detail;
                     let newList = [];
 
-                    for await (i of oldList) {
-                        if (("cargdoc" in i) && ("ninum" in i)) {
-                            newList.push(i);
-                        }
+                    try {
+                        await oldList.forEach((item, index) => {
+                            var bakNum = bakList[index].ninum, oldNum = item.ninum;
+                            if (typeof (bakNum) == "undefined" || (bakNum.trim() == ""))
+                                bakNum = 0;
+
+                            if (bakNum != oldNum && oldNum > 0)
+                                newList.push(item);
+                        });
+                    } catch (e) { alert(e) }
+
+                    if (newList.length == 0) {
+                        Toast.info('您未操作任何一条物料，无法提交', 1);
+                        this.setState({ submiting: false });
+                        return;
                     }
 
                     newDetail.bitems = newList;
@@ -78,7 +88,7 @@ class ProcuDetailScreen extends React.Component {
 
                     axios.submitOrder(this, "/addpurchase", qs.stringify(params));
                 } else {
-                    Toast.fail('您未操作任何一条物料，无法提交', 1);
+                    Toast.info('您未操作任何一条物料，无法提交', 1);
                 }
             } else
                 Toast.info("提交中，请稍后", 1);
@@ -105,9 +115,11 @@ class ProcuDetailScreen extends React.Component {
     }
 
     componentWillMount() {
-        let detail = this.props.navigation.state.params.item;
+        let originDetail = this.props.navigation.state.params.item;
+        let detail = JSON.parse(JSON.stringify(originDetail));
+        let bakDetail = JSON.parse(JSON.stringify(originDetail));
         this.setState({
-            detail
+            detail, bakDetail,
         })
     }
 

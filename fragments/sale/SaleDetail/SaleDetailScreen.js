@@ -54,7 +54,7 @@ class SaleDetailScreen extends React.Component {
                     let newDetail = this.state.detail;
                     let newList = [];
 
-                    for await (i of oldList) {
+                    for await (let i of oldList) {
                         if (("pk_checkcarg" in i) && ("noutnum" in i)) {
                             newList.push(i);
                         }
@@ -75,7 +75,7 @@ class SaleDetailScreen extends React.Component {
 
                     axios.submitOrder(this, "/signsaleout", qs.stringify(params));
                 } else {
-                    Toast.fail('您未操作任何一条物料，无法提交', 1);
+                    Toast.info('您未操作任何一条物料，无法提交', 1);
                 }
             } else
                 Toast.info("提交中，请稍后", 1);
@@ -83,7 +83,8 @@ class SaleDetailScreen extends React.Component {
     }
 
     componentWillMount() {
-        let detail = this.props.navigation.state.params.item;
+        let originDetail = this.props.navigation.state.params.item;
+        let detail = JSON.parse(JSON.stringify(originDetail));
         this.setState({
             detail
         })
