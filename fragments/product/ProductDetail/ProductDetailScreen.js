@@ -84,8 +84,6 @@ class ProductDetailScreen extends React.Component {
                         ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck, zancun: this.state.stage
                     }
 
-                    // alert(JSON.stringify(origin));
-
                     let params = {
                         params: JSON.stringify(origin)
                     }
