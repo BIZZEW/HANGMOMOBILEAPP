@@ -242,15 +242,6 @@ class ProcuScanListScreen extends React.Component {
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
                         >
-                            {/* <FlatList
-                                style={styles.FlatList}
-                                data={this.state.scanInfoList}
-                                renderItem={({ item, key }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.editInfo(item, key) }}>
-                                        <ListItem itemInfo={item} />
-                                    </TouchableOpacity>
-                                )}
-                            /> */}
 
                             <SwipeableFlatList
                                 style={styles.FlatList}
@@ -263,11 +254,7 @@ class ProcuScanListScreen extends React.Component {
                                 renderItem={({ item }) => (
                                     <TouchableOpacity
                                         onPress={() => { this.editInfo(item) }}
-                                        style={{
-                                            height: 80,
-                                            backgroundColor: "#1270CC",
-                                            paddingVertical: 5,
-                                        }}
+                                        style={styles.swipeableFlatItem}
                                     >
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
@@ -275,30 +262,13 @@ class ProcuScanListScreen extends React.Component {
                                 renderRight={({ item }) => (
                                     <TouchableOpacity
                                         onPress={() => { this.deleteInfo(item) }}
-                                        style={{
-                                            height: 80,
-                                            width: 80,
-                                            backgroundColor: '#1270CC',
-                                            paddingLeft: 8,
-                                            paddingVertical: 5,
-                                        }}
+                                        style={styles.swipeableFlatRight}
                                     >
                                         <View
-                                            style={{
-                                                backgroundColor: '#CC3333',
-                                                flex: 1,
-                                                justifyContent: 'center',
-                                                height: 70,
-                                                borderRadius: 10,
-                                            }}
+                                            style={styles.deleteItemBtn}
                                         >
                                             <Text
-                                                style={{
-                                                    backgroundColor: 'transparent',
-                                                    color: 'white',
-                                                    fontSize: 16,
-                                                    textAlign: 'center'
-                                                }}
+                                                style={styles.deleteItemBtnTxt}
                                             >
                                                 删除
                                             </Text>

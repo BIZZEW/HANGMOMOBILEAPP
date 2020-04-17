@@ -357,6 +357,32 @@ const styles = StyleSheet.create(
             paddingTop: 10,
             paddingHorizontal: 16,
         },
+        // 四级记录列表页面
+        swipeableFlatItem: {
+            height: 80,
+            backgroundColor: "#1270CC",
+            paddingVertical: 5,
+        },
+        swipeableFlatRight: {
+            height: 80,
+            width: 80,
+            backgroundColor: '#1270CC',
+            paddingLeft: 8,
+            paddingVertical: 5,
+        },
+        deleteItemBtn: {
+            backgroundColor: '#CC3333',
+            flex: 1,
+            justifyContent: 'center',
+            height: 70,
+            borderRadius: 10,
+        },
+        deleteItemBtnTxt: {
+            backgroundColor: 'transparent',
+            color: 'white',
+            fontSize: 16,
+            textAlign: 'center'
+        }
     });
 
 module.exports = styles;
