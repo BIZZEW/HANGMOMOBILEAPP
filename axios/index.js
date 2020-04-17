@@ -159,7 +159,7 @@ export default class Axios {
             axios({
                 url: options.url,
                 method: options.method,
-                baseURL: baseApi5,
+                baseURL: baseApi,
                 timeout: 8000,
                 params: (options.params) || "",
                 data: (options.data) || "",

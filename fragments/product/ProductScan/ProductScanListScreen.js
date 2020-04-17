@@ -242,16 +242,6 @@ class ProductScanListScreen extends React.Component {
                             showsHorizontalScrollIndicator={false}
                             showsVerticalScrollIndicator={false}
                         >
-                            {/* <FlatList
-                                style={styles.FlatList}
-                                data={this.state.scanInfoList}
-                                renderItem={({ item, key }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.editInfo(item, key) }}>
-                                        <ListItem itemInfo={item} />
-                                    </TouchableOpacity>
-                                )}
-                            /> */}
-
                             <SwipeableFlatList
                                 style={styles.FlatList}
                                 data={this.state.scanInfoList}
@@ -307,7 +297,6 @@ class ProductScanListScreen extends React.Component {
                                 )}
                             />
                         </ScrollView>
-
                     </View>
                 </Drawer >
             </Provider>
