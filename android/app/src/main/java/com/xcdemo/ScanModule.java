@@ -48,13 +48,13 @@ public class ScanModule extends ReactContextBaseJavaModule {
         IntentFilter intentFilter = new IntentFilter(SCN_CUST_ACTION_SCODE);
         getReactApplicationContext().registerReceiver(scanDataReceiver, intentFilter);
 
-        outPutMode = readerManager.getOutPutMode();
-        if (outPutMode != 2) {
-            readerManager.setOutPutMode(2);
-        }
-        if (endCharMode != 3) {
-            readerManager.setEndCharMode(3);
-        }
+        // outPutMode = readerManager.getOutPutMode();
+        // if (outPutMode != 2) {
+        //     readerManager.setOutPutMode(2);
+        // }
+        // if (endCharMode != 3) {
+        //     readerManager.setEndCharMode(3);
+        // }
     }
 
     //通过RCTDeviceEventEmitter发送消息到js端
