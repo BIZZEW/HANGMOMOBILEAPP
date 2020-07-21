@@ -1,9 +1,12 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import Ionicons from 'react-native-vector-icons/FontAwesome5';
 import { getActiveChildNavigationOptions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+
+
+import PosScreen from '../pos/PosScreen';
 
 import ProcuScreen from '../procu/ProcuScreen';
 import ProcuDetailScreen from '../procu/ProcuDetail/ProcuDetailScreen';
@@ -24,6 +27,18 @@ import SaleDetailScreen from '../sale/SaleDetail/SaleDetailScreen';
 import SaleMaterialDetailScreen from '../sale/SaleMaterialDetail/SaleMaterialDetailScreen';
 import styles from '../../res/styles';
 import { Icon, Modal } from '@ant-design/react-native';
+
+// 货位查询堆
+const PosStack = createStackNavigator(
+    {
+        Home: PosScreen,
+    },
+    {
+        defaultNavigationOptions: {
+            headerShown: false,
+        },
+    }
+);
 
 // 采购入库堆
 const ProcuDetailStack = createStackNavigator(
@@ -200,6 +215,7 @@ const HomeStack = createStackNavigator(
         // 一级单据查询界面
         主页: TabNavigator,
         // 二级单据详情界面
+        货位查询: PosStack,
         采购入库单: ProcuDetailStack,
         转库单: TransferDetailStack,
         产成品入库单: ProductDetailStack,
@@ -227,30 +243,33 @@ const HomeStack = createStackNavigator(
                 headerBackImage: <BackImage />,
                 headerRight: () => {
                     if (tabState.title) {
-                        return <Icon name="logout" style={styles.logoutIcon} onPress={() => {
-                            if (global.logoutshow == 0) {
-                                global.logoutshow = 1;
-                                Modal.alert('提示', "确认退出当前账户？", [
-                                    {
-                                        text: '取消',
-                                        onPress: async () => {
-                                            global.logoutshow = 0;
+                        return <View style={styles.topBarIconWrapper}>
+                            <Icon name="scan" style={{ ...styles.topBarIcon, marginRight: 25 }} onPress={() => { navigation.navigate('货位查询') }} />
+                            <Icon name="logout" style={styles.topBarIcon} onPress={() => {
+                                if (global.logoutshow == 0) {
+                                    global.logoutshow = 1;
+                                    Modal.alert('提示', "确认退出当前账户？", [
+                                        {
+                                            text: '取消',
+                                            onPress: async () => {
+                                                global.logoutshow = 0;
+                                            },
+                                            style: 'cancel',
                                         },
-                                        style: 'cancel',
-                                    },
-                                    {
-                                        text: '确定',
-                                        onPress: async () => {
-                                            global.logoutshow = 0;
-                                            AsyncStorage.clear();
-                                            navigation.navigate('Auth');
-                                        }
-                                    },
-                                ],
-                                    onBackHandler = () => { return false; }
-                                );
-                            }
-                        }} />
+                                        {
+                                            text: '确定',
+                                            onPress: async () => {
+                                                global.logoutshow = 0;
+                                                AsyncStorage.clear();
+                                                navigation.navigate('Auth');
+                                            }
+                                        },
+                                    ],
+                                        onBackHandler = () => { return false; }
+                                    );
+                                }
+                            }} />
+                        </View>
                     }
                     else
                         return <></>

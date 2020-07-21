@@ -3,11 +3,18 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create(
     {
+        // 顶栏按钮包围
+        topBarIconWrapper: {
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center'
+        },
         // 主页面
-        logoutIcon: {
+        topBarIcon: {
             fontSize: 25,
             color: "#1270CC",
-            marginRight: 10
+            marginRight: 15,
+            flex: 1,
         },
         // 对话框
         container: {
