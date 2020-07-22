@@ -196,6 +196,16 @@ class SaleDetailScreen extends React.Component {
                                 <Item
                                     extra={
                                         <Text>
+                                            {this.state.detail.custname}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    客户名称
+                                    </Item>
+                                <Item
+                                    extra={
+                                        <Text>
                                             {this.state.detail.vnote}
                                         </Text>
                                     }

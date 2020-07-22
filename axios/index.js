@@ -97,7 +97,7 @@ export default class Axios {
         })
     }
 
-    static submitOrder(_this, url, data) {
+    static submitOrder(_this, url, data, successFunk = null) {
         // alert("submitOrder triggered!");
         this.ajax({
             url,
@@ -112,11 +112,15 @@ export default class Axios {
                 else {
                     Toast.success('提交成功！', 1);
 
-                    const { navigation } = _this.props;
-                    setTimeout(() => {
-                        navigation.navigate('主页');
-                        navigation.state.params.requireList();
-                    }, 1000);
+                    if (successFunk) {
+                        successFunk(res)
+                    } else {
+                        const { navigation } = _this.props;
+                        setTimeout(() => {
+                            navigation.navigate('主页');
+                            navigation.state.params.requireList();
+                        }, 1000);
+                    }
                 }
             }
         }).catch((error) => {

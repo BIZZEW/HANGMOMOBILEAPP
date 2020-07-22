@@ -259,11 +259,12 @@ class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
         return <View style={styles.ListItem}>
-            <Text>{"单据号：" + itemInfo.vbillcode}</Text>
-            <Text>{"单据日期：" + itemInfo.dbilldate}</Text>
-            <Text>{"申请部门：" + itemInfo.cdeptid_name}</Text>
-            <Text>{"申请人：" + itemInfo.cemployeeid_name}</Text>
-            <Text>{"运输方式：" + itemInfo.ctransmodeid_name}</Text>
+            <Text>{`单据号：${itemInfo.vbillcode ? itemInfo.vbillcode : ""}`}</Text>
+            <Text>{`单据日期：${itemInfo.dbilldate ? itemInfo.dbilldate : ""}`}</Text>
+            <Text>{`申请部门：${itemInfo.cdeptid_name ? itemInfo.cdeptid_name : ""}`}</Text>
+            <Text>{`申请人：${itemInfo.cemployeeid_name ? itemInfo.cemployeeid_name : ""}`}</Text>
+            <Text>{`运输方式：${itemInfo.ctransmodeid_name ? itemInfo.ctransmodeid_name : ""}`}</Text>
+            <Text>{`客户名称：${itemInfo.custname ? itemInfo.custname : ""}`}</Text>
         </View>
     }
 }

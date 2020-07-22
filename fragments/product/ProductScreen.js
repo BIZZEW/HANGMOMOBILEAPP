@@ -67,6 +67,8 @@ export default class ProductScreen extends React.Component {
             vbillcodeLock: true,
             material: "",
             materialLock: true,
+            factory: "",
+            factoryLock: true,
             formdate: "",
             enddate: "",
             keyboardShown: false,
@@ -113,6 +115,25 @@ export default class ProductScreen extends React.Component {
                             placeholder="请输入物料"
                         >
                             物料
+                        </InputItem>
+
+                        <InputItem
+                            clear
+                            type="text"
+                            value={this.state.factory}
+                            onChange={factory => {
+                                if (!this.state.factoryLock)
+                                    this.setState({ factory });
+                            }}
+                            onFocus={() => {
+                                this.setState({ factoryLock: false });
+                            }}
+                            onBlur={() => {
+                                this.setState({ factoryLock: true });
+                            }}
+                            placeholder="请输入生产车间"
+                        >
+                            生产车间
                         </InputItem>
 
                         <InputItem
