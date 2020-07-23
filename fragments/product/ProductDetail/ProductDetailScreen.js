@@ -248,6 +248,16 @@ class ProductDetailScreen extends React.Component {
                                 <Item
                                     extra={
                                         <Text>
+                                            {this.state.detail.cbaseid_spec_h}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    规格
+                                    </Item>
+                                <Item
+                                    extra={
+                                        <Text>
                                             {this.state.detail.vnote}
                                         </Text>
                                     }
@@ -260,13 +270,14 @@ class ProductDetailScreen extends React.Component {
                         <Button
                             onPress={() => { this.submitConfirmed('Y'); this.setState({ stage: 'N' }) }}
                             style={{
-                                ...styles.confirmBtnRt,
+                                // ...styles.confirmBtnRt,
+                                ...styles.confirmBtn,
                                 backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
                             }}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 入库</Text>
                         </Button>
-                        <Button
+                        {/* <Button
                             onPress={() => { this.submitConfirmed('Y'); this.setState({ stage: 'Y' }) }}
                             style={{
                                 ...styles.saveBtn,
@@ -274,7 +285,7 @@ class ProductDetailScreen extends React.Component {
                             }}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 暂存</Text>
-                        </Button>
+                        </Button> */}
                     </View>
 
                     <View style={styles.tabsContent}>

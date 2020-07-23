@@ -35,6 +35,7 @@ export default class ProductScreen extends React.Component {
                 let origin = {
                     vbillcode: this.state.vbillcode,
                     pk_source: this.state.material,
+                    deptname: this.state.factory,
                     formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
                     enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
                     pk_org: org,

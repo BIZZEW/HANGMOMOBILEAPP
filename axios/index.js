@@ -80,6 +80,8 @@ export default class Axios {
             if (res.errorcode == 0) {
                 let data = res.data;
 
+                // alert(JSON.stringify(data))
+
                 if (data.length == 0)
                     Toast.info('没有查询到数据', 1)
 
@@ -97,7 +99,7 @@ export default class Axios {
         })
     }
 
-    static submitOrder(_this, url, data, successFunk = null) {
+    static submitOrder(_this, url, data, successFunk = false) {
         // alert("submitOrder triggered!");
         this.ajax({
             url,
@@ -124,6 +126,35 @@ export default class Axios {
                 }
             }
         }).catch((error) => {
+            _this.setState({
+                submiting: false
+            })
+            if (String(error).toLowerCase().indexOf('timeout') != -1)
+                Toast.offline('服务器繁忙，请稍后重试', 1);
+            else if (String(error).toLowerCase().indexOf('network') != -1)
+                Toast.offline('网络连接失败，请稍后重试', 1);
+            else
+                Toast.offline('服务器访问失败，请稍后重试', 1);
+        })
+    }
+
+    static queryOrder(_this, url, data, successFunk = false) {
+        this.ajax({
+            url,
+            data,
+            method: "post"
+        }).then((res) => {
+            _this.setState({ submiting: false })
+
+            if (res.errorcode == 0) {
+                Toast.success('查询成功！', 1);
+                if (successFunk)
+                    successFunk(res)
+            }
+        }).catch((error) => {
+            _this.setState({
+                submiting: false
+            })
             if (String(error).toLowerCase().indexOf('timeout') != -1)
                 Toast.offline('服务器繁忙，请稍后重试', 1);
             else if (String(error).toLowerCase().indexOf('network') != -1)
@@ -151,7 +182,7 @@ export default class Axios {
         // alert("ajax triggered!");
         // Loading.show();
         const key = Toast.loading('加载中，请稍后...');
-        let baseApi = 'http://49.4.90.227:80/service';
+        let baseApi = 'http://49.4.90.227:81/service';
         let baseApi0 = 'https://tcc.taobao.com/cc/json';
         let baseApi1 = 'http://rap2api.taobao.org/app/mock/239516/example/1576031001727';
         let baseApi2 = 'http://10.100.6.25:80/service';
