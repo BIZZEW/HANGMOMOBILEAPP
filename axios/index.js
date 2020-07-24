@@ -108,6 +108,8 @@ export default class Axios {
         }).then((res) => {
             _this.setState({ submiting: false });
 
+            // alert(JSON.stringify(res))
+
             if (res.errorcode == 0) {
                 if (res.checkflag && res.checkflag == "3" || res.checkflag == 3)
                     _this.continueConfirm(res.errormsg);

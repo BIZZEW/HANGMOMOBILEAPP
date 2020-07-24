@@ -132,9 +132,9 @@ export default class ProductScreen extends React.Component {
                             onBlur={() => {
                                 this.setState({ factoryLock: true });
                             }}
-                            placeholder="请输入生产车间"
+                            placeholder="请输入部门"
                         >
-                            生产车间
+                            部门
                         </InputItem>
 
                         <InputItem

@@ -61,7 +61,9 @@ class TransferMaterialDetailScreen extends React.Component {
                     let origin = {
                         num: this.state.num,
                         coutcspace: this.state.outcargdoc,
+                        // coutcspace: "YC010102",
                         cincspace: this.state.incargdoc,
+                        // cincspace: "01010205",
                         dbilldate: formatTime(new Date())
                     }
 
@@ -80,17 +82,12 @@ class TransferMaterialDetailScreen extends React.Component {
                                 params: JSON.stringify(origin)
                             }
 
-                            axios.submitOrder(this, "/prowhstr", qs.stringify(params), (res) => {
+                            axios.submitOrder(this, "/prowhstr", qs.stringify(params), (res) => {// if (_this.inputRef)
                                 this.setState({
-                                    detail: {},
-                                    index: "",
                                     num: "",
-                                    numLock: true,
                                     incargdoc: "",
                                     outcargdoc: "",
                                     scanIndicator: true,
-                                    showListVisible: false,
-                                    keyboardShown: false,
                                 })
                             });
                         }
@@ -132,8 +129,8 @@ class TransferMaterialDetailScreen extends React.Component {
                     scanIndicator: false
                 })
             }
-            if (_this.inputRef)
-                _this.inputRef.focus();
+            // if (_this.inputRef)
+            //     _this.inputRef.focus();
         });
 
         let showListVisible = this.props.navigation.state.params.showListVisible;
