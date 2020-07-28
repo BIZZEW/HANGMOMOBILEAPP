@@ -43,6 +43,43 @@ export default class Axios {
         });
     }
 
+    static getOptions(_this, url, data, successFunk = false) {
+        this.ajax({
+            url,
+            data,
+            method: "post"
+        }).then(async (res) => {
+
+            if (res.errorcode == 0) {
+                if (successFunk) {
+                    successFunk(res)
+                } else {
+                    // const { navigation } = _this.props;
+                    // setTimeout(() => {
+                    //     navigation.navigate('主页');
+                    //     navigation.state.params.requireList();
+                    // }, 1000);
+                }
+
+                // _this.setState({
+                //     orgs: data.map(function (item) {
+                //         return {
+                //             value: item.pk_corp,
+                //             label: item.unitname,
+                //         }
+                //     }),
+                // });
+            }
+        }).catch((error) => {
+            if (String(error).toLowerCase().indexOf('timeout') != -1)
+                Toast.offline('服务器繁忙，请稍后重试', 1);
+            else if (String(error).toLowerCase().indexOf('network') != -1)
+                Toast.offline('网络连接失败，请稍后重试', 1);
+            else
+                Toast.offline('服务器访问失败，请稍后重试', 1);
+        })
+    }
+
     static getUserList(_this, url, data) {
         this.ajax({
             url,
@@ -188,7 +225,7 @@ export default class Axios {
         let baseApi0 = 'https://tcc.taobao.com/cc/json';
         let baseApi1 = 'http://rap2api.taobao.org/app/mock/239516/example/1576031001727';
         let baseApi2 = 'http://10.100.6.25:80/service';
-        let baseApi3 = 'http://10.32.100.110:80/service';
+        let baseApi3 = 'http://10.32.100.168:80/service';
         let baseApi4 = 'http://192.168.43.50:80/service';
         let baseApi5 = 'http://10.100.6.19:80/service';
 

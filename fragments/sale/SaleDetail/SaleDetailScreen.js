@@ -39,7 +39,7 @@ class SaleDetailScreen extends React.Component {
 
             newSubDetail.noutnum = data.noutnum;
             newSubDetail.pk_checkcarg = data.pk_checkcarg;
-            newSubDetail.vfree10 = "Y";
+            newSubDetail.vuserdef9 = "Y";
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -198,7 +198,7 @@ class SaleDetailScreen extends React.Component {
                                     </Item>
                                 <Item
                                     extra={
-                                        <Text>
+                                        <Text style={{ width: "50%" }}>
                                             {this.state.detail.custname}
                                         </Text>
                                     }
@@ -265,10 +265,10 @@ class SaleDetailScreen extends React.Component {
 class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
-        let colorStyle = { color: itemInfo.vfree10 === "Y" ? '#B0B0B0' : '#000' }
+        let colorStyle = { color: itemInfo.vuserdef9 === "Y" ? '#B0B0B0' : '#000' }
         return <View style={{
             ...styles.ListItem,
-            backgroundColor: itemInfo.vfree10 === "Y" ? '#DFDFDF' : '#FFF'
+            backgroundColor: itemInfo.vuserdef9 === "Y" ? '#DFDFDF' : '#FFF'
         }}>
             <Text style={colorStyle}>{`物料编码：${itemInfo.cbaseid_code ? itemInfo.cbaseid_code : ""}`}</Text>
             <Text style={colorStyle}>{`物料名称：${itemInfo.cbaseid_name ? itemInfo.cbaseid_name : ""}`}</Text>

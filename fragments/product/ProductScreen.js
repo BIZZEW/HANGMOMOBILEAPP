@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, View, TouchableOpacity, FlatList, AsyncStorage, Keyboard } from 'react-native';
-import { Button, Drawer, List, Provider, InputItem, Icon, DatePicker, Toast } from '@ant-design/react-native';
+import { Button, Drawer, List, Provider, InputItem, Icon, DatePicker, Toast, Picker } from '@ant-design/react-native';
 import axios from '../../axios/index';
 import styles from '../../res/styles'
 import qs from 'qs';
@@ -35,11 +35,13 @@ export default class ProductScreen extends React.Component {
                 let origin = {
                     vbillcode: this.state.vbillcode,
                     pk_source: this.state.material,
-                    deptname: this.state.factory,
+                    deptname: this.state.dept[0],
                     formdate: eval(JSON.stringify(this.state.formdate)).split('T')[0],
                     enddate: eval(JSON.stringify(this.state.enddate)).split('T')[0],
                     pk_org: org,
                 }
+
+                // alert(JSON.stringify(origin))
 
                 let params = {
                     params: JSON.stringify(origin)
@@ -62,7 +64,50 @@ export default class ProductScreen extends React.Component {
             })
         }
 
+        this.onPress = async () => {
+            // setTimeout(() => {
+            //     this.setState({
+            //         depts: [
+            //             { value: "0", label: "液体部门" },
+            //             { value: "1", label: "固体部门" },
+            //             { value: "2", label: "气体部门" },
+            //         ],
+            //     });
+            // }, 500);
+
+            let pk_org = await AsyncStorage.getItem('pk_org');
+
+            let origin = {
+                pk_corp: pk_org,
+            }
+
+            var params = {
+                params: JSON.stringify(origin)
+            }
+
+            axios.getOptions(this, "/querydeptlist", qs.stringify(params), (res) => {
+                if (res.errorcode == 0) {
+                    let data = res.data;
+
+                    this.setState({
+                        depts: data.map(function (item) {
+                            return {
+                                value: item.deptname,
+                                label: item.deptname,
+                            }
+                        }),
+                    });
+                }
+            });
+        }
+
+        this.onChange = dept => {
+            this.setState({ dept });
+        }
+
         this.state = {
+            dept: "",
+            depts: [],
             searchResult: [],
             vbillcode: "",
             vbillcodeLock: true,
@@ -118,7 +163,7 @@ export default class ProductScreen extends React.Component {
                             物料
                         </InputItem>
 
-                        <InputItem
+                        {/* <InputItem
                             clear
                             type="text"
                             value={this.state.factory}
@@ -135,7 +180,7 @@ export default class ProductScreen extends React.Component {
                             placeholder="请输入部门"
                         >
                             部门
-                        </InputItem>
+                        </InputItem> */}
 
                         <InputItem
                             clear
@@ -155,6 +200,17 @@ export default class ProductScreen extends React.Component {
                         >
                             单据号
                         </InputItem>
+
+                        <Picker
+                            data={this.state.depts}
+                            cols={1}
+                            value={this.state.dept}
+                            onChange={this.onChange}
+                        >
+                            <List.Item arrow="horizontal" onPress={this.onPress}>
+                                部门
+                            </List.Item>
+                        </Picker>
 
                         <DatePicker
                             value={this.state.formdate}
@@ -259,7 +315,9 @@ class ListItem extends React.Component {
             <Text>{"单据编号：" + itemInfo.vbillcode}</Text>
             <Text>{"单据日期：" + itemInfo.dbilldate}</Text>
             <Text>{"库存组织：" + itemInfo.cstoreorganization_name}</Text>
-            <Text>{"发运：" + itemInfo.ctransmodeid_name}</Text>
+            {/* <Text>{"发运：" + itemInfo.ctransmodeid_name}</Text> */}
+            <Text>{"规格：" + itemInfo.cbaseid_spec_h}</Text>
+            <Text>{"型号：" + itemInfo.cbaseid_type_h}</Text>
             <Text>{"人员：" + itemInfo.cemployeeid_name}</Text>
             <Text>{"部门：" + itemInfo.cdeptid_name}</Text>
         </View>

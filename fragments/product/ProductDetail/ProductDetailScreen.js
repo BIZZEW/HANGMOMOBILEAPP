@@ -258,6 +258,16 @@ class ProductDetailScreen extends React.Component {
                                 <Item
                                     extra={
                                         <Text>
+                                            {this.state.detail.cbaseid_type_h}
+                                        </Text>
+                                    }
+                                    multipleLine
+                                >
+                                    型号
+                                    </Item>
+                                <Item
+                                    extra={
+                                        <Text>
                                             {this.state.detail.vnote}
                                         </Text>
                                     }

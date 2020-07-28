@@ -273,7 +273,10 @@ const styles = StyleSheet.create(
         },
         detailList: {
             marginBottom: 80,
-            borderRadius: 10,
+            borderRadius: 10
+        },
+        detailListItem: {
+            color: "#000"
         },
         tabsContent: {
             alignItems: 'center',
