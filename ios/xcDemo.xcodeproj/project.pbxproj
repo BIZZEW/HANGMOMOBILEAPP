@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* xcDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* xcDemoTests.m */; };
 		066FFA94324540B0B8D78FD4 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE8635DA6E6B4E5986A5C209 /* Zocial.ttf */; };
@@ -25,6 +26,7 @@
 		7B826DAC807C41A2B14E4192 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCB29052FD364294AC3E2B0A /* FontAwesome5_Brands.ttf */; };
 		807D38368C92A903B24C6A63 /* libPods-xcDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2E77407F9CE9CE9C289206 /* libPods-xcDemo.a */; };
 		A67375A115A34BF7A3562FEA /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3357EBDA09BC4F8CB4E7D21B /* FontAwesome5_Solid.ttf */; };
+		AEC966EC24D003E100F6302D /* bundle in Resources */ = {isa = PBXBuildFile; fileRef = AEC966EB24D003E100F6302D /* bundle */; };
 		B9AF59AF285D44B5AEBB3493 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC51121B60A643B888DF8AE8 /* MaterialIcons.ttf */; };
 		CB37A7D78DB24139D626B6E2 /* libPods-xcDemo-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C8954A64B7C0F8B0DD7916D /* libPods-xcDemo-tvOSTests.a */; };
 		CCAD897CA07F4DC0BD2DBA9D /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39546B0883244FCBA63FE861 /* FontAwesome5_Regular.ttf */; };
@@ -83,6 +85,7 @@
 		7AA076191979521D42D85397 /* Pods-xcDemo-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xcDemo-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-xcDemo-tvOS/Pods-xcDemo-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		9D63CDF290084C6AA07B362E /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		A678794BE599EABB8AFFB30A /* Pods-xcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xcDemo.debug.xcconfig"; path = "Target Support Files/Pods-xcDemo/Pods-xcDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		AEC966EB24D003E100F6302D /* bundle */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundle; sourceTree = "<group>"; };
 		BFF21949859E40B8B17F3D3C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		C02B8A48DC6548A7A4502665 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		C04880013D9ABDB626FDAE7C /* Pods-xcDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xcDemoTests.release.xcconfig"; path = "Target Support Files/Pods-xcDemoTests/Pods-xcDemoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -156,6 +159,7 @@
 		13B07FAE1A68108700A75B9A /* xcDemo */ = {
 			isa = PBXGroup;
 			children = (
+				AEC966EB24D003E100F6302D /* bundle */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -405,6 +409,7 @@
 				B9AF59AF285D44B5AEBB3493 /* MaterialIcons.ttf in Resources */,
 				40D670FE72564A00AFA43235 /* Octicons.ttf in Resources */,
 				F79D4B8374C8433980018D33 /* SimpleLineIcons.ttf in Resources */,
+				AEC966EC24D003E100F6302D /* bundle in Resources */,
 				066FFA94324540B0B8D78FD4 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -754,7 +759,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.goldencircle.incomenotif;
 				PRODUCT_NAME = xcDemo;
 				PROVISIONING_PROFILE_SPECIFIER = incomenotif_Dis;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -777,7 +782,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.goldencircle.incomenotif;
 				PRODUCT_NAME = xcDemo;
 				PROVISIONING_PROFILE_SPECIFIER = incomenotif_Dis;
 				VERSIONING_SYSTEM = "apple-generic";
