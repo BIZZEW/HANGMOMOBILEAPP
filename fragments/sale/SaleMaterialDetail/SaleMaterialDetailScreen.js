@@ -1,7 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, View, DeviceEventEmitter, Keyboard } from 'react-native';
 import { Button, List, Provider, InputItem, Icon } from '@ant-design/react-native';
-import DialogModal from '../../common/DialogModal'
 import { Toast } from '@ant-design/react-native';
 import styles from '../../../res/styles'
 const Item = List.Item;
@@ -24,13 +23,11 @@ class SaleMaterialDetailScreen extends React.Component {
 
         this.state = {
             detail: {},
-            allItems: [],
             index: "",
             noutnum: "",
             noutnumLock: true,
             pk_checkcarg: "",
             keyboardShown: false,
-            isShowDialog: false
         };
 
         this.materialConfirm = () => {
@@ -40,39 +37,10 @@ class SaleMaterialDetailScreen extends React.Component {
                 Toast.info('货位不符，请检查扫的条形码是否正确', 3);
             else {
                 const { navigation } = this.props;
-                // 先将当前的数据提交到上一级界面
-                navigation.state.params.editConfirmed(this.state);
-
-                // 从当前的数据开始遍历后面的数据
-                let allItems = this.state.allItems
-                for (var index = this.state.index + 1; index < allItems.length; index++)
-                    if (!allItems[index].pk_checkcarg) {
-                        // 发现有未操作过的数据，弹出询问框，更新索引，结束遍历
-                        this.setState({ isShowDialog: true, index })
-                        return
-                    }
-
-                // 遍历结束也没有发现未操作过的数据，直接返回上一级界面
                 navigation.navigate("销售出库单");
+                navigation.state.params.editConfirmed(this.state);
             }
         };
-
-        this.ensureDialog = () => {
-            // 操作下一条数据，重置页面数据
-            let index = this.state.index;
-            let detail = this.state.allItems[index];
-            let pk_checkcarg = detail.pk_checkcarg ? detail.pk_checkcarg : "";
-            let noutnum = detail.noutnum ? detail.noutnum : "";
-            this.setState({
-                detail, index, pk_checkcarg, noutnum, isShowDialog: false
-            })
-        }
-
-        this.cancelDialog = () => {
-            // 不操作下一条数据，返回上一级界面
-            const { navigation } = this.props;
-            navigation.navigate("销售出库单");
-        }
     }
 
     componentDidMount() {
@@ -98,25 +66,17 @@ class SaleMaterialDetailScreen extends React.Component {
         });
 
         let detail = JSON.parse(JSON.stringify(this.props.navigation.state.params.item));
-        let allItems = JSON.parse(JSON.stringify(this.props.navigation.state.params.allItems));
         let index = this.props.navigation.state.params.index;
         let pk_checkcarg = detail.pk_checkcarg ? detail.pk_checkcarg : "";
         let noutnum = detail.noutnum ? detail.noutnum : "";
         this.setState({
-            detail, index, pk_checkcarg, noutnum, allItems
+            detail, index, pk_checkcarg, noutnum
         })
     }
 
     render() {
         return (
             <Provider>
-                <DialogModal
-                    title={"提示"}
-                    content={"当前物料已操作完成，是否继续操作下一条物料？"}
-                    confirm={this.ensureDialog}
-                    cancel={this.cancelDialog}
-                    visible={this.state.isShowDialog}
-                />
                 <View style={styles.tabsContent}>
                     <ScrollView
                         style={styles.materialScrollView}
@@ -131,9 +91,6 @@ class SaleMaterialDetailScreen extends React.Component {
                                 value={this.state.pk_checkcarg}
                                 placeholder="请扫码获取库位"
                                 editable={false}
-                                // onChange={pk_checkcarg => {
-                                //     this.setState({ pk_checkcarg });
-                                // }}
                                 style={styles.materialInput}
                             >
                                 货位

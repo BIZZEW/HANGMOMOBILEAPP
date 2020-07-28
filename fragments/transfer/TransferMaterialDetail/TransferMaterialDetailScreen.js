@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View, DeviceEventEmitter, TouchableOpacity, AsyncStorage, Keyboard } from 'react-native';
+import { ScrollView, Text, View, DeviceEventEmitter, AsyncStorage, Keyboard } from 'react-native';
 import { Button, List, Provider, InputItem, Icon, SegmentedControl } from '@ant-design/react-native';
 import { Toast } from '@ant-design/react-native';
 import styles from '../../../res/styles'
@@ -61,9 +61,7 @@ class TransferMaterialDetailScreen extends React.Component {
                     let origin = {
                         num: this.state.num,
                         coutcspace: this.state.outcargdoc,
-                        // coutcspace: "YC010102",
                         cincspace: this.state.incargdoc,
-                        // cincspace: "01010205",
                         dbilldate: formatTime(new Date())
                     }
 
@@ -82,14 +80,7 @@ class TransferMaterialDetailScreen extends React.Component {
                                 params: JSON.stringify(origin)
                             }
 
-                            axios.submitOrder(this, "/prowhstr", qs.stringify(params), (res) => {// if (_this.inputRef)
-                                this.setState({
-                                    num: "",
-                                    incargdoc: "",
-                                    outcargdoc: "",
-                                    scanIndicator: true,
-                                })
-                            });
+                            axios.submitOrder(this, "/prowhstr", qs.stringify(params));
                         }
                     });
                 }
@@ -120,17 +111,15 @@ class TransferMaterialDetailScreen extends React.Component {
             // alert("扫码结果为： " + Event.ScanResult);
             if (_this.state.scanIndicator) {
                 _this.setState({
-                    incargdoc: Event.ScanResult,
-                    scanIndicator: false
+                    incargdoc: Event.ScanResult
                 })
             } else {
                 _this.setState({
-                    outcargdoc: Event.ScanResult,
-                    scanIndicator: false
+                    outcargdoc: Event.ScanResult
                 })
             }
-            // if (_this.inputRef)
-            //     _this.inputRef.focus();
+            if (_this.inputRef)
+                _this.inputRef.focus();
         });
 
         let showListVisible = this.props.navigation.state.params.showListVisible;
@@ -158,7 +147,7 @@ class TransferMaterialDetailScreen extends React.Component {
                         showsVerticalScrollIndicator={false}
                     >
                         <List renderHeader={'请填选'}>
-                            {/* <View style={styles.segmentWrapper}>
+                            <View style={styles.segmentWrapper}>
                                 <SegmentedControl
                                     values={['扫入库货位条形码', '扫出库货位条形码']}
                                     onChange={this.onSegmentChange}
@@ -166,46 +155,31 @@ class TransferMaterialDetailScreen extends React.Component {
                                     style={styles.scanSegment}
                                     tintColor={'#1270CC'}
                                 />
-                            </View> */}
+                            </View>
                             <View
-                                // style={{ display: this.state.scanIndicator ? "flex" : "none" }}
-                                style={{ opacity: this.state.scanIndicator ? 1 : 0.3 }}
-                            >
-                                <TouchableOpacity
-                                    activeOpacity={0.3}
-                                    onPress={() => this.setState({ scanIndicator: true })}
-                                >
-                                    <InputItem
-                                        clear
-                                        type="text"
-                                        value={this.state.incargdoc}
-                                        placeholder="请扫码获取入库货位"
-                                        editable={false}
-                                        style={styles.materialInput}
-                                    >入库货位
-                                    </InputItem>
-                                </TouchableOpacity>
+                                style={{ display: this.state.scanIndicator ? "flex" : "none" }}>
+                                <InputItem
+                                    clear
+                                    type="text"
+                                    value={this.state.incargdoc}
+                                    placeholder="请扫码获取入库货位"
+                                    editable={false}
+                                    style={styles.materialInput}
+                                >入库货位
+                            </InputItem>
                             </View>
 
                             <View
-                                // style={{ display: this.state.scanIndicator ? "none" : "flex" }}
-                                style={{ opacity: this.state.scanIndicator ? 0.3 : 1 }}
-                            >
-                                <TouchableOpacity
-                                    activeOpacity={0.3}
-                                    onPress={() => this.setState({ scanIndicator: false })}
-                                >
-                                    <InputItem
-                                        clear
-                                        type="text"
-                                        value={this.state.outcargdoc}
-                                        placeholder="请扫码获取出库货位"
-                                        editable={false}
-                                        style={styles.materialInput}
-                                    >出库货位
-                                    </InputItem>
-                                </TouchableOpacity>
-
+                                style={{ display: this.state.scanIndicator ? "none" : "flex" }}>
+                                <InputItem
+                                    clear
+                                    type="text"
+                                    value={this.state.outcargdoc}
+                                    placeholder="请扫码获取出库货位"
+                                    editable={false}
+                                    style={styles.materialInput}
+                                >出库货位
+                            </InputItem>
                             </View>
 
                             <InputItem

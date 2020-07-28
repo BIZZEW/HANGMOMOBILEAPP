@@ -1,7 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, View, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
 import { Button, List, Provider, Icon, Tabs, Toast } from '@ant-design/react-native';
-import DialogModal from '../../common/DialogModal'
 import axios from '../../../axios/index';
 import styles from '../../../res/styles';
 import qs from 'qs';
@@ -30,8 +29,6 @@ class TransferDetailScreen extends React.Component {
             detail: {},
             editedFlag: false,
             submiting: false,
-            isShowDialog: false,
-            confirmText: "",
         };
 
         this.editConfirmed = data => {
@@ -49,7 +46,7 @@ class TransferDetailScreen extends React.Component {
             })
         }
 
-        this.submitConfirmed = async (ischeck) => {
+        this.submitConfirmed = async () => {
             if (!this.state.submiting) {
                 if (this.state.editedFlag) {
                     this.setState({ submiting: true });
@@ -70,7 +67,7 @@ class TransferDetailScreen extends React.Component {
                     let org = await AsyncStorage.getItem('pk_org');
 
                     let origin = {
-                        ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), ischeck
+                        ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date())
                     }
 
                     let params = {
@@ -83,25 +80,6 @@ class TransferDetailScreen extends React.Component {
                 }
             } else
                 Toast.info("提交中，请稍后", 1);
-        }
-
-        // 确认
-        this.ensureDialog = () => {
-            this.submitConfirmed('N');
-            this.setState({ isShowDialog: false });
-        }
-
-        //取消
-        this.cancelDialog = () => {
-            this.setState({ isShowDialog: false });
-        }
-
-        // 是否继续
-        this.continueConfirm = (confirmText) => {
-            this.setState({
-                confirmText: confirmText + "，是否继续？",
-                isShowDialog: true
-            })
         }
     }
 
@@ -121,13 +99,6 @@ class TransferDetailScreen extends React.Component {
 
         return (
             <Provider>
-                <DialogModal
-                    title={"提示"}
-                    content={this.state.confirmText}
-                    confirm={this.ensureDialog}
-                    cancel={this.cancelDialog}
-                    visible={this.state.isShowDialog}
-                />
                 <Tabs
                     tabs={tabs}
                     renderUnderline={() => null}
@@ -246,7 +217,7 @@ class TransferDetailScreen extends React.Component {
                             </List>
                         </ScrollView>
                         <Button
-                            onPress={() => this.submitConfirmed('Y')}
+                            onPress={() => this.submitConfirmed()}
                             style={{
                                 ...styles.confirmBtn,
                                 backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",

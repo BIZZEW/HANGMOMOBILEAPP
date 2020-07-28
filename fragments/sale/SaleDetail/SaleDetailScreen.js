@@ -29,8 +29,6 @@ class SaleDetailScreen extends React.Component {
             detail: {},
             editedFlag: false,
             submiting: false,
-            // 暂存标志
-            stage: 'N',
         };
 
         this.editConfirmed = data => {
@@ -39,7 +37,6 @@ class SaleDetailScreen extends React.Component {
 
             newSubDetail.noutnum = data.noutnum;
             newSubDetail.pk_checkcarg = data.pk_checkcarg;
-            newSubDetail.vuserdef9 = "Y";
             newDetail.bitems[data.index] = newSubDetail;
 
             this.setState({
@@ -69,7 +66,7 @@ class SaleDetailScreen extends React.Component {
                     let org = await AsyncStorage.getItem('pk_org');
 
                     let origin = {
-                        ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date()), zancun: this.state.stage
+                        ...newDetail, pk_org: org, coperatorid: coperatorid, dbilldate: formatTime(new Date())
                     }
 
                     let params = {
@@ -198,16 +195,6 @@ class SaleDetailScreen extends React.Component {
                                     </Item>
                                 <Item
                                     extra={
-                                        <Text style={{ width: "50%" }}>
-                                            {this.state.detail.custname}
-                                        </Text>
-                                    }
-                                    multipleLine
-                                >
-                                    客户名称
-                                    </Item>
-                                <Item
-                                    extra={
                                         <Text>
                                             {this.state.detail.vnote}
                                         </Text>
@@ -219,22 +206,13 @@ class SaleDetailScreen extends React.Component {
                             </List>
                         </ScrollView>
                         <Button
-                            onPress={() => { this.submitConfirmed(); this.setState({ stage: 'N' }) }}
+                            onPress={() => this.submitConfirmed()}
                             style={{
-                                ...styles.confirmBtnRt,
+                                ...styles.confirmBtn,
                                 backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
                             }}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 出库</Text>
-                        </Button>
-                        <Button
-                            onPress={() => { this.submitConfirmed(); this.setState({ stage: 'Y' }) }}
-                            style={{
-                                ...styles.saveBtn,
-                                backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
-                            }}>
-                            <Icon name="save" size="sm" color="#fff" style={styles.btnIcon} />
-                            <Text style={styles.btnText}> 暂存</Text>
                         </Button>
                     </View>
 
@@ -249,7 +227,7 @@ class SaleDetailScreen extends React.Component {
                                 style={styles.FlatList}
                                 data={this.state.detail.bitems}
                                 renderItem={({ item, index }) => (
-                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('销售出库物料明细', { item: item, index: index, allItems: this.state.detail.bitems, editConfirmed: this.editConfirmed }) }}>
+                                    <TouchableOpacity activeOpacity={1} onPress={() => { this.props.navigation.navigate('销售出库物料明细', { item: item, index: index, editConfirmed: this.editConfirmed }) }}>
                                         <ListItem itemInfo={item} />
                                     </TouchableOpacity>
                                 )}
@@ -265,18 +243,14 @@ class SaleDetailScreen extends React.Component {
 class ListItem extends React.Component {
     render() {
         let itemInfo = this.props.itemInfo;
-        let colorStyle = { color: itemInfo.vuserdef9 === "Y" ? '#B0B0B0' : '#000' }
-        return <View style={{
-            ...styles.ListItem,
-            backgroundColor: itemInfo.vuserdef9 === "Y" ? '#DFDFDF' : '#FFF'
-        }}>
-            <Text style={colorStyle}>{`物料编码：${itemInfo.cbaseid_code ? itemInfo.cbaseid_code : ""}`}</Text>
-            <Text style={colorStyle}>{`物料名称：${itemInfo.cbaseid_name ? itemInfo.cbaseid_name : ""}`}</Text>
-            <Text style={colorStyle}>{`含税金额：${itemInfo.ntaxmny ? itemInfo.ntaxmny : ""}`}</Text>
-            <Text style={colorStyle}>{`批次号：${itemInfo.vbatchcode ? itemInfo.vbatchcode : ""}`}</Text>
-            <Text style={colorStyle}>{`型号：${itemInfo.cbaseid_type ? itemInfo.cbaseid_type : ""}`}</Text>
-            <Text style={colorStyle}>{`规格：${itemInfo.cbaseid_spec ? itemInfo.cbaseid_spec : ""}`}</Text>
-            <Text style={colorStyle}>{`单位：${itemInfo.measname ? itemInfo.measname : ""}`}</Text>
+        return <View style={styles.ListItem}>
+            <Text>{"物料编码：" + itemInfo.cbaseid_code}</Text>
+            <Text>{"物料名称：" + itemInfo.cbaseid_name}</Text>
+            <Text>{"含税金额：" + itemInfo.ntaxmny}</Text>
+            <Text>{"批次号：" + itemInfo.vbatchcode}</Text>
+            <Text>{"型号：" + itemInfo.cbaseid_type}</Text>
+            <Text>{"规格：" + itemInfo.cbaseid_spec}</Text>
+            <Text>{"单位：" + itemInfo.measname}</Text>
         </View>
     }
 }
