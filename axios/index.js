@@ -221,7 +221,7 @@ export default class Axios {
         // alert("ajax triggered!");
         // Loading.show();
         const key = Toast.loading('加载中，请稍后...');
-        let baseApi = 'http://49.4.90.227:81/service';
+        let baseApi = 'http://49.4.90.227:80/service';
         let baseApi0 = 'https://tcc.taobao.com/cc/json';
         let baseApi1 = 'http://rap2api.taobao.org/app/mock/239516/example/1576031001727';
         let baseApi2 = 'http://10.100.6.25:80/service';
