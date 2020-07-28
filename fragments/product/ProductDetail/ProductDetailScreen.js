@@ -287,7 +287,7 @@ class ProductDetailScreen extends React.Component {
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 入库</Text>
                         </Button>
-                        {/* <Button
+                        <Button
                             onPress={() => { this.submitConfirmed('Y'); this.setState({ stage: 'Y' }) }}
                             style={{
                                 ...styles.saveBtn,
@@ -295,7 +295,7 @@ class ProductDetailScreen extends React.Component {
                             }}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                             <Text style={styles.btnText}> 暂存</Text>
-                        </Button> */}
+                        </Button>
                     </View>
 
                     <View style={styles.tabsContent}>
