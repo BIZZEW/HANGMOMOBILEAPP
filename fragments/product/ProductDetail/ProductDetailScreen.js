@@ -280,8 +280,8 @@ class ProductDetailScreen extends React.Component {
                         <Button
                             onPress={() => { this.submitConfirmed('Y'); this.setState({ stage: 'N' }) }}
                             style={{
-                                // ...styles.confirmBtnRt,
-                                ...styles.confirmBtn,
+                                ...styles.confirmBtnRt,
+                                // ...styles.confirmBtn,
                                 backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
                             }}>
                             <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
