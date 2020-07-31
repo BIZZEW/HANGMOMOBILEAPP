@@ -1,0 +1,33 @@
+diff --git a/node_modules/react-native-swipeable-flat-list/src/components/SwipeableFlatList.js b/node_modules/react-native-swipeable-flat-list/src/components/SwipeableFlatList.js
+index 99f2d26..6d9e8e2 100644
+--- a/node_modules/react-native-swipeable-flat-list/src/components/SwipeableFlatList.js
++++ b/node_modules/react-native-swipeable-flat-list/src/components/SwipeableFlatList.js
+@@ -23,11 +23,14 @@ export default class SwipeableFlatList extends Component {
+ 	constructor(props) {
+ 		super(props);
+ 		this._itemRef = React.createRef();
++		this._itemRefList = [];
+ 	}
+ 
+ 	_handleOpenChild = (ref) => {
++		this._reset();
+ 		this._itemRef?.current?.close?.();
+ 		this._itemRef = ref;
++		this._itemRefList.push(ref);
+ 	}
+ 
+ 	_handleCloseChild = () => {
+@@ -40,6 +43,13 @@ export default class SwipeableFlatList extends Component {
+ 		onScroll?.(event);
+ 	}
+ 
++	_reset = () => {
++		for (let i of this._itemRefList)
++			i?.close?.();
++
++		this._itemRefList = []
++	}
++
+ 	render = () => {
+ 		const {
+ 			data,
