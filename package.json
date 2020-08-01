@@ -9,6 +9,7 @@
         "test": "jest",
         "lint": "eslint .",
         "postinstall": "patch-package",
+        "patch": "npx patch-package react-native-swipeable-flat-list",
         "buildDebug": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew clean && ./gradlew assembleDebug",
         "buildRelease": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew clean && ./gradlew assembleRelease"
     },
