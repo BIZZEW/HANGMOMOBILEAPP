@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, Text, View, DeviceEventEmitter, TouchableOpacity, AsyncStorage, Keyboard } from 'react-native';
-import { Button, List, Provider, InputItem, Icon, SegmentedControl } from '@ant-design/react-native';
-import { Toast } from '@ant-design/react-native';
+import { Button, List, Provider, InputItem, Icon, SegmentedControl, Toast } from '@ant-design/react-native';
+import DialogModal from '../../common/DialogModal'
 import styles from '../../../res/styles'
 import axios from '../../../axios/index';
 import qs from 'qs';
@@ -47,6 +47,10 @@ class TransferMaterialDetailScreen extends React.Component {
             scanIndicator: true,
             showListVisible: false,
             keyboardShown: false,
+
+            submiting: false,
+            isShowDialog: false,
+            confirmText: "",
         };
 
         this.materialConfirm = () => {
@@ -57,44 +61,72 @@ class TransferMaterialDetailScreen extends React.Component {
                     const { navigation } = this.props;
                     navigation.navigate("转库单");
                     navigation.state.params.editConfirmed(this.state);
-                } else {
-                    let origin = {
-                        num: this.state.num,
-                        coutcspace: this.state.outcargdoc,
-                        // coutcspace: "YC010102",
-                        cincspace: this.state.incargdoc,
-                        // cincspace: "01010205",
-                        dbilldate: formatTime(new Date())
-                    }
-
-                    // 产成品转库
-                    AsyncStorage.multiGet(['coperatorid', 'pk_org'], (err, stores) => {
-                        if (err) Toast.fail("出错了，请重试", 1);
-                        else {
-                            stores.map((result, i, store) => {
-                                let key = store[i][0];
-                                let value = store[i][1];
-                                origin[key] = value;
-                            });
-                            origin.pk_corp = origin.pk_org;
-
-                            let params = {
-                                params: JSON.stringify(origin)
-                            }
-
-                            axios.submitOrder(this, "/prowhstr", qs.stringify(params), (res) => {// if (_this.inputRef)
-                                this.setState({
-                                    num: "",
-                                    incargdoc: "",
-                                    outcargdoc: "",
-                                    scanIndicator: true,
-                                })
-                            });
-                        }
-                    });
-                }
+                } else
+                    this.submitConfirmed('Y')
             }
         };
+
+
+        this.submitConfirmed = async (ischeck) => {
+            if (!this.state.submiting) {
+                this.setState({ submiting: true });
+                let origin = {
+                    num: this.state.num,
+                    coutcspace: this.state.outcargdoc,
+                    // coutcspace: "C6",
+                    cincspace: this.state.incargdoc,
+                    // cincspace: "YC010101",
+                    dbilldate: formatTime(new Date()),
+                    ischeck
+                }
+
+                // 产成品转库
+                AsyncStorage.multiGet(['coperatorid', 'pk_org'], (err, stores) => {
+                    if (err) Toast.fail("出错了，请重试", 1);
+                    else {
+                        stores.map((result, i, store) => {
+                            let key = store[i][0];
+                            let value = store[i][1];
+                            origin[key] = value;
+                        });
+                        origin.pk_corp = origin.pk_org;
+
+                        let params = {
+                            params: JSON.stringify(origin)
+                        }
+
+                        axios.submitOrder(this, "/prowhstr", qs.stringify(params), (res) => {// if (_this.inputRef)
+                            this.setState({
+                                num: "",
+                                incargdoc: "",
+                                outcargdoc: "",
+                                scanIndicator: true,
+                            })
+                        });
+                    }
+                });
+            } else
+                Toast.info("提交中，请稍后", 1);
+        }
+
+        // 确认
+        this.ensureDialog = () => {
+            this.submitConfirmed('N');
+            this.setState({ isShowDialog: false });
+        }
+
+        //取消
+        this.cancelDialog = () => {
+            this.setState({ isShowDialog: false });
+        }
+
+        // 是否继续
+        this.continueConfirm = (confirmText) => {
+            this.setState({
+                confirmText: confirmText + "，是否继续？",
+                isShowDialog: true
+            })
+        }
 
         this.onSegmentChange = e => {
             this.setState({
@@ -150,6 +182,13 @@ class TransferMaterialDetailScreen extends React.Component {
     render() {
         return (
             <Provider>
+                <DialogModal
+                    title={"提示"}
+                    content={this.state.confirmText}
+                    confirm={this.ensureDialog}
+                    cancel={this.cancelDialog}
+                    visible={this.state.isShowDialog}
+                />
                 <View style={styles.tabsContent}>
                     <ScrollView
                         style={styles.materialScrollView}
@@ -345,7 +384,10 @@ class TransferMaterialDetailScreen extends React.Component {
                     </ScrollView>
                     <Button
                         onPress={() => this.materialConfirm()}
-                        style={{ ...styles.materialConfirmBtn, display: this.state.keyboardShown ? "none" : "flex", position: this.state.keyboardShown ? "relative" : "absolute" }}
+                        style={{
+                            ...styles.materialConfirmBtn, display: this.state.keyboardShown ? "none" : "flex", position: this.state.keyboardShown ? "relative" : "absolute",
+                            backgroundColor: this.state.submiting ? "#B0B0B0" : "#1270CC",
+                        }}
                     >
                         <Icon name="check" size="sm" color="#fff" style={styles.btnIcon} />
                         <Text style={styles.btnText}> 确定</Text>
