@@ -44,7 +44,7 @@ class TransferMaterialDetailScreen extends React.Component {
             numLock: true,
             incargdoc: "",
             outcargdoc: "",
-            scanIndicator: true,
+            scanIndicator: false,
             showListVisible: false,
             keyboardShown: false,
 
@@ -100,7 +100,7 @@ class TransferMaterialDetailScreen extends React.Component {
                                 num: "",
                                 incargdoc: "",
                                 outcargdoc: "",
-                                scanIndicator: true,
+                                scanIndicator: false,
                             })
                         });
                     }
@@ -128,11 +128,11 @@ class TransferMaterialDetailScreen extends React.Component {
             })
         }
 
-        this.onSegmentChange = e => {
-            this.setState({
-                scanIndicator: e.nativeEvent.selectedSegmentIndex == 0,
-            })
-        }
+        // this.onSegmentChange = e => {
+        //     this.setState({
+        //         scanIndicator: e.nativeEvent.selectedSegmentIndex == 0,
+        //     })
+        // }
     }
 
     componentDidMount() {
@@ -158,7 +158,7 @@ class TransferMaterialDetailScreen extends React.Component {
             } else {
                 _this.setState({
                     outcargdoc: Event.ScanResult,
-                    scanIndicator: false
+                    scanIndicator: true
                 })
             }
             // if (_this.inputRef)
@@ -206,25 +206,6 @@ class TransferMaterialDetailScreen extends React.Component {
                                     tintColor={'#1270CC'}
                                 />
                             </View> */}
-                            <View
-                                // style={{ display: this.state.scanIndicator ? "flex" : "none" }}
-                                style={{ opacity: this.state.scanIndicator ? 1 : 0.3 }}
-                            >
-                                <TouchableOpacity
-                                    activeOpacity={0.3}
-                                    onPress={() => this.setState({ scanIndicator: true })}
-                                >
-                                    <InputItem
-                                        clear
-                                        type="text"
-                                        value={this.state.incargdoc}
-                                        placeholder="请扫码获取入库货位"
-                                        editable={false}
-                                        style={styles.materialInput}
-                                    >入库货位
-                                    </InputItem>
-                                </TouchableOpacity>
-                            </View>
 
                             <View
                                 // style={{ display: this.state.scanIndicator ? "none" : "flex" }}
@@ -245,6 +226,26 @@ class TransferMaterialDetailScreen extends React.Component {
                                     </InputItem>
                                 </TouchableOpacity>
 
+                            </View>
+
+                            <View
+                                // style={{ display: this.state.scanIndicator ? "flex" : "none" }}
+                                style={{ opacity: this.state.scanIndicator ? 1 : 0.3 }}
+                            >
+                                <TouchableOpacity
+                                    activeOpacity={0.3}
+                                    onPress={() => this.setState({ scanIndicator: true })}
+                                >
+                                    <InputItem
+                                        clear
+                                        type="text"
+                                        value={this.state.incargdoc}
+                                        placeholder="请扫码获取入库货位"
+                                        editable={false}
+                                        style={styles.materialInput}
+                                    >入库货位
+                                    </InputItem>
+                                </TouchableOpacity>
                             </View>
 
                             <InputItem
