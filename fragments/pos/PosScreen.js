@@ -15,7 +15,7 @@ class PosScreen extends React.Component {
             position: "",
             searchResult: [],
             submiting: false,
-            scanToastKey: ""
+            scanToastKey: undefined
         };
 
         this.scanDrill = () => {
@@ -44,17 +44,23 @@ class PosScreen extends React.Component {
                     }
 
                     axios.queryOrder(this, "/queryonhandnum", qs.stringify(params), (res) => {
-                        // 获取到的结果复制到查询结果列表
+                        let tmpdata = []
                         if (res && res.data)
-                            this.setState({
-                                searchResult: res.data
-                            })
+                            tmpdata = res.data
+
+                        this.setState({
+                            submiting: false,
+                            // 获取到的结果复制到查询结果列表
+                            searchResult: tmpdata
+                        })
                     });
-                } else {
-                    Toast.info('请先扫货位码', 1);
                 }
-            } else
-                Toast.info("查询中，请稍后", 1);
+                // else {
+                //     Toast.info('请先扫货位码', 1);
+                // }
+            }
+            // else
+            //     Toast.info("查询中，请稍后", 1);
         }
     }
 
@@ -63,13 +69,17 @@ class PosScreen extends React.Component {
         //通过使用DeviceEventEmitter模块来监听事件
         DeviceEventEmitter.addListener('iDataScan', function (Event) {
             // alert("扫码结果为： " + Event.ScanResult);
-            Portal.remove(_this.state.scanToastKey)
+            if (_this.state.scanToastKey)
+                Portal.remove(_this.state.scanToastKey)
 
             // 接收到扫码结果，将编码赋值到货位字段，同时清空其他信息字段。操作完毕之后触发查询方法
             _this.setState({
+                scanToastKey: undefined,
                 position: Event.ScanResult,
                 searchResult: [],
-            }, () => _this.queryConfirmed())
+            },
+                () => _this.queryConfirmed()
+            )
         });
     }
 

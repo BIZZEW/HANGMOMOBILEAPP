@@ -183,10 +183,10 @@ export default class Axios {
             data,
             method: "post"
         }).then((res) => {
-            _this.setState({ submiting: false })
+            // _this.setState({ submiting: false })
 
             if (res.errorcode == 0) {
-                Toast.success('查询成功！', 1);
+                // Toast.success('查询成功！', 1);
                 if (successFunk)
                     successFunk(res)
             }
