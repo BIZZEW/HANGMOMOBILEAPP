@@ -1,0 +1,13 @@
+diff --git a/node_modules/@bang88/react-native-ultimate-listview/src/refreshableScrollView.android.js b/node_modules/@bang88/react-native-ultimate-listview/src/refreshableScrollView.android.js
+index 16fae01..2a25fc1 100644
+--- a/node_modules/@bang88/react-native-ultimate-listview/src/refreshableScrollView.android.js
++++ b/node_modules/@bang88/react-native-ultimate-listview/src/refreshableScrollView.android.js
+@@ -9,7 +9,7 @@ import {
+   Text,
+   View
+ } from 'react-native'
+-import AsyncStorage from '@react-native-community/async-storage'
++import AsyncStorage from '@react-native-async-storage/async-storage'
+ import dateFormat from './util'
+ 
+ const { width, height } = Dimensions.get('window')
